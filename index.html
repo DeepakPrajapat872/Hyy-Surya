@@ -12,38 +12,134 @@
   <link id="pwaManifest" rel="manifest" />
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;min-height:100vh;overflow-x:hidden}
-    body{background:radial-gradient(circle at top,#071e30 0%,#010509 100%);color:#00f3ff;font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;padding:12px 14px;gap:9px}
-    .hud-top{width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#8be9fd;border-bottom:1px solid rgba(0,243,255,.25);padding-bottom:6px;gap:6px}
+    html,body{width:100%;min-height:100dvh;overflow-x:hidden;background:#020b14}
+    body{
+      background:radial-gradient(circle at top,#0a2942 0%,#020b14 58%,#010509 100%);
+      color:#00f3ff;font-family:'Segoe UI',sans-serif;
+      display:flex;flex-direction:column;align-items:center;
+      padding:12px 14px 16px;gap:10px;
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .hud-top{
+      width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;
+      font-size:11px;color:#93e8ff;border-bottom:1px solid rgba(0,243,255,.22);padding-bottom:7px;gap:6px;
+      animation:fadeUp .35s ease both;
+    }
     .badge-group{display:flex;align-items:center;gap:6px}
-    .engine-badge{border:1px solid #fde047;color:#fde047;background:rgba(253,224,71,.12);padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold}
-    .mute-btn{border:1px solid #38bdf8;color:#e0f2fe;background:rgba(56,189,248,.15);padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold;cursor:pointer}
-    .orb-container{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-    .orbit-1{position:absolute;width:116px;height:116px;border-radius:50%;border:2.5px dashed #00f3ff;animation:spinR 8s linear infinite}
-    .orbit-2{position:absolute;width:90px;height:90px;border-radius:50%;border:3px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;animation:spinL 3.5s linear infinite}
-    .cyber-sphere{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#00f3ff 45%,#003380 90%);box-shadow:0 0 25px #00f3ff,inset 0 0 12px #fff;animation:idleB 2.2s ease-in-out infinite alternate}
-    .listening .orbit-1{border-color:#00ff9d;animation-duration:2.5s}
-    .listening .cyber-sphere{background:radial-gradient(circle at 30% 30%,#fff,#00ff9d 45%,#006633 90%);box-shadow:0 0 35px #00ff9d;animation:actP .6s infinite alternate}
+    .engine-badge{
+      border:1px solid rgba(253,224,71,.7);color:#fde047;background:rgba(253,224,71,.12);
+      padding:3px 9px;border-radius:12px;font-size:10px;font-weight:bold;letter-spacing:.4px;
+    }
+    .mute-btn{
+      border:1px solid rgba(56,189,248,.6);color:#e0f2fe;background:rgba(56,189,248,.14);
+      padding:3px 9px;border-radius:12px;font-size:10px;font-weight:bold;cursor:pointer;
+      transition:transform .2s ease,background .2s ease;
+    }
+    .mute-btn:active{transform:scale(.94)}
+    .orb-container{
+      position:relative;width:128px;height:128px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;margin-top:2px;animation:fadeUp .45s ease both;
+    }
+    .orbit-1{
+      position:absolute;width:122px;height:122px;border-radius:50%;
+      border:2px dashed rgba(0,243,255,.75);animation:spinR 9s linear infinite;
+    }
+    .orbit-2{
+      position:absolute;width:96px;height:96px;border-radius:50%;
+      border:3px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
+      animation:spinL 3.8s linear infinite;
+    }
+    .cyber-sphere{
+      width:60px;height:60px;border-radius:50%;
+      background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
+      box-shadow:0 0 28px rgba(0,243,255,.85),inset 0 0 12px rgba(255,255,255,.8);
+      animation:idleB 2.4s ease-in-out infinite alternate;
+      transition:all .3s ease;
+    }
+    .listening .orbit-1{border-color:#00ff9d;animation-duration:2.4s}
+    .listening .cyber-sphere{
+      background:radial-gradient(circle at 32% 28%,#ffffff,#00ff9d 46%,#006633 92%);
+      box-shadow:0 0 38px rgba(0,255,157,.95),inset 0 0 12px #fff;
+      animation:actP .65s ease-in-out infinite alternate;
+    }
     .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
-    .speaking .cyber-sphere{background:radial-gradient(circle at 30% 30%,#fff,#c084fc 45%,#4c1d95 90%);box-shadow:0 0 40px #c084fc;animation:spkB .35s infinite alternate}
+    .speaking .cyber-sphere{
+      background:radial-gradient(circle at 32% 28%,#ffffff,#c084fc 46%,#4c1d95 92%);
+      box-shadow:0 0 42px rgba(192,132,252,.95),inset 0 0 12px #fff;
+      animation:spkB .35s ease-in-out infinite alternate;
+    }
     @keyframes spinR{100%{transform:rotate(360deg)}}
     @keyframes spinL{100%{transform:rotate(-360deg)}}
-    @keyframes idleB{from{transform:scale(.94)}to{transform:scale(1.04)}}
-    @keyframes actP{from{transform:scale(.92)}to{transform:scale(1.12)}}
-    @keyframes spkB{from{transform:scale(.95)}to{transform:scale(1.18)}}
-    h1{font-size:23px;font-weight:800;letter-spacing:2px;color:#fff;text-shadow:0 0 12px #00f3ff}
-    #status{font-size:13px;color:#a5f3fc;text-align:center;max-width:420px;min-height:20px}
-    .main-btn{padding:10px 32px;font-size:14px;font-weight:bold;letter-spacing:1.5px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;border:none;border-radius:25px;box-shadow:0 0 16px rgba(0,198,255,.5);cursor:pointer}
-    .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b)}
-    .quick-chips{width:100%;max-width:440px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
-    .chip{background:rgba(0,243,255,.08);border:1px solid rgba(0,243,255,.35);color:#cffafe;padding:4px 10px;border-radius:14px;font-size:11px;cursor:pointer}
-    .log-panel{width:100%;max-width:440px;background:rgba(0,243,255,.05);border:1px solid rgba(0,243,255,.3);border-radius:10px;padding:8px 10px;font-size:11px;max-height:165px;overflow-y:auto}
-    .log-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,243,255,.2);padding-bottom:3px;margin-bottom:5px}
-    .log-title{font-weight:bold;color:#00f3ff;font-size:10px;letter-spacing:1px}
-    .clear-btn{background:none;border:none;color:#94a3b8;font-size:10px;cursor:pointer;text-decoration:underline}
-    .log-entry{margin-bottom:5px;line-height:1.35;color:#cffafe}
-    .log-source{color:#fde047;font-weight:bold}
+    @keyframes idleB{from{transform:scale(.95)}to{transform:scale(1.05)}}
+    @keyframes actP{from{transform:scale(.93)}to{transform:scale(1.13)}}
+    @keyframes spkB{from{transform:scale(.96)}to{transform:scale(1.18)}}
+    h1{
+      font-size:25px;font-weight:800;letter-spacing:2.5px;color:#fff;
+      text-shadow:0 0 16px rgba(0,243,255,.55);animation:fadeUp .5s ease both;
+    }
+    #status{
+      font-size:13px;color:#bceeff;text-align:center;max-width:420px;min-height:20px;
+      animation:fadeUp .55s ease both;
+    }
+    .main-btn{
+      padding:11px 36px;font-size:14px;font-weight:bold;letter-spacing:1.5px;
+      background:linear-gradient(90deg,#189bff,#0066ff);color:#fff;border:none;
+      border-radius:25px;box-shadow:0 4px 20px rgba(0,153,255,.45);cursor:pointer;
+      transition:transform .18s ease,box-shadow .2s ease;animation:fadeUp .6s ease both;
+    }
+    .main-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,198,255,.6)}
+    .main-btn:active{transform:scale(.96)}
+    .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b);box-shadow:0 4px 20px rgba(255,65,108,.45)}
+    .quick-chips{
+      width:100%;max-width:440px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;
+      animation:fadeUp .65s ease both;
+    }
+    .chip{
+      background:rgba(12,42,68,.55);border:1px solid rgba(125,211,252,.32);
+      color:#e0f7ff;padding:6px 11px;border-radius:12px;font-size:11px;cursor:pointer;
+      transition:transform .18s ease,background .2s ease,border-color .2s ease;
+    }
+    .chip:hover{background:rgba(0,243,255,.16);border-color:rgba(0,243,255,.65);transform:translateY(-1px)}
+    .chip:active{transform:scale(.95)}
+    .log-panel{
+      width:100%;max-width:440px;
+      background:linear-gradient(180deg,rgba(13,44,72,.52) 0%,rgba(5,19,34,.72) 100%);
+      border:1px solid rgba(125,211,252,.28);border-radius:16px;
+      padding:10px 12px;font-size:11.5px;max-height:190px;overflow-y:auto;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);animation:fadeUp .7s ease both;
+    }
+    .log-header{
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid rgba(125,211,252,.18);padding-bottom:6px;margin-bottom:7px;
+    }
+    .log-title{font-weight:bold;color:#e6f9ff;font-size:10.5px;letter-spacing:.7px}
+    .clear-btn{
+      background:rgba(30,90,140,.45);border:1px solid rgba(125,211,252,.25);
+      color:#dff6ff;font-size:10.5px;padding:3px 10px;border-radius:10px;cursor:pointer;
+      transition:background .2s ease;
+    }
+    .clear-btn:hover{background:rgba(56,189,248,.28)}
+    .log-entry{margin-bottom:6px;line-height:1.4;color:#d6f5ff;animation:fadeUp .25s ease both}
+    .log-source{color:#67e8f9;font-weight:bold}
     .log-entry a{color:#38bdf8;text-decoration:underline}
+    .chat-bar{
+      width:100%;max-width:440px;display:flex;align-items:center;gap:8px;
+      background:rgba(10,34,58,.65);border:1px solid rgba(125,211,252,.3);
+      border-radius:26px;padding:6px 8px 6px 14px;animation:fadeUp .75s ease both;
+    }
+    .chat-input{
+      flex:1;background:transparent;border:none;outline:none;color:#ffffff;
+      font-size:13px;min-width:0;
+    }
+    .chat-input::placeholder{color:#94b8cc}
+    .icon-btn{
+      width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:14px;
+      transition:transform .18s ease,background .2s ease;flex-shrink:0;
+    }
+    .icon-btn:active{transform:scale(.92)}
+    .mic-mini{background:rgba(56,189,248,.18);color:#e0f7ff;border:1px solid rgba(125,211,252,.35)}
+    .send-mini{background:linear-gradient(135deg,#22b8ff,#0066ff);color:#fff;box-shadow:0 2px 12px rgba(0,153,255,.4)}
   </style>
 </head>
 <body>
@@ -60,32 +156,40 @@
   <div id="status">Tap ACTIVATE for Voice Assistant</div>
   <button id="toggleBtn" class="main-btn" type="button">ACTIVATE</button>
   <div class="quick-chips">
+    <button class="chip" type="button" data-cmd="hello surya">👋 Hello</button>
     <button class="chip" type="button" data-cmd="square root of 144">√144</button>
     <button class="chip" type="button" data-cmd="2 to the power 8">2^8</button>
-    <button class="chip" type="button" data-cmd="sin 30">sin 30°</button>
     <button class="chip" type="button" data-cmd="what is the date and time today">📅 Date & Time</button>
     <button class="chip" type="button" data-cmd="open youtube">▶️ YouTube</button>
   </div>
   <div class="log-panel">
     <div class="log-header">
-      <div class="log-title">SURYA ENGINE LOG (ADVANCED MATH + WIKIPEDIA)</div>
+      <div class="log-title">SURYA ENGINE LOG — ADVANCED MATH + WIKIPEDIA</div>
       <button id="clearLogBtn" class="clear-btn" type="button">Clear</button>
     </div>
-    <div id="logList"><div class="log-entry"><span class="log-source">[SURYA]</span> System Ready. Tap ACTIVATE to start.</div></div>
+    <div id="logList"></div>
   </div>
+  <form class="chat-bar" id="chatForm">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask Surya anything..." autocomplete="off" />
+    <button class="icon-btn mic-mini" id="miniMicBtn" type="button" title="Voice Input">🎙️</button>
+    <button class="icon-btn send-mini" type="submit" title="Send">➤</button>
+  </form>
 
   <script>
+    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2';
     function makeIcon(sz){
       try{
         const c=document.createElement('canvas');c.width=sz;c.height=sz;
         const x=c.getContext('2d');if(!x)return '';
         x.fillStyle='#020b14';x.fillRect(0,0,sz,sz);
         const r=sz/2;
-        x.strokeStyle='#00f3ff';x.lineWidth=Math.max(4,sz*.035);x.setLineDash([sz*.14,sz*.06]);
-        x.beginPath();x.arc(r,r,sz*.34,0,Math.PI*2);x.stroke();x.setLineDash([]);
-        const g=x.createRadialGradient(r-sz*.06,r-sz*.06,sz*.02,r,r,sz*.22);
-        g.addColorStop(0,'#fff');g.addColorStop(.5,'#00f3ff');g.addColorStop(1,'#003380');
-        x.fillStyle=g;x.beginPath();x.arc(r,r,sz*.22,0,Math.PI*2);x.fill();
+        x.strokeStyle='#38bdf8';x.lineWidth=Math.max(4,sz*.032);x.setLineDash([sz*.12,sz*.05]);
+        x.beginPath();x.arc(r,r,sz*.36,0,Math.PI*2);x.stroke();x.setLineDash([]);
+        x.strokeStyle='#00f3ff';x.lineWidth=Math.max(3,sz*.024);
+        x.beginPath();x.arc(r,r,sz*.27,.4,Math.PI*1.65);x.stroke();
+        const g=x.createRadialGradient(r-sz*.05,r-sz*.05,sz*.02,r,r,sz*.19);
+        g.addColorStop(0,'#ffffff');g.addColorStop(.5,'#22d3ee');g.addColorStop(1,'#0284c7');
+        x.fillStyle=g;x.beginPath();x.arc(r,r,sz*.19,0,Math.PI*2);x.fill();
         return c.toDataURL('image/png');
       }catch(e){return '';}
     }
@@ -99,69 +203,150 @@
       if(m)m.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify({name:'SURYA AI',short_name:'SURYA AI',start_url:'./',scope:'./',display:'standalone',background_color:'#020b14',theme_color:'#020b14',icons:icons}));
     })();
 
-    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn');
+    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     let isListening=false,isSpeaking=false,isMuted=false,rec=null;
+
+    function renderLogItem(item){
+      const d=document.createElement('div');d.className='log-entry';
+      d.innerHTML='<span class="log-source">['+item.src+']</span> '+item.det+(item.url?' — <a href="'+item.url+'" target="_blank">Open</a>':'');
+      logList.prepend(d);
+    }
+    function addLog(src,det,url=null,persist=true){
+      const entry={src:src,det:det,url:url};
+      renderLogItem(entry);
+      if(persist){
+        try{
+          const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
+          list.push(entry);
+          localStorage.setItem(LOG_KEY,JSON.stringify(list.slice(-45)));
+        }catch(e){}
+      }
+    }
+    (function loadSavedLogs(){
+      try{
+        const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
+        if(list.length){
+          list.forEach(function(item){renderLogItem(item);});
+        }else{
+          addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
+        }
+      }catch(e){
+        addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
+      }
+    })();
 
     function setVis(st){orbLogo.classList.remove('listening','speaking');if(st==='listening')orbLogo.classList.add('listening');if(st==='speaking')orbLogo.classList.add('speaking');}
     function updClock(){const n=new Date();document.getElementById('clock').innerText='TIME: '+n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
     updClock();setInterval(updClock,1000);
     if(navigator.getBattery)navigator.getBattery().then(function(b){const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};f();b.addEventListener('levelchange',f);});
-    function addLog(src,det,url=null){const d=document.createElement('div');d.className='log-entry';d.innerHTML='<span class="log-source">['+src+']</span> '+det+(url?' — <a href="'+url+'" target="_blank">Open</a>':'');logList.prepend(d);}
 
     muteBtn.addEventListener('click',function(){isMuted=!isMuted;muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 VOICE ON';if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');});
-    clearLogBtn.addEventListener('click',function(){logList.innerHTML='<div class="log-entry"><span class="log-source">[SURYA]</span> Log cleared.</div>';});
+    clearLogBtn.addEventListener('click',function(){
+      try{localStorage.removeItem(LOG_KEY);}catch(e){}
+      logList.innerHTML='';
+      addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
+    });
 
     function speak(text,cb){
       const clean=text.replace(/[*#_`]/g,'');statusEl.innerText='Surya: '+clean;window.speechSynthesis.cancel();
       if(rec)try{rec.abort();}catch(e){}
       if(isMuted){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},300);return;}
-      isSpeaking=true;const u=new SpeechSynthesisUtterance(clean);u.lang='en-IN';u.rate=1.0;u.pitch=.96;
+      isSpeaking=true;const u=new SpeechSynthesisUtterance(clean);u.lang='en-IN';u.rate=1.0;u.pitch=1.02;
       u.onstart=function(){setVis('speaking');};
       u.onend=u.onerror=function(){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},350);};
       window.speechSynthesis.speak(u);
     }
 
-    function launchApp(app){
-      if(/Android/i.test(navigator.userAgent)&&app.pkg){
-        window.location.href='intent://'+app.url.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
+    function openAppSmart(app){
+      const isAndroid=/Android/i.test(navigator.userAgent);
+      if(isAndroid&&app.pkg){
+        const hostPath=app.url.replace(/^https?:\/\//,'');
+        const intentUrl='intent://'+hostPath+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
+        window.location.href=intentUrl;
         return;
       }
       window.location.href=app.url;
     }
 
+    function tryNotes(cmd){
+      const saveM=cmd.match(/^(?:note|save note|remember)\s+(.+)/i);
+      if(saveM){
+        const txt=saveM[1].trim();
+        try{
+          const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+          notes.push(txt);
+          localStorage.setItem(NOTES_KEY,JSON.stringify(notes.slice(-30)));
+        }catch(e){}
+        addLog('NOTE SAVED',txt);speak('Got it! I have saved that note for you: '+txt+'.');return true;
+      }
+      if(/\b(show my notes|read notes|my notes)\b/i.test(cmd)){
+        let notes=[];
+        try{notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){}
+        if(!notes.length){addLog('NOTES','No saved notes yet.');speak('You do not have any saved notes yet, friend.');return true;}
+        const last=notes[notes.length-1];
+        addLog('NOTES','Total '+notes.length+' saved. Latest: '+last);
+        speak('Your latest saved note is: '+last+'.');return true;
+      }
+      return false;
+    }
+
+    function tryFriendlyChat(cmd){
+      const c=cmd.trim().toLowerCase();
+      if(/^(hello|hyy|hi|hey|hello surya|hyy surya|hi surya|hey surya|surya)\b/i.test(c)){
+        const r='Hey there! Great to hear from you. How are you doing today, and how can I help?';
+        addLog('SURYA',r);speak(r);return true;
+      }
+      if(/\b(how are you|what is up|wassup|how r u)\b/i.test(c)){
+        const r='I am doing awesome, thanks for asking! Always ready to help you out.';
+        addLog('SURYA',r);speak(r);return true;
+      }
+      if(/\b(who are you|your name)\b/i.test(c)){
+        const r='I am Surya AI, your friendly voice assistant built to help with math, knowledge, notes, and apps.';
+        addLog('SURYA',r);speak(r);return true;
+      }
+      if(/\b(thank you|thanks|ty)\b/i.test(c)){
+        const r='Anytime! Always happy to help you.';
+        addLog('SURYA',r);speak(r);return true;
+      }
+      return false;
+    }
+
     function tryDateTime(cmd){
       if(/\b(time|date|day|today)\b/i.test(cmd)){
         const n=new Date(),d=n.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),t=n.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-        const r='Today is '+d+' and the current time is '+t+'.';addLog('CLOCK / DATE',r);speak(r);return true;
+        const r='Today is '+d+' and the time right now is '+t+'.';addLog('CLOCK / DATE',r);speak(r);return true;
       }
       return false;
     }
 
     function tryOpenApp(cmd){
       const apps=[
-        {keys:['youtube'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com'},
+        {keys:['youtube'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com/'},
         {keys:['whatsapp'],name:'WhatsApp',pkg:'com.whatsapp',url:'https://wa.me/'},
-        {keys:['instagram'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com'},
-        {keys:['facebook'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com'},
-        {keys:['maps','map','location'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com'},
-        {keys:['gmail','email'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com'},
+        {keys:['instagram'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com/'},
+        {keys:['facebook'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com/'},
+        {keys:['maps','map','location'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com/'},
+        {keys:['gmail','email'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com/'},
         {keys:['telegram'],name:'Telegram',pkg:'org.telegram.messenger',url:'https://t.me/'},
-        {keys:['spotify'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com'},
-        {keys:['amazon'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in'},
-        {keys:['flipkart'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com'},
-        {keys:['paytm'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com'},
-        {keys:['zomato'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com'},
-        {keys:['swiggy'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com'},
-        {keys:['netflix'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com'},
-        {keys:['jiocinema','jio cinema'],name:'JioCinema',pkg:'com.jio.media.jiobeats',url:'https://www.jiocinema.com'},
-        {keys:['google'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com'}
+        {keys:['spotify'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com/'},
+        {keys:['amazon'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in/'},
+        {keys:['flipkart'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com/'},
+        {keys:['paytm'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com/'},
+        {keys:['zomato'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com/'},
+        {keys:['swiggy'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com/'},
+        {keys:['netflix'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com/'},
+        {keys:['jiocinema','jio cinema'],name:'JioCinema',pkg:'com.jio.media.jiobeats',url:'https://www.jiocinema.com/'},
+        {keys:['google'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com/'}
       ];
       const openIntent=/\b(open|launch|start)\b/i.test(cmd);
       for(let i=0;i<apps.length;i++){
         const a=apps[i];
         if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=2)){
-          addLog('APP LAUNCHER','Opening '+a.name,a.url);speak('Sure sir, opening '+a.name+'.',function(){launchApp(a);});return true;
+          addLog('APP LAUNCHER','Opening '+a.name+' (App if installed, else Browser)',a.url);
+          speak('Sure! Opening '+a.name+' for you.');
+          setTimeout(function(){openAppSmart(a);},250);
+          return true;
         }
       }
       return false;
@@ -186,7 +371,7 @@
 
     async function searchWiki(q){
       const m=tryAdvMath(q);
-      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak('Sir, the answer is '+m+'.');return;}
+      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak('The answer is '+m+'!');return;}
       const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain)\b/gi,'').replace(/[?!.]/g,'').trim();
       if(topic.length>=2){
         addLog('WIKIPEDIA (EN)','Searching: "'+topic+'"...');
@@ -205,21 +390,41 @@
       }
       const gUrl='https://www.google.com/search?q='+encodeURIComponent(q);
       addLog('GOOGLE FALLBACK','Searching: "'+q+'"',gUrl);
-      speak('Showing Google results for '+q+'.',function(){window.location.href=gUrl;});
+      speak('Let me check Google for '+q+'.');
+      setTimeout(function(){window.location.href=gUrl;},250);
     }
 
     async function processCmd(cmd){
-      if(isSpeaking)return;
-      addLog('USER','"'+cmd+'"');
-      if(/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cmd)){isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');speak('Going to sleep mode, sir.');return;}
-      if(tryDateTime(cmd))return;
-      if(/\b(play|song|music)\b/i.test(cmd)){const q=cmd.replace(/play|on youtube|song|music/gi,'').trim();const u='https://www.youtube.com/results?search_query='+encodeURIComponent(q);addLog('YOUTUBE','Playing: "'+q+'"',u);speak('Playing '+q+' on YouTube, sir.',function(){window.location.href=u;});return;}
-      if(/\b(call|dial)\b/i.test(cmd)){addLog('DIALER','Opening Phone Dialer','tel:');speak('Opening phone dialer, sir.',function(){window.location.href='tel:';});return;}
-      if(tryOpenApp(cmd))return;
-      await searchWiki(cmd);
+      if(!cmd||!cmd.trim()||isSpeaking)return;
+      const cleanCmd=cmd.trim();
+      addLog('USER','"'+cleanCmd+'"');
+      if(/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cleanCmd)){isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');speak('Okay, taking a quick nap! Tap activate whenever you need me.');return;}
+      if(tryNotes(cleanCmd))return;
+      if(tryFriendlyChat(cleanCmd))return;
+      if(tryDateTime(cleanCmd))return;
+      if(/\b(play|song|music)\b/i.test(cleanCmd)){
+        const q=cleanCmd.replace(/play|on youtube|song|music/gi,'').trim();
+        const webYt='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+        addLog('YOUTUBE','Playing: "'+q+'"',webYt);
+        speak('Playing '+q+' on YouTube!');
+        setTimeout(function(){openAppSmart({name:'YouTube',pkg:'com.google.android.youtube',url:webYt});},250);
+        return;
+      }
+      if(/\b(call|dial)\b/i.test(cleanCmd)){addLog('DIALER','Opening Phone Dialer','tel:');speak('Opening the dialer for you.');setTimeout(function(){window.location.href='tel:';},250);return;}
+      if(tryOpenApp(cleanCmd))return;
+      await searchWiki(cleanCmd);
     }
 
     document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){const c=b.getAttribute('data-cmd');statusEl.innerText='You: '+c;processCmd(c);});});
+
+    chatForm.addEventListener('submit',function(e){
+      e.preventDefault();
+      const val=chatInput.value.trim();
+      if(!val)return;
+      chatInput.value='';
+      statusEl.innerText='You: '+val;
+      processCmd(val);
+    });
 
     if(SR){
       rec=new SR();rec.lang='en-IN';rec.continuous=false;rec.interimResults=false;
@@ -242,6 +447,11 @@
 
     toggleBtn.addEventListener('click',toggleSurya);
     orbLogo.addEventListener('click',toggleSurya);
+    miniMicBtn.addEventListener('click',function(){
+      if(!SR){statusEl.innerText='Please use Chrome browser.';return;}
+      if(!isListening)toggleSurya();
+      else try{rec.start();}catch(e){}
+    });
   </script>
 </body>
 </html>
