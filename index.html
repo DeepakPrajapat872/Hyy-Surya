@@ -24,32 +24,52 @@
       align-items: center;
       justify-content: flex-start;
       padding: 12px 14px;
-      gap: 10px;
+      gap: 9px;
     }
     .hud-top {
       width: 100%; max-width: 440px;
-      display: flex; justify-content: space-between;
+      display: flex; justify-content: space-between; align-items: center;
       font-size: 11px; color: #8be9fd;
       border-bottom: 1px solid rgba(0, 243, 255, 0.25);
       padding-bottom: 6px;
+    }
+    .key-btn {
+      background: rgba(0, 243, 255, 0.15);
+      border: 1px solid #00f3ff;
+      color: #00f3ff;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .key-btn.gemini-active {
+      border-color: #00ff9d;
+      color: #00ff9d;
+      background: rgba(0, 255, 157, 0.12);
+    }
+    .key-btn.wiki-fallback {
+      border-color: #fde047;
+      color: #fde047;
+      background: rgba(253, 224, 71, 0.12);
     }
 
     /* 3D Orbiting Cyber Orb Logo */
     .orb-container {
       position: relative;
-      width: 130px; height: 130px;
+      width: 125px; height: 125px;
       display: flex; align-items: center; justify-content: center;
-      margin-top: 4px;
+      margin-top: 2px;
       cursor: pointer;
     }
     .orbit-1 {
-      position: absolute; width: 126px; height: 126px;
+      position: absolute; width: 120px; height: 120px;
       border-radius: 50%;
       border: 2.5px dashed #00f3ff;
       animation: spinRight 8s linear infinite;
     }
     .orbit-2 {
-      position: absolute; width: 98px; height: 98px;
+      position: absolute; width: 94px; height: 94px;
       border-radius: 50%;
       border: 3px solid transparent;
       border-left-color: #38bdf8;
@@ -57,7 +77,7 @@
       animation: spinLeft 3.5s linear infinite;
     }
     .cyber-sphere {
-      width: 62px; height: 62px;
+      width: 58px; height: 58px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #ffffff, #00f3ff 45%, #003380 90%);
       box-shadow: 0 0 25px #00f3ff, inset 0 0 12px #ffffff;
@@ -88,7 +108,7 @@
     @keyframes speakBounce { from { transform: scale(0.95); } to { transform: scale(1.18); } }
 
     h1 {
-      font-size: 24px;
+      font-size: 23px;
       font-weight: 800;
       letter-spacing: 2px;
       color: #ffffff;
@@ -101,7 +121,7 @@
       max-width: 420px;
       min-height: 20px;
     }
-    button {
+    .main-btn {
       padding: 10px 32px;
       font-size: 14px;
       font-weight: bold;
@@ -113,7 +133,7 @@
       box-shadow: 0 0 16px rgba(0, 198, 255, 0.5);
       cursor: pointer;
     }
-    button.active-stop {
+    .main-btn.active-stop {
       background: linear-gradient(90deg, #ff416c, #ff4b2b);
       box-shadow: 0 0 16px rgba(255, 65, 108, 0.5);
     }
@@ -125,9 +145,9 @@
       border-radius: 10px;
       padding: 8px 10px;
       font-size: 11px;
-      max-height: 150px;
+      max-height: 165px;
       overflow-y: auto;
-      margin-top: 4px;
+      margin-top: 2px;
     }
     .log-title {
       font-weight: bold; color: #00f3ff;
@@ -144,7 +164,7 @@
   <div class="hud-top">
     <span id="clock">TIME: --:--</span>
     <span id="battery">PWR: --%</span>
-    <span id="langHud">LANG: EN</span>
+    <button id="engineBadge" class="key-btn" onclick="configureApiKey()">🔑 SET GEMINI KEY</button>
   </div>
 
   <!-- Cyber Orb Logo -->
@@ -155,13 +175,13 @@
   </div>
 
   <h1>SURYA</h1>
-  <div id="status">Tap ACTIVATE once for hands-free mode</div>
-  <button id="toggleBtn" onclick="toggleSurya()">ACTIVATE</button>
+  <div id="status">Tap ACTIVATE for Auto-Switching AI Assistant</div>
+  <button id="toggleBtn" class="main-btn" onclick="toggleSurya()">ACTIVATE</button>
 
   <div class="log-panel">
-    <div class="log-title">LIVE EXECUTION &amp; SOURCE LOG</div>
+    <div class="log-title">HYBRID AI ENGINE LOG (GEMINI ↔ WIKIPEDIA)</div>
     <div id="logList">
-      <div class="log-entry"><span class="log-source">[SYSTEM]</span> Ready. Say "Hindi mein baat karo" to switch to Hindi.</div>
+      <div class="log-entry"><span class="log-source">[SURYA]</span> Auto-Failover Ready. Tap "SET GEMINI KEY" above to connect Gemini!</div>
     </div>
   </div>
 
@@ -170,13 +190,37 @@
     const toggleBtn = document.getElementById('toggleBtn');
     const logList = document.getElementById('logList');
     const orbLogo = document.getElementById('orbLogo');
-    const langHud = document.getElementById('langHud');
+    const engineBadge = document.getElementById('engineBadge');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     let isListening = false;
     let isSpeaking = false;
-    let currentLang = 'en'; // 'en' or 'hi'
     let recognition = null;
+    let geminiApiKey = localStorage.getItem('surya_gemini_key') || '';
+
+    function setEngineStatus(mode) {
+      engineBadge.classList.remove('gemini-active', 'wiki-fallback');
+      if (!geminiApiKey) {
+        engineBadge.innerText = "🔑 SET GEMINI KEY";
+      } else if (mode === 'gemini') {
+        engineBadge.innerText = "🟢 ENGINE: GEMINI";
+        engineBadge.classList.add('gemini-active');
+      } else if (mode === 'wiki') {
+        engineBadge.innerText = "🟡 ENGINE: WIKIPEDIA";
+        engineBadge.classList.add('wiki-fallback');
+      }
+    }
+    setEngineStatus(geminiApiKey ? 'gemini' : 'none');
+
+    function configureApiKey() {
+      const input = prompt("Apni Gemini API Key yahan paste karein:", geminiApiKey);
+      if (input !== null) {
+        geminiApiKey = input.trim();
+        localStorage.setItem('surya_gemini_key', geminiApiKey);
+        setEngineStatus(geminiApiKey ? 'gemini' : 'none');
+        addLog("SYSTEM", geminiApiKey ? "Gemini Key saved! Auto-failover enabled." : "Key cleared. Running on Wikipedia.");
+      }
+    }
 
     function setVisualState(state) {
       orbLogo.classList.remove('listening', 'speaking');
@@ -200,25 +244,33 @@
     function addLog(source, detail, url = null) {
       const div = document.createElement('div');
       div.className = 'log-entry';
-      let linkHtml = url ? ` — <a href="${url}" target="_blank">Open Link</a>` : '';
+      let linkHtml = url ? ` — <a href="${url}" target="_blank">Open</a>` : '';
       div.innerHTML = `<span class="log-source">[${source}]</span> ${detail}${linkHtml}`;
       logList.prepend(div);
     }
 
-    function speak(text, callback = null) {
-      statusEl.innerText = "Surya: " + text;
+    function detectLanguage(text) {
+      if (/[\u0900-\u097F]/.test(text)) return 'hi';
+      if (/\b(kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun)\b/i.test(text)) {
+        return 'hi';
+      }
+      return 'en';
+    }
+
+    function speak(text, lang = 'en', callback = null) {
+      const cleanSpeech = text.replace(/[*#_`]/g, '');
+      statusEl.innerText = "Surya: " + cleanSpeech;
       window.speechSynthesis.cancel();
       isSpeaking = true;
 
-      // Stop microphone while Surya speaks to prevent self-echo!
       if (recognition) {
         try { recognition.abort(); } catch (e) {}
       }
 
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = currentLang === 'hi' ? 'hi-IN' : 'en-IN';
-      utter.rate = 0.98;
-      utter.pitch = 0.95;
+      const utter = new SpeechSynthesisUtterance(cleanSpeech);
+      utter.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+      utter.rate = 1.0;
+      utter.pitch = 0.96;
 
       utter.onstart = () => setVisualState('speaking');
       utter.onend = () => {
@@ -231,7 +283,7 @@
             if (isListening && !isSpeaking) {
               try { recognition.start(); } catch (e) {}
             }
-          }, 400);
+          }, 350);
         }
       };
       utter.onerror = () => {
@@ -241,222 +293,191 @@
       window.speechSynthesis.speak(utter);
     }
 
-    async function searchWikipedia(rawQuery) {
-      const topic = rawQuery
-        .replace(/\b(who is|what is|tell me about|when was|born|died|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|ke bare mein batao|in hindi|hindi mein)\b/gi, '')
-        .replace(/(का जन्म कब हुआ था|को फांसी कब हुई थी|कौन है|कौन थे|क्या है|के बारे में बताओ)/g, '')
-        .trim();
+    // 1. Universal App & Website Launcher
+    function tryOpenApp(cmd, lang) {
+      const apps = [
+        { keys: ['youtube', 'यूट्यूब'], name: 'YouTube', url: 'https://www.youtube.com' },
+        { keys: ['whatsapp', 'व्हाट्सएप'], name: 'WhatsApp', url: 'https://wa.me/' },
+        { keys: ['instagram', 'इंस्टाग्राम'], name: 'Instagram', url: 'https://www.instagram.com' },
+        { keys: ['facebook', 'फेसबुक'], name: 'Facebook', url: 'https://www.facebook.com' },
+        { keys: ['maps', 'map', 'मैप्स', 'लोकेशन'], name: 'Google Maps', url: 'https://maps.google.com' },
+        { keys: ['gmail', 'email', 'जीमेल'], name: 'Gmail', url: 'https://mail.google.com' },
+        { keys: ['telegram', 'टेलीग्राम'], name: 'Telegram', url: 'https://t.me/' },
+        { keys: ['spotify', 'स्पॉटिफाई'], name: 'Spotify', url: 'https://open.spotify.com' },
+        { keys: ['amazon', 'अमेज़न', 'अमेजॉन'], name: 'Amazon', url: 'https://www.amazon.in' },
+        { keys: ['flipkart', 'फ्लिपकार्ट'], name: 'Flipkart', url: 'https://www.flipkart.com' },
+        { keys: ['paytm', 'पेटीएम'], name: 'Paytm', url: 'https://paytm.com' },
+        { keys: ['zomato', 'ज़ोमैटो'], name: 'Zomato', url: 'https://www.zomato.com' },
+        { keys: ['swiggy', 'स्विगी'], name: 'Swiggy', url: 'https://www.swiggy.com' },
+        { keys: ['netflix', 'नेटफ्लिक्स'], name: 'Netflix', url: 'https://www.netflix.com' },
+        { keys: ['jiocinema', 'jio cinema', 'जियो सिनेमा'], name: 'JioCinema', url: 'https://www.jiocinema.com' },
+        { keys: ['google', 'गूगल'], name: 'Google', url: 'https://www.google.com' }
+      ];
 
-      if (!topic || topic.length < 2) return false;
-      const wikiSub = currentLang === 'hi' ? 'hi' : 'en';
-      addLog(`WIKIPEDIA (${wikiSub.toUpperCase()})`, `Searching: "${topic}"...`);
+      const hasOpenIntent = /\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd) || /(खोलो|खोल|चलाओ)/.test(cmd);
 
-      try {
-        const searchUrl = `https://${wikiSub}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(topic)}&format=json&origin=*`;
-        const searchRes = await fetch(searchUrl);
-        const searchData = await searchRes.json();
-        const bestTitle = searchData?.query?.search?.[0]?.title;
-
-        if (!bestTitle) return false;
-
-        const summaryUrl = `https://${wikiSub}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bestTitle)}`;
-        const sumRes = await fetch(summaryUrl);
-        const sumData = await sumRes.json();
-
-        if (sumData.extract) {
-          const splitChar = currentLang === 'hi' ? '। ' : '. ';
-          const shortAns = sumData.extract.split(splitChar).slice(0, 2).join(splitChar) + (currentLang === 'hi' ? '।' : '.');
-          addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls?.desktop?.page);
-          speak(shortAns);
-          return true;
+      for (const app of apps) {
+        if (app.keys.some(k => cmd.includes(k))) {
+          if (hasOpenIntent || cmd.trim().split(' ').length <= 2) {
+            addLog("APP LAUNCHER", `Opening ${app.name}`, app.url);
+            speak(
+              lang === 'hi' ? `जी सर, ${app.name} खोल रहा हूँ।` : `Sure sir, opening ${app.name}.`,
+              lang,
+              () => { window.location.href = app.url; }
+            );
+            return true;
+          }
         }
-      } catch (e) {
-        return false;
       }
       return false;
     }
 
-    async function processCommand(cmd) {
-      if (isSpeaking) return;
-      addLog("VOICE INPUT", `Heard: "${cmd}"`);
+    // 2. Local Math Helper (Used during Wikipedia Fallback)
+    function tryLocalMath(cmd) {
+      let expr = cmd
+        .replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
+        .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
+        .replace(/minus|subtract|घटा|माइनस|ghata/gi, '-')
+        .replace(/divided by|divide by|भाग|डिवाइड|bhag/gi, '/')
+        .replace(/[^0-9+\-*/().]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
 
-      // Switch to Hindi Mode
-      if (cmd.includes('hindi mein') || cmd.includes('speak in hindi') || cmd.includes('hindi me baat') || cmd.includes('हिंदी में')) {
-        currentLang = 'hi';
-        langHud.innerText = "LANG: HI";
-        if (recognition) recognition.lang = 'hi-IN';
-        addLog("LANGUAGE", "Switched to Hindi (hi-IN)");
-        speak("ठीक है सर, अब मैं आपसे हिंदी में बात करूँगा। बताइए मैं आपकी क्या सहायता कर सकता हूँ?");
-        return;
-      }
-
-      // Switch to English Mode
-      if (cmd.includes('speak in english') || cmd.includes('english mein') || cmd.includes('english me baat') || cmd.includes('अंग्रेजी में')) {
-        currentLang = 'en';
-        langHud.innerText = "LANG: EN";
-        if (recognition) recognition.lang = 'en-IN';
-        addLog("LANGUAGE", "Switched to English (en-IN)");
-        speak("Alright sir, I have switched back to English mode.");
-        return;
-      }
-
-      // Stop / Sleep command
-      if (/\b(stop|sleep|band ho ja|रुक जाओ|बंद हो जाओ)\b/i.test(cmd)) {
-        isListening = false;
-        toggleBtn.innerText = "ACTIVATE";
-        toggleBtn.classList.remove('active-stop');
-        addLog("SYSTEM", "Continuous listening stopped.");
-        speak(currentLang === 'hi' ? "ठीक है सर, मैं स्लीप मोड में जा रहा हूँ।" : "Going to sleep mode, sir.");
-        return;
-      }
-
-      // Greeting check
-      if (/^(hello|hi|hey|namaste|surya|hello surya|hi surya|नमस्ते|सूर्या)$/i.test(cmd.trim())) {
-        addLog("LOCAL AI", "Greeting module triggered.");
-        speak(currentLang === 'hi'
-          ? "नमस्ते सर! सूर्या सिस्टम ऑनलाइन है। बताइए मैं आपकी क्या मदद कर सकता हूँ?"
-          : "Hello sir! Surya system is online. How may I assist you?");
-        return;
-      }
-
-      // Time & Date
-      if (/\b(time|samay|kitne baje)\b/i.test(cmd) || cmd.includes('समय') || cmd.includes('कितने बजे')) {
-        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        addLog("DEVICE CLOCK", `Fetched time: ${time}`);
-        speak(currentLang === 'hi' ? `सर, अभी समय हो रहा है ${time}` : `Sir, the current time is ${time}`);
-        return;
-      }
-      if (/\b(date|tarikh|aaj kya din)\b/i.test(cmd) || cmd.includes('तारीख')) {
-        const date = new Date().toDateString();
-        addLog("DEVICE CALENDAR", `Fetched date: ${date}`);
-        speak(currentLang === 'hi' ? `सर, आज की तारीख है ${date}` : `Today is ${date}`);
-        return;
-      }
-
-      // Battery
-      if (/\b(battery|charge)\b/i.test(cmd) || cmd.includes('बैटरी')) {
-        const batText = document.getElementById('battery').innerText.replace('PWR: ', '');
-        addLog("BATTERY SENSOR", `Read ${batText}`);
-        speak(currentLang === 'hi' ? `सर, फोन की बैटरी ${batText} चार्ज है।` : `Sir, system battery is at ${batText}`);
-        return;
-      }
-
-      // Math calculation
-      const mathMatch = cmd.replace(/into|multiply|x|गुणा/gi, '*').replace(/plus|जोड़/gi, '+').replace(/minus|घटा/gi, '-').replace(/divide by|divided by|भाग/gi, '/');
-      if (/^[0-9+\-*/().\s]+$/.test(mathMatch.trim()) && /[+\-*/]/.test(mathMatch)) {
+      if (/[0-9]\s*[+\-*/]\s*[0-9]/.test(expr)) {
         try {
-          const ans = Function('"use strict";return (' + mathMatch + ')')();
-          addLog("MATH ENGINE", `Calculated: ${mathMatch.trim()} = ${ans}`);
-          speak(currentLang === 'hi' ? `इसका उत्तर है ${ans}` : `The answer is ${ans}`);
-          return;
+          const ans = Function('"use strict";return (' + expr + ')')();
+          if (typeof ans === 'number' && !isNaN(ans)) {
+            return Number.isInteger(ans) ? ans : ans.toFixed(2);
+          }
+        } catch (e) {}
+      }
+      return null;
+    }
+
+    // 3. Wikipedia Backup Engine (Auto-triggered when Gemini limit hits or no key)
+    async function fallbackToWikipedia(rawQuery, lang) {
+      setEngineStatus(geminiApiKey ? 'wiki' : 'none');
+
+      // Check Math first locally
+      const mathAns = tryLocalMath(rawQuery);
+      if (mathAns !== null) {
+        addLog("WIKI/LOCAL MATH", `Result = ${mathAns}`);
+        speak(lang === 'hi' ? `सर, इसका उत्तर ${mathAns} होता है।` : `Sir, the answer is ${mathAns}.`, lang);
+        return;
+      }
+
+      const cleanTopic = rawQuery
+        .replace(/\b(who is|who was|what is|tell me about|when was|where is|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|kya hota hai|kaha hai|ke bare mein batao|batao|in hindi|hindi mein)\b/gi, '')
+        .replace(/(का जन्म कब हुआ था|को फांसी कब हुई थी|कौन है|कौन थे|क्या है|क्या होता है|कहाँ है|के बारे में बताओ|बताओ)/g, '')
+        .replace(/[?।!]/g, '')
+        .trim();
+
+      if (cleanTopic.length >= 2) {
+        const wikiSub = lang === 'hi' ? 'hi' : 'en';
+        addLog(`WIKIPEDIA (${wikiSub.toUpperCase()})`, `Searching: "${cleanTopic}"...`);
+        try {
+          const searchUrl = `https://${wikiSub}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(cleanTopic)}&format=json&origin=*`;
+          const searchRes = await fetch(searchUrl);
+          const searchData = await searchRes.json();
+          const bestTitle = searchData?.query?.search?.[0]?.title;
+
+          if (bestTitle) {
+            const summaryUrl = `https://${wikiSub}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bestTitle)}`;
+            const sumRes = await fetch(summaryUrl);
+            const sumData = await sumRes.json();
+
+            if (sumData.extract && sumData.type !== 'disambiguation') {
+              const splitChar = lang === 'hi' ? '। ' : '. ';
+              const shortAns = sumData.extract.split(splitChar).slice(0, 2).join(splitChar) + (lang === 'hi' ? '।' : '.');
+              addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls?.desktop?.page);
+              speak(shortAns, lang);
+              return;
+            }
+          }
         } catch (e) {}
       }
 
-      // Play song on YouTube
-      if (/\b(play|chalao|song|gaana)\b/i.test(cmd) || cmd.includes('गाना') || cmd.includes('चलाओ')) {
-        const song = cmd.replace(/play|on youtube|chalao|song|gaana|गाना|चलाओ/gi, '').trim();
-        const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(song)}`;
-        addLog("YOUTUBE LAUNCHER", `Playing: "${song}"`, ytUrl);
-        speak(currentLang === 'hi' ? `यूट्यूब पर ${song} चला रहा हूँ सर।` : `Opening YouTube for ${song}`, () => { window.location.href = ytUrl; });
-        return;
-      }
-
-      // Open Apps
-      if (cmd.includes('youtube') || cmd.includes('यूट्यूब')) {
-        addLog("APP LAUNCHER", "Opening YouTube", "https://www.youtube.com");
-        speak(currentLang === 'hi' ? "यूट्यूब खोल रहा हूँ सर।" : "Opening YouTube, sir.", () => { window.location.href = "https://www.youtube.com"; });
-        return;
-      }
-      if (cmd.includes('whatsapp') || cmd.includes('व्हाट्सएप')) {
-        addLog("APP LAUNCHER", "Opening WhatsApp", "https://wa.me/");
-        speak(currentLang === 'hi' ? "व्हाट्सएप खोल रहा हूँ सर।" : "Opening WhatsApp, sir.", () => { window.location.href = "https://wa.me/"; });
-        return;
-      }
-      if (cmd.includes('instagram') || cmd.includes('इंस्टाग्राम')) {
-        addLog("APP LAUNCHER", "Opening Instagram", "https://www.instagram.com");
-        speak(currentLang === 'hi' ? "इंस्टाग्राम खोल रहा हूँ सर।" : "Opening Instagram, sir.", () => { window.location.href = "https://www.instagram.com"; });
-        return;
-      }
-
-      // Wikipedia Answer (Hindi or English depending on active mode)
-      const wikiSuccess = await searchWikipedia(cmd);
-      if (wikiSuccess) return;
-
-      // Fallback Google Search
-      const gUrl = `https://www.google.com/search?q=${encodeURIComponent(cmd)}`;
-      addLog("GOOGLE SEARCH", `Searching: "${cmd}"`, gUrl);
-      speak(currentLang === 'hi' ? `गूगल पर ${cmd} खोज रहा हूँ सर।` : `Searching Google for ${cmd}`, () => { window.location.href = gUrl; });
+      // Final Google Search fallback
+      const gUrl = `https://www.google.com/search?q=${encodeURIComponent(rawQuery)}`;
+      addLog("GOOGLE FALLBACK", `Searching: "${rawQuery}"`, gUrl);
+      speak(lang === 'hi' ? `गूगल पर ${rawQuery} दिखा रहा हूँ सर।` : `Showing Google results for ${rawQuery}.`, lang, () => { window.location.href = gUrl; });
     }
 
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-IN';
-      recognition.continuous = false;
-      recognition.interimResults = false;
+    // 4. Primary Gemini AI Brain (Auto-recovers whenever quota returns!)
+    async function askHybridAI(promptText, lang) {
+      if (!geminiApiKey) {
+        await fallbackToWikipedia(promptText, lang);
+        return;
+      }
 
-      recognition.onstart = () => {
-        if (isSpeaking) {
-          try { recognition.abort(); } catch (e) {}
+      statusEl.innerText = lang === 'hi' ? "Surya (Gemini) सोच रहा है..." : "Surya (Gemini) is thinking...";
+
+      const systemPrompt = `You are SURYA, a loyal, smart personal voice assistant (like Jarvis). Reply in the EXACT same language the user spoke (${lang === 'hi' ? 'Natural Hindi / Hinglish' : 'Natural English'}). Keep answers concise, clear, and conversational (2 to 3 short sentences max so it sounds great when spoken aloud). Do not use emojis or markdown symbols.`;
+
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(geminiApiKey)}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: `${systemPrompt}\n\nUser: ${promptText}` }]
+            }]
+          })
+        });
+
+        // If Quota Exhausted (429) or API Error -> Auto-switch to Wikipedia!
+        if (!response.ok) {
+          addLog("LIMIT / API NOTICE", `Gemini unavailable (HTTP ${response.status}). Shifting to Wikipedia...`);
+          await fallbackToWikipedia(promptText, lang);
           return;
         }
-        setVisualState('listening');
-        statusEl.innerText = currentLang === 'hi' ? "सुन रहा हूँ..." : "Listening continuously...";
-      };
 
-      recognition.onresult = (event) => {
-        if (isSpeaking) return;
-        const cmd = event.results[0][0].transcript.toLowerCase();
-        statusEl.innerText = "You: " + cmd;
-        processCommand(cmd);
-      };
+        const data = await response.json();
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-      recognition.onend = () => {
-        if (!isSpeaking) setVisualState('idle');
-        if (isListening && !isSpeaking) {
-          setTimeout(() => {
-            if (isListening && !isSpeaking) {
-              try { recognition.start(); } catch (e) {}
-            }
-          }, 300);
+        if (reply) {
+          setEngineStatus('gemini');
+          addLog("GEMINI AI", reply);
+          speak(reply, lang);
+        } else {
+          await fallbackToWikipedia(promptText, lang);
         }
-      };
-
-      recognition.onerror = () => {
-        if (!isSpeaking) setVisualState('idle');
-        if (isListening && !isSpeaking) {
-          setTimeout(() => {
-            if (isListening && !isSpeaking) {
-              try { recognition.start(); } catch (e) {}
-            }
-          }, 600);
-        }
-      };
+      } catch (err) {
+        addLog("SWITCHING", "Gemini unreachable. Shifting to Wikipedia...");
+        await fallbackToWikipedia(promptText, lang);
+      }
     }
 
-    function toggleSurya() {
-      if (!SpeechRecognition) {
-        statusEl.innerText = "Browser voice support nahi kar raha. Chrome use karein.";
-        return;
-      }
-      if (!isListening) {
-        isListening = true;
-        toggleBtn.innerText = "STOP";
-        toggleBtn.classList.add('active-stop');
-        addLog("SYSTEM", "Hands-free continuous mode activated.");
-        recognition.start();
-      } else {
+    async function processCommand(cmd) {
+      if (isSpeaking) return;
+      const lang = detectLanguage(cmd);
+      addLog(`USER (${lang.toUpperCase()})`, `"${cmd}"`);
+
+      // Stop / Sleep
+      if (/\b(stop|sleep|band ho ja|so jao|रुक जाओ|बंद हो जाओ)\b/i.test(cmd)) {
         isListening = false;
-        isSpeaking = false;
-        window.speechSynthesis.cancel();
         toggleBtn.innerText = "ACTIVATE";
         toggleBtn.classList.remove('active-stop');
-        setVisualState('idle');
-        try { recognition.abort(); } catch (e) {}
-        addLog("SYSTEM", "System paused.");
-        statusEl.innerText = "Surya paused. Tap ACTIVATE to resume.";
+        speak(lang === 'hi' ? "ठीक है सर, मैं स्लीप मोड में जा रहा हूँ।" : "Going to sleep mode, sir.", lang);
+        return;
       }
-    }
-  </script>
-</body>
-</html>
 
+      // Play Music / Video on YouTube
+      if (/\b(play|chalao|song|gaana|bajao)\b/i.test(cmd) || cmd.includes('गाना') || cmd.includes('चलाओ') || cmd.includes('बजाओ')) {
+        const query = cmd.replace(/play|on youtube|chalao|song|gaana|bajao|गाना|चलाओ|बजाओ|यूट्यूब पर/gi, '').trim();
+        const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+        addLog("YOUTUBE", `Playing: "${query}"`, ytUrl);
+        speak(lang === 'hi' ? `यूट्यूब पर ${query} चला रहा हूँ सर।` : `Playing ${query} on YouTube, sir.`, lang, () => { window.location.href = ytUrl; });
+        return;
+      }
+
+      // Phone Call Trigger
+      if (/\b(call|phone lagao|कॉल)\b/i.test(cmd)) {
+        addLog("DIALER", "Opening Phone Dialer", "tel:");
+        speak(lang === 'hi' ? "जी सर, कॉल डायलर खोल रहा हूँ।" : "Opening phone dialer, sir.", lang, () => { window.location.href = "tel:"; });
+        return;
+      }
+
+      // Universal App Launcher
+ 
