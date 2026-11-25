@@ -123,13 +123,13 @@
     <button class="chip" type="button" data-cmd="square root of 144">√144</button>
     <button class="chip" type="button" data-cmd="2 to the power 8">2^8</button>
     <button class="chip" type="button" data-cmd="sin 30">sin 30°</button>
-    <button class="chip" type="button" data-cmd="aaj ki date aur time kya hai">📅 Date & Time</button>
-    <button class="chip" type="button" data-cmd="youtube kholo">▶️ YouTube</button>
+    <button class="chip" type="button" data-cmd="what is the date and time today">📅 Date & Time</button>
+    <button class="chip" type="button" data-cmd="open youtube">▶️ YouTube</button>
   </div>
 
   <div class="log-panel">
     <div class="log-header">
-      <div class="log-title">SURYA ENGINE LOG (ADVANCE MATHS + WIKIPEDIA)</div>
+      <div class="log-title">SURYA ENGINE LOG (ADVANCED MATH + WIKIPEDIA)</div>
       <button id="clearLogBtn" class="clear-btn" type="button">Clear</button>
     </div>
     <div id="logList">
@@ -188,13 +188,7 @@
       logList.innerHTML = '<div class="log-entry"><span class="log-source">[SURYA]</span> Log cleared.</div>';
     });
 
-    function detectLanguage(text) {
-      if (/[\u0900-\u097F]/.test(text)) return 'hi';
-      if (/\b(kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|vargmool|ghat)\b/i.test(text)) return 'hi';
-      return 'en';
-    }
-
-    function speak(text, lang, callback) {
+    function speak(text, callback) {
       const cleanSpeech = text.replace(/[*#_`]/g, '');
       statusEl.innerText = "Surya: " + cleanSpeech;
       window.speechSynthesis.cancel();
@@ -209,7 +203,7 @@
 
       isSpeaking = true;
       const utter = new SpeechSynthesisUtterance(cleanSpeech);
-      utter.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+      utter.lang = 'en-IN';
       utter.rate = 1.0; utter.pitch = 0.96;
       utter.onstart = function() { setVisualState('speaking'); };
       utter.onend = utter.onerror = function() {
@@ -220,42 +214,42 @@
       window.speechSynthesis.speak(utter);
     }
 
-    function tryDateTime(cmd, lang) {
-      if (/\b(time|samay|waqt|date|day|aaj|tarik|tarikh)\b/i.test(cmd) || /(समय|वक्त|तारीख|दिन|आज)/.test(cmd)) {
+    function tryDateTime(cmd) {
+      if (/\b(time|date|day|today)\b/i.test(cmd)) {
         const now = new Date();
-        const dateStr = now.toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const timeStr = now.toLocaleTimeString(lang === 'hi' ? 'hi-IN' : 'en-IN', { hour: '2-digit', minute: '2-digit' });
-        const reply = lang === 'hi' ? "आज " + dateStr + " है और अभी समय " + timeStr + " हुआ है।" : "Today is " + dateStr + " and the current time is " + timeStr + ".";
-        addLog("CLOCK / DATE", reply); speak(reply, lang); return true;
+        const dateStr = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+        const reply = "Today is " + dateStr + " and the current time is " + timeStr + ".";
+        addLog("CLOCK / DATE", reply); speak(reply); return true;
       }
       return false;
     }
 
-    function tryOpenApp(cmd, lang) {
+    function tryOpenApp(cmd) {
       const apps = [
-        { keys: ['youtube', 'यूट्यूब'], name: 'YouTube', url: 'https://www.youtube.com' },
-        { keys: ['whatsapp', 'व्हाट्सएप'], name: 'WhatsApp', url: 'https://wa.me/' },
-        { keys: ['instagram', 'इंस्टाग्राम'], name: 'Instagram', url: 'https://www.instagram.com' },
-        { keys: ['facebook', 'फेसबुक'], name: 'Facebook', url: 'https://www.facebook.com' },
-        { keys: ['maps', 'map', 'मैप्स', 'लोकेशन'], name: 'Google Maps', url: 'https://maps.google.com' },
-        { keys: ['gmail', 'email', 'जीमेल'], name: 'Gmail', url: 'https://mail.google.com' },
-        { keys: ['telegram', 'टेलीग्राम'], name: 'Telegram', url: 'https://t.me/' },
-        { keys: ['spotify', 'स्पॉटिफाई'], name: 'Spotify', url: 'https://open.spotify.com' },
-        { keys: ['amazon', 'अमेज़न', 'अमेजॉन'], name: 'Amazon', url: 'https://www.amazon.in' },
-        { keys: ['flipkart', 'फ्लिपकार्ट'], name: 'Flipkart', url: 'https://www.flipkart.com' },
-        { keys: ['paytm', 'पेटीएम'], name: 'Paytm', url: 'https://paytm.com' },
-        { keys: ['zomato', 'ज़ोमैटो'], name: 'Zomato', url: 'https://www.zomato.com' },
-        { keys: ['swiggy', 'स्विगी'], name: 'Swiggy', url: 'https://www.swiggy.com' },
-        { keys: ['netflix', 'नेटफ्लिक्स'], name: 'Netflix', url: 'https://www.netflix.com' },
-        { keys: ['jiocinema', 'jio cinema', 'जियो सिनेमा'], name: 'JioCinema', url: 'https://www.jiocinema.com' },
-        { keys: ['google', 'गूगल'], name: 'Google', url: 'https://www.google.com' }
+        { keys: ['youtube'], name: 'YouTube', url: 'https://www.youtube.com' },
+        { keys: ['whatsapp'], name: 'WhatsApp', url: 'https://wa.me/' },
+        { keys: ['instagram'], name: 'Instagram', url: 'https://www.instagram.com' },
+        { keys: ['facebook'], name: 'Facebook', url: 'https://www.facebook.com' },
+        { keys: ['maps', 'map', 'location'], name: 'Google Maps', url: 'https://maps.google.com' },
+        { keys: ['gmail', 'email'], name: 'Gmail', url: 'https://mail.google.com' },
+        { keys: ['telegram'], name: 'Telegram', url: 'https://t.me/' },
+        { keys: ['spotify'], name: 'Spotify', url: 'https://open.spotify.com' },
+        { keys: ['amazon'], name: 'Amazon', url: 'https://www.amazon.in' },
+        { keys: ['flipkart'], name: 'Flipkart', url: 'https://www.flipkart.com' },
+        { keys: ['paytm'], name: 'Paytm', url: 'https://paytm.com' },
+        { keys: ['zomato'], name: 'Zomato', url: 'https://www.zomato.com' },
+        { keys: ['swiggy'], name: 'Swiggy', url: 'https://www.swiggy.com' },
+        { keys: ['netflix'], name: 'Netflix', url: 'https://www.netflix.com' },
+        { keys: ['jiocinema', 'jio cinema'], name: 'JioCinema', url: 'https://www.jiocinema.com' },
+        { keys: ['google'], name: 'Google', url: 'https://www.google.com' }
       ];
-      const hasOpenIntent = /\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd) || /(खोलो|खोल|चलाओ)/.test(cmd);
+      const hasOpenIntent = /\b(open|launch|start)\b/i.test(cmd);
       for (let i = 0; i < apps.length; i++) {
         const app = apps[i];
         if (app.keys.some(function(k) { return cmd.toLowerCase().includes(k); }) && (hasOpenIntent || cmd.trim().split(' ').length <= 2)) {
           addLog("APP LAUNCHER", "Opening " + app.name, app.url);
-          speak(lang === 'hi' ? "जी सर, " + app.name + " खोल रहा हूँ।" : "Sure sir, opening " + app.name + ".", lang, function() { window.location.href = app.url; });
+          speak("Sure sir, opening " + app.name + ".", function() { window.location.href = app.url; });
           return true;
         }
       }
@@ -264,7 +258,7 @@
 
     function tryAdvanceMath(cmd) {
       let s = cmd.toLowerCase();
-      const pctMatch = s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*(?:of|ka|ki)\s*(\d+(?:\.\d+)?)/i);
+      const pctMatch = s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
       if (pctMatch) {
         const val = (parseFloat(pctMatch[1]) / 100) * parseFloat(pctMatch[2]);
         return Number.isInteger(val) ? val : parseFloat(val.toFixed(4));
@@ -274,16 +268,16 @@
         let res = fn.toLowerCase() === 'sin' ? Math.sin(rad) : fn.toLowerCase() === 'cos' ? Math.cos(rad) : Math.tan(rad);
         return '(' + Number(res.toFixed(6)) + ')';
       });
-      s = s.replace(/(?:square root of|sqrt|वर्गमूल|vargmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.sqrt(' + parseFloat(n) + ')'; });
-      s = s.replace(/(?:cube root of|cbrt|घनमूल|ghanmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.cbrt(' + parseFloat(n) + ')'; });
+      s = s.replace(/(?:square root of|sqrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.sqrt(' + parseFloat(n) + ')'; });
+      s = s.replace(/(?:cube root of|cbrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.cbrt(' + parseFloat(n) + ')'; });
       s = s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.log10(' + parseFloat(n) + ')'; });
       s = s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, __, n) { return 'Math.log(' + parseFloat(n) + ')'; });
-      s = s.replace(/\b(pi|पाई)\b/gi, '(' + Math.PI + ')');
-      s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात|ghat)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) { return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')'; });
-      s = s.replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
-           .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
-           .replace(/minus|subtract|घटा|माइनस|ghata/gi, '-')
-           .replace(/divided by|divide by|भाग|डिवाइड|bhag/gi, '/')
+      s = s.replace(/\bpi\b/gi, '(' + Math.PI + ')');
+      s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) { return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')'; });
+      s = s.replace(/into|multiplied by|multiply|x|×/gi, '*')
+           .replace(/plus|add|added to/gi, '+')
+           .replace(/minus|subtract/gi, '-')
+           .replace(/divided by|divide by/gi, '/')
            .replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g, ' ').replace(/\s+/g, ' ').trim();
 
       if (/[0-9]/.test(s) && /(\+|-|\*|\/|Math\.)/.test(s)) {
@@ -295,64 +289,60 @@
       return null;
     }
 
-    async function searchWikipedia(rawQuery, lang) {
+    async function searchWikipedia(rawQuery) {
       const mathAns = tryAdvanceMath(rawQuery);
       if (mathAns !== null) {
-        addLog("ADVANCE MATHS", "Result = " + mathAns);
-        speak(lang === 'hi' ? "सर, इसका उत्तर " + mathAns + " है।" : "Sir, the answer is " + mathAns + ".", lang);
+        addLog("ADVANCED MATH", "Result = " + mathAns);
+        speak("Sir, the answer is " + mathAns + ".");
         return;
       }
       const cleanTopic = rawQuery
-        .replace(/\b(who is|who was|what is|tell me about|when was|where is|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|kya hota hai|kaha hai|ke bare mein batao|batao|in hindi|hindi mein)\b/gi, '')
-        .replace(/(का जन्म कब हुआ था|को फांसी कब हुई थी|कौन है|कौन थे|क्या है|क्या होता है|कहाँ है|के बारे में बताओ|बताओ)/g, '')
-        .replace(/[?।!]/g, '').trim();
+        .replace(/\b(who is|who was|what is|tell me about|when was|where is|explain)\b/gi, '')
+        .replace(/[?!.]/g, '').trim();
 
       if (cleanTopic.length >= 2) {
-        const wikiSub = lang === 'hi' ? 'hi' : 'en';
-        addLog("WIKIPEDIA (" + wikiSub.toUpperCase() + ")", 'Searching: "' + cleanTopic + '"...');
+        addLog("WIKIPEDIA (EN)", 'Searching: "' + cleanTopic + '"...');
         try {
-          const sRes = await fetch("https://" + wikiSub + ".wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*");
+          const sRes = await fetch("https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*");
           const sData = await sRes.json();
           const bestTitle = sData && sData.query && sData.query.search && sData.query.search[0] ? sData.query.search[0].title : null;
           if (bestTitle) {
-            const sumRes = await fetch("https://" + wikiSub + ".wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle));
+            const sumRes = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle));
             const sumData = await sumRes.json();
             if (sumData.extract && sumData.type !== 'disambiguation') {
-              const sp = lang === 'hi' ? '। ' : '. ';
-              const shortAns = sumData.extract.split(sp).slice(0, 2).join(sp) + (lang === 'hi' ? '।' : '.');
+              const shortAns = sumData.extract.split('. ').slice(0, 2).join('. ') + '.';
               addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls && sumData.content_urls.desktop ? sumData.content_urls.desktop.page : null);
-              speak(shortAns, lang); return;
+              speak(shortAns); return;
             }
           }
         } catch (e) {}
       }
       const gUrl = "https://www.google.com/search?q=" + encodeURIComponent(rawQuery);
       addLog("GOOGLE FALLBACK", 'Searching: "' + rawQuery + '"', gUrl);
-      speak(lang === 'hi' ? "गूगल पर " + rawQuery + " दिखा रहा हूँ सर।" : "Showing Google results for " + rawQuery + ".", lang, function() { window.location.href = gUrl; });
+      speak("Showing Google results for " + rawQuery + ".", function() { window.location.href = gUrl; });
     }
 
     async function processCommand(cmd) {
       if (isSpeaking) return;
-      const lang = detectLanguage(cmd);
-      addLog("USER (" + lang.toUpperCase() + ")", '"' + cmd + '"');
+      addLog("USER", '"' + cmd + '"');
 
-      if (/\b(stop|sleep|band ho ja|so jao|रुक जाओ|बंद हो जाओ)\b/i.test(cmd)) {
+      if (/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cmd)) {
         isListening = false; toggleBtn.innerText = "ACTIVATE"; toggleBtn.classList.remove('active-stop');
-        speak(lang === 'hi' ? "ठीक है सर, मैं स्लीप मोड में जा रहा हूँ।" : "Going to sleep mode, sir.", lang); return;
+        speak("Going to sleep mode, sir."); return;
       }
-      if (tryDateTime(cmd, lang)) return;
-      if (/\b(play|chalao|song|gaana|bajao)\b/i.test(cmd) || cmd.includes('गाना') || cmd.includes('चलाओ') || cmd.includes('बजाओ')) {
-        const query = cmd.replace(/play|on youtube|chalao|song|gaana|bajao|गाना|चलाओ|बजाओ|यूट्यूब पर/gi, '').trim();
+      if (tryDateTime(cmd)) return;
+      if (/\b(play|song|music)\b/i.test(cmd)) {
+        const query = cmd.replace(/play|on youtube|song|music/gi, '').trim();
         const ytUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
         addLog("YOUTUBE", 'Playing: "' + query + '"', ytUrl);
-        speak(lang === 'hi' ? "यूट्यूब पर " + query + " चला रहा हूँ सर।" : "Playing " + query + " on YouTube, sir.", lang, function() { window.location.href = ytUrl; }); return;
+        speak("Playing " + query + " on YouTube, sir.", function() { window.location.href = ytUrl; }); return;
       }
-      if (/\b(call|phone lagao|कॉल)\b/i.test(cmd)) {
+      if (/\b(call|dial)\b/i.test(cmd)) {
         addLog("DIALER", "Opening Phone Dialer", "tel:");
-        speak(lang === 'hi' ? "जी सर, कॉल डायलर खोल रहा हूँ।" : "Opening phone dialer, sir.", lang, function() { window.location.href = "tel:"; }); return;
+        speak("Opening phone dialer, sir.", function() { window.location.href = "tel:"; }); return;
       }
-      if (tryOpenApp(cmd, lang)) return;
-      await searchWikipedia(cmd, lang);
+      if (tryOpenApp(cmd)) return;
+      await searchWikipedia(cmd);
     }
 
     document.querySelectorAll('.chip').forEach(function(btn) {
@@ -365,12 +355,12 @@
 
     if (SpeechRecognition) {
       recognition = new SpeechRecognition();
-      recognition.lang = 'hi-IN';
+      recognition.lang = 'en-IN';
       recognition.continuous = false;
       recognition.interimResults = false;
       recognition.onstart = function() {
         if (isSpeaking) { try { recognition.abort(); } catch (e) {} return; }
-        setVisualState('listening'); statusEl.innerText = "Listening... (Hindi / English)";
+        setVisualState('listening'); statusEl.innerText = "Listening...";
       };
       recognition.onresult = function(event) {
         if (isSpeaking) return;
@@ -378,4 +368,32 @@
         statusEl.innerText = "You: " + cmd; processCommand(cmd);
       };
       recognition.onend = function() {
-    
+        if (!isSpeaking) setVisualState('idle');
+        if (isListening && !isSpeaking) setTimeout(function() { if (isListening && !isSpeaking) try { recognition.start(); } catch (e) {} }, 350);
+      };
+      recognition.onerror = function() {
+        if (!isSpeaking) setVisualState('idle');
+        if (isListening && !isSpeaking) setTimeout(function() { if (isListening && !isSpeaking) try { recognition.start(); } catch (e) {} }, 600);
+      };
+    }
+
+    function toggleSurya() {
+      if (!SpeechRecognition) { statusEl.innerText = "Please use Chrome browser."; return; }
+      if (!isListening) {
+        isListening = true; toggleBtn.innerText = "STOP"; toggleBtn.classList.add('active-stop');
+        addLog("SYSTEM", "Surya Assistant Active.");
+        try { recognition.start(); } catch (e) { statusEl.innerText = "Please allow microphone permission."; }
+      } else {
+        isListening = false; isSpeaking = false; window.speechSynthesis.cancel();
+        toggleBtn.innerText = "ACTIVATE"; toggleBtn.classList.remove('active-stop');
+        setVisualState('idle');
+        try { recognition.abort(); } catch (e) {}
+        addLog("SYSTEM", "Paused."); statusEl.innerText = "Surya paused. Tap ACTIVATE to resume.";
+      }
+    }
+
+    toggleBtn.addEventListener('click', toggleSurya);
+    orbLogo.addEventListener('click', toggleSurya);
+  </script>
+</body>
+</html>
