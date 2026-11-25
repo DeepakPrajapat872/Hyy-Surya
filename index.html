@@ -398,18 +398,15 @@
       return false;
     }
 
-    // Advance Maths Engine (Basic + Powers + Roots + Trig + Log + Percentage)
     function tryAdvanceMath(cmd) {
       let s = cmd.toLowerCase();
 
-      // Percentage e.g. "20% of 500" or "20 percent of 500"
       const pctMatch = s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*(?:of|ka|ki)\s*(\d+(?:\.\d+)?)/i);
       if (pctMatch) {
         const val = (parseFloat(pctMatch[1]) / 100) * parseFloat(pctMatch[2]);
         return Number.isInteger(val) ? val : parseFloat(val.toFixed(4));
       }
 
-      // Trig in degrees e.g. sin 30, cos 60, tan 45
       s = s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi, function(_, fn, deg) {
         const rad = (parseFloat(deg) * Math.PI) / 180;
         let res = 0;
@@ -422,7 +419,6 @@
         return '(' + Number(res.toFixed(6)) + ')';
       });
 
-      // Square root & cube root
       s = s.replace(/(?:square root of|sqrt|वर्गमूल|vargmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) {
         return 'Math.sqrt(' + parseFloat(n) + ')';
       });
@@ -430,7 +426,6 @@
         return 'Math.cbrt(' + parseFloat(n) + ')';
       });
 
-      // Log & Pi & E
       s = s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) {
         return 'Math.log10(' + parseFloat(n) + ')';
       });
@@ -439,12 +434,10 @@
       });
       s = s.replace(/\b(pi|पाई)\b/gi, '(' + Math.PI + ')');
 
-      // Powers: "to the power of", "power", "^", "की घात"
       s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात|ghat)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) {
         return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')';
       });
 
-      // Basic operators
       s = s
         .replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
         .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
@@ -495,3 +488,8 @@
 
             if (sumData.extract && sumData.type !== 'disambiguation') {
               const splitChar = lang === 'hi' ? '। ' : '. ';
+              const shortAns = sumData.extract.split(splitChar).slice(0, 2).join(splitChar) + (lang === 'hi' ? '।' : '.');
+              addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls && sumData.content_urls.desktop ? sumData.content_urls.desktop.page : null);
+              speak(shortAns, lang);
+              return;
+    
