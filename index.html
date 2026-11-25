@@ -17,55 +17,55 @@
       background:radial-gradient(circle at top,#0a2942 0%,#020b14 58%,#010509 100%);
       color:#00f3ff;font-family:'Segoe UI',sans-serif;
       display:flex;flex-direction:column;align-items:center;
-      padding:12px 14px 16px;gap:10px;
+      padding:16px 16px 20px;gap:13px;
     }
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     .hud-top{
-      width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;
-      font-size:11px;color:#93e8ff;border-bottom:1px solid rgba(0,243,255,.22);padding-bottom:7px;gap:6px;
+      width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;
+      font-size:13px;color:#93e8ff;border-bottom:1px solid rgba(0,243,255,.24);padding-bottom:9px;gap:8px;
       animation:fadeUp .35s ease both;
     }
-    .badge-group{display:flex;align-items:center;gap:6px}
+    .badge-group{display:flex;align-items:center;gap:8px}
     .engine-badge{
-      border:1px solid rgba(253,224,71,.7);color:#fde047;background:rgba(253,224,71,.12);
-      padding:3px 9px;border-radius:12px;font-size:10px;font-weight:bold;letter-spacing:.4px;
+      border:1px solid rgba(253,224,71,.75);color:#fde047;background:rgba(253,224,71,.14);
+      padding:4px 11px;border-radius:14px;font-size:11px;font-weight:bold;letter-spacing:.5px;
     }
     .mute-btn{
-      border:1px solid rgba(56,189,248,.6);color:#e0f2fe;background:rgba(56,189,248,.14);
-      padding:3px 9px;border-radius:12px;font-size:10px;font-weight:bold;cursor:pointer;
+      border:1px solid rgba(56,189,248,.65);color:#e0f2fe;background:rgba(56,189,248,.16);
+      padding:4px 11px;border-radius:14px;font-size:11px;font-weight:bold;cursor:pointer;
       transition:transform .2s ease,background .2s ease;
     }
     .mute-btn:active{transform:scale(.94)}
     .orb-container{
-      position:relative;width:128px;height:128px;display:flex;align-items:center;justify-content:center;
-      cursor:pointer;margin-top:2px;animation:fadeUp .45s ease both;
+      position:relative;width:166px;height:166px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;margin-top:4px;animation:fadeUp .45s ease both;
     }
     .orbit-1{
-      position:absolute;width:122px;height:122px;border-radius:50%;
-      border:2px dashed rgba(0,243,255,.75);animation:spinR 9s linear infinite;
+      position:absolute;width:160px;height:160px;border-radius:50%;
+      border:3px dashed rgba(0,243,255,.8);animation:spinR 9s linear infinite;
     }
     .orbit-2{
-      position:absolute;width:96px;height:96px;border-radius:50%;
-      border:3px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
+      position:absolute;width:124px;height:124px;border-radius:50%;
+      border:3.5px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
       animation:spinL 3.8s linear infinite;
     }
     .cyber-sphere{
-      width:60px;height:60px;border-radius:50%;
+      width:78px;height:78px;border-radius:50%;
       background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
-      box-shadow:0 0 28px rgba(0,243,255,.85),inset 0 0 12px rgba(255,255,255,.8);
+      box-shadow:0 0 34px rgba(0,243,255,.9),inset 0 0 15px rgba(255,255,255,.85);
       animation:idleB 2.4s ease-in-out infinite alternate;
       transition:all .3s ease;
     }
     .listening .orbit-1{border-color:#00ff9d;animation-duration:2.4s}
     .listening .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#00ff9d 46%,#006633 92%);
-      box-shadow:0 0 38px rgba(0,255,157,.95),inset 0 0 12px #fff;
+      box-shadow:0 0 44px rgba(0,255,157,.95),inset 0 0 15px #fff;
       animation:actP .65s ease-in-out infinite alternate;
     }
     .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
     .speaking .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#c084fc 46%,#4c1d95 92%);
-      box-shadow:0 0 42px rgba(192,132,252,.95),inset 0 0 12px #fff;
+      box-shadow:0 0 48px rgba(192,132,252,.95),inset 0 0 15px #fff;
       animation:spkB .35s ease-in-out infinite alternate;
     }
     @keyframes spinR{100%{transform:rotate(360deg)}}
@@ -74,72 +74,72 @@
     @keyframes actP{from{transform:scale(.93)}to{transform:scale(1.13)}}
     @keyframes spkB{from{transform:scale(.96)}to{transform:scale(1.18)}}
     h1{
-      font-size:25px;font-weight:800;letter-spacing:2.5px;color:#fff;
-      text-shadow:0 0 16px rgba(0,243,255,.55);animation:fadeUp .5s ease both;
+      font-size:32px;font-weight:800;letter-spacing:3px;color:#fff;
+      text-shadow:0 0 18px rgba(0,243,255,.6);animation:fadeUp .5s ease both;
     }
     #status{
-      font-size:13px;color:#bceeff;text-align:center;max-width:420px;min-height:20px;
+      font-size:15px;color:#bceeff;text-align:center;max-width:460px;min-height:24px;line-height:1.4;
       animation:fadeUp .55s ease both;
     }
     .main-btn{
-      padding:11px 36px;font-size:14px;font-weight:bold;letter-spacing:1.5px;
+      padding:14px 44px;font-size:16px;font-weight:bold;letter-spacing:1.8px;
       background:linear-gradient(90deg,#189bff,#0066ff);color:#fff;border:none;
-      border-radius:25px;box-shadow:0 4px 20px rgba(0,153,255,.45);cursor:pointer;
+      border-radius:30px;box-shadow:0 6px 24px rgba(0,153,255,.5);cursor:pointer;
       transition:transform .18s ease,box-shadow .2s ease;animation:fadeUp .6s ease both;
     }
-    .main-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,198,255,.6)}
+    .main-btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,198,255,.65)}
     .main-btn:active{transform:scale(.96)}
-    .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b);box-shadow:0 4px 20px rgba(255,65,108,.45)}
+    .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b);box-shadow:0 6px 24px rgba(255,65,108,.5)}
     .quick-chips{
-      width:100%;max-width:440px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;
+      width:100%;max-width:480px;display:flex;flex-wrap:wrap;justify-content:center;gap:9px;
       animation:fadeUp .65s ease both;
     }
     .chip{
-      background:rgba(12,42,68,.55);border:1px solid rgba(125,211,252,.32);
-      color:#e0f7ff;padding:6px 11px;border-radius:12px;font-size:11px;cursor:pointer;
+      background:rgba(12,42,68,.6);border:1px solid rgba(125,211,252,.36);
+      color:#e0f7ff;padding:8px 14px;border-radius:14px;font-size:13px;cursor:pointer;
       transition:transform .18s ease,background .2s ease,border-color .2s ease;
     }
-    .chip:hover{background:rgba(0,243,255,.16);border-color:rgba(0,243,255,.65);transform:translateY(-1px)}
+    .chip:hover{background:rgba(0,243,255,.16);border-color:rgba(0,243,255,.7);transform:translateY(-1px)}
     .chip:active{transform:scale(.95)}
     .log-panel{
-      width:100%;max-width:440px;
-      background:linear-gradient(180deg,rgba(13,44,72,.52) 0%,rgba(5,19,34,.72) 100%);
-      border:1px solid rgba(125,211,252,.28);border-radius:16px;
-      padding:10px 12px;font-size:11.5px;max-height:190px;overflow-y:auto;
+      width:100%;max-width:480px;
+      background:linear-gradient(180deg,rgba(13,44,72,.56) 0%,rgba(5,19,34,.78) 100%);
+      border:1px solid rgba(125,211,252,.3);border-radius:18px;
+      padding:12px 14px;font-size:13px;max-height:230px;overflow-y:auto;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08);animation:fadeUp .7s ease both;
     }
     .log-header{
       display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid rgba(125,211,252,.18);padding-bottom:6px;margin-bottom:7px;
+      border-bottom:1px solid rgba(125,211,252,.2);padding-bottom:8px;margin-bottom:9px;
     }
-    .log-title{font-weight:bold;color:#e6f9ff;font-size:10.5px;letter-spacing:.7px}
+    .log-title{font-weight:bold;color:#e6f9ff;font-size:11.5px;letter-spacing:.7px}
     .clear-btn{
-      background:rgba(30,90,140,.45);border:1px solid rgba(125,211,252,.25);
-      color:#dff6ff;font-size:10.5px;padding:3px 10px;border-radius:10px;cursor:pointer;
+      background:rgba(30,90,140,.5);border:1px solid rgba(125,211,252,.3);
+      color:#dff6ff;font-size:12px;padding:4px 12px;border-radius:11px;cursor:pointer;
       transition:background .2s ease;
     }
-    .clear-btn:hover{background:rgba(56,189,248,.28)}
-    .log-entry{margin-bottom:6px;line-height:1.4;color:#d6f5ff;animation:fadeUp .25s ease both}
+    .clear-btn:hover{background:rgba(56,189,248,.3)}
+    .log-entry{margin-bottom:8px;line-height:1.45;color:#d6f5ff;animation:fadeUp .25s ease both}
     .log-source{color:#67e8f9;font-weight:bold}
     .log-entry a{color:#38bdf8;text-decoration:underline}
     .chat-bar{
-      width:100%;max-width:440px;display:flex;align-items:center;gap:8px;
-      background:rgba(10,34,58,.65);border:1px solid rgba(125,211,252,.3);
-      border-radius:26px;padding:6px 8px 6px 14px;animation:fadeUp .75s ease both;
+      width:100%;max-width:480px;display:flex;align-items:center;gap:10px;
+      background:rgba(10,34,58,.72);border:1px solid rgba(125,211,252,.34);
+      border-radius:30px;padding:8px 10px 8px 18px;animation:fadeUp .75s ease both;
     }
     .chat-input{
       flex:1;background:transparent;border:none;outline:none;color:#ffffff;
-      font-size:13px;min-width:0;
+      font-size:15px;min-width:0;
     }
-    .chat-input::placeholder{color:#94b8cc}
+    .chat-input::placeholder{color:#9ec4d8}
     .icon-btn{
-      width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;font-size:14px;
+      width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:17px;
       transition:transform .18s ease,background .2s ease;flex-shrink:0;
     }
     .icon-btn:active{transform:scale(.92)}
-    .mic-mini{background:rgba(56,189,248,.18);color:#e0f7ff;border:1px solid rgba(125,211,252,.35)}
-    .send-mini{background:linear-gradient(135deg,#22b8ff,#0066ff);color:#fff;box-shadow:0 2px 12px rgba(0,153,255,.4)}
+    .mic-mini{background:rgba(56,189,248,.2);color:#e0f7ff;border:1px solid rgba(125,211,252,.38)}
+    .send-mini{background:linear-gradient(135deg,#22b8ff,#0066ff);color:#fff;box-shadow:0 3px 14px rgba(0,153,255,.45)}
   </style>
 </head>
 <body>
@@ -174,9 +174,8 @@
     <button class="icon-btn mic-mini" id="miniMicBtn" type="button" title="Voice Input">🎙️</button>
     <button class="icon-btn send-mini" type="submit" title="Send">➤</button>
   </form>
-
-  <script>
-    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2';
+    <script>
+    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2',LANG_KEY='surya_lang_pref_v1';
     function makeIcon(sz){
       try{
         const c=document.createElement('canvas');c.width=sz;c.height=sz;
@@ -206,7 +205,22 @@
     const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     let isListening=false,isSpeaking=false,isMuted=false,rec=null;
+    let preferredLang=(function(){try{return localStorage.getItem(LANG_KEY)||'en';}catch(e){return 'en';}})();
 
+    function detectLang(text){
+      const t=(text||'').trim().toLowerCase();
+      if(/[\u0900-\u097F]/.test(t))return 'hi';
+      if(/\b(hindi|hindi mein|hinglish|kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|baat)\b/i.test(t)){
+        return 'hi';
+      }
+      if(/\b(speak in english|english mein|in english)\b/i.test(t))return 'en';
+      return preferredLang||'en';
+    }
+    function setPreferredLang(lang){
+      preferredLang=lang==='hi'?'hi':'en';
+      try{localStorage.setItem(LANG_KEY,preferredLang);}catch(e){}
+      if(rec)rec.lang=preferredLang==='hi'?'hi-IN':'en-IN';
+    }
     function renderLogItem(item){
       const d=document.createElement('div');d.className='log-entry';
       d.innerHTML='<span class="log-source">['+item.src+']</span> '+item.det+(item.url?' — <a href="'+item.url+'" target="_blank">Open</a>':'');
@@ -226,14 +240,9 @@
     (function loadSavedLogs(){
       try{
         const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
-        if(list.length){
-          list.forEach(function(item){renderLogItem(item);});
-        }else{
-          addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
-        }
-      }catch(e){
-        addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
-      }
+        if(list.length){list.forEach(function(item){renderLogItem(item);});}
+        else{addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);}
+      }catch(e){addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);}
     })();
 
     function setVis(st){orbLogo.classList.remove('listening','speaking');if(st==='listening')orbLogo.classList.add('listening');if(st==='speaking')orbLogo.classList.add('speaking');}
@@ -242,193 +251,203 @@
     if(navigator.getBattery)navigator.getBattery().then(function(b){const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};f();b.addEventListener('levelchange',f);});
 
     muteBtn.addEventListener('click',function(){isMuted=!isMuted;muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 VOICE ON';if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');});
-    clearLogBtn.addEventListener('click',function(){
-      try{localStorage.removeItem(LOG_KEY);}catch(e){}
-      logList.innerHTML='';
-      addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);
-    });
+    clearLogBtn.addEventListener('click',function(){try{localStorage.removeItem(LOG_KEY);}catch(e){}logList.innerHTML='';addLog('SURYA','System Ready. Tap ACTIVATE to start.',null,false);});
 
-    function speak(text,cb){
+    function pickVoice(lang){
+      const voices=window.speechSynthesis.getVoices()||[];
+      if(lang==='hi')return voices.find(function(v){return /hi(-|_)?in/i.test(v.lang);})||voices.find(function(v){return /^hi/i.test(v.lang);})||null;
+      return voices.find(function(v){return /en(-|_)?in/i.test(v.lang);})||voices.find(function(v){return /^en/i.test(v.lang);})||null;
+    }
+    function speak(text,lang='en',cb=null){
       const clean=text.replace(/[*#_`]/g,'');statusEl.innerText='Surya: '+clean;window.speechSynthesis.cancel();
       if(rec)try{rec.abort();}catch(e){}
       if(isMuted){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},300);return;}
-      isSpeaking=true;const u=new SpeechSynthesisUtterance(clean);u.lang='en-IN';u.rate=1.0;u.pitch=1.02;
+      isSpeaking=true;
+      const u=new SpeechSynthesisUtterance(clean);
+      u.lang=lang==='hi'?'hi-IN':'en-IN';
+      const v=pickVoice(lang);if(v)u.voice=v;
+      u.rate=1.0;u.pitch=1.0;
       u.onstart=function(){setVis('speaking');};
       u.onend=u.onerror=function(){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},350);};
       window.speechSynthesis.speak(u);
     }
-
     function openAppSmart(app){
       const isAndroid=/Android/i.test(navigator.userAgent);
       if(isAndroid&&app.pkg){
         const hostPath=app.url.replace(/^https?:\/\//,'');
-        const intentUrl='intent://'+hostPath+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
-        window.location.href=intentUrl;
+        window.location.href='intent://'+hostPath+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
         return;
       }
       window.location.href=app.url;
     }
-
-    function tryNotes(cmd){
+    function tryLangSwitch(cmd){
+      const c=cmd.trim().toLowerCase();
+      if(/\b(hindi mein baat karo|speak in hindi|hindi me bolo|talk in hindi|hindi)\b/i.test(c)||/हिन्दी में बात|हिंदी में बात/.test(cmd)){
+        setPreferredLang('hi');
+        const r='बिलकुल! अब मैं आपसे हिंदी में बात करूँगा। बताइए, मैं आपकी क्या मदद कर सकता हूँ?';
+        addLog('SURYA (HI)',r);speak(r,'hi');return true;
+      }
+      if(/\b(speak in english|english mein baat karo|talk in english|english)\b/i.test(c)){
+        setPreferredLang('en');
+        const r='Sure! Switched back to English. How can I help you?';
+        addLog('SURYA (EN)',r);speak(r,'en');return true;
+      }
+      return false;
+    }
+    function tryNotes(cmd,lang){
       const saveM=cmd.match(/^(?:note|save note|remember)\s+(.+)/i);
       if(saveM){
         const txt=saveM[1].trim();
-        try{
-          const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
-          notes.push(txt);
-          localStorage.setItem(NOTES_KEY,JSON.stringify(notes.slice(-30)));
-        }catch(e){}
-        addLog('NOTE SAVED',txt);speak('Got it! I have saved that note for you: '+txt+'.');return true;
+        try{const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');notes.push(txt);localStorage.setItem(NOTES_KEY,JSON.stringify(notes.slice(-30)));}catch(e){}
+        addLog('NOTE SAVED',txt);speak(lang==='hi'?'ठीक है, मैंने यह नोट सेव कर लिया है: '+txt+'.':'Got it! I have saved that note for you: '+txt+'.',lang);return true;
       }
       if(/\b(show my notes|read notes|my notes)\b/i.test(cmd)){
-        let notes=[];
-        try{notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){}
-        if(!notes.length){addLog('NOTES','No saved notes yet.');speak('You do not have any saved notes yet, friend.');return true;}
+        let notes=[];try{notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){}
+        if(!notes.length){addLog('NOTES','No saved notes yet.');speak(lang==='hi'?'अभी आपके पास कोई सेव किया हुआ नोट नहीं है।':'You do not have any saved notes yet, friend.',lang);return true;}
         const last=notes[notes.length-1];
-        addLog('NOTES','Total '+notes.length+' saved. Latest: '+last);
-        speak('Your latest saved note is: '+last+'.');return true;
+        addLog('NOTES','Total '+notes.length+' saved. Latest: '+last);speak(lang==='hi'?'आपका आखिरी सेव किया हुआ नोट है: '+last+'.':'Your latest saved note is: '+last+'.',lang);return true;
       }
       return false;
     }
-
-    function tryFriendlyChat(cmd){
+    function tryFriendlyChat(cmd,lang){
       const c=cmd.trim().toLowerCase();
-      if(/^(hello|hyy|hi|hey|hello surya|hyy surya|hi surya|hey surya|surya)\b/i.test(c)){
-        const r='Hey there! Great to hear from you. How are you doing today, and how can I help?';
-        addLog('SURYA',r);speak(r);return true;
+      if(/^(hello|hyy|hi|hey|hello surya|hyy surya|hi surya|hey surya|surya|namaste|नमस्ते)\b/i.test(c)){
+        const r=lang==='hi'?'नमस्ते दोस्त! आपसे बात करके अच्छा लगा। आज आप कैसे हैं और मैं क्या मदद करूँ?':'Hey there! Great to hear from you. How are you doing today, and how can I help?';
+        addLog('SURYA',r);speak(r,lang);return true;
       }
-      if(/\b(how are you|what is up|wassup|how r u)\b/i.test(c)){
-        const r='I am doing awesome, thanks for asking! Always ready to help you out.';
-        addLog('SURYA',r);speak(r);return true;
+      if(/\b(how are you|what is up|wassup|how r u|kaise ho|kya haal)\b/i.test(c)||/(कैसे हो|क्या हाल)/.test(cmd)){
+        const r=lang==='hi'?'मैं बिल्कुल बढ़िया हूँ, पूछने के लिए धन्यवाद! बताइए आज क्या करना है?':'I am doing awesome, thanks for asking! Always ready to help you out.';
+        addLog('SURYA',r);speak(r,lang);return true;
       }
-      if(/\b(who are you|your name)\b/i.test(c)){
-        const r='I am Surya AI, your friendly voice assistant built to help with math, knowledge, notes, and apps.';
-        addLog('SURYA',r);speak(r);return true;
+      if(/\b(who are you|your name|tum kaun|aap kaun)\b/i.test(c)||/(कौन हो|नाम क्या)/.test(cmd)){
+        const r=lang==='hi'?'मैं सूर्या एआई हूँ, आपका दोस्त और वॉइस असिस्टेंट—गणित, जानकारी, नोट्स और ऐप्स में मदद के लिए तैयार।':'I am Surya AI, your friendly voice assistant built to help with math, knowledge, notes, and apps.';
+        addLog('SURYA',r);speak(r,lang);return true;
       }
-      if(/\b(thank you|thanks|ty)\b/i.test(c)){
-        const r='Anytime! Always happy to help you.';
-        addLog('SURYA',r);speak(r);return true;
-      }
-      return false;
-    }
-
-    function tryDateTime(cmd){
-      if(/\b(time|date|day|today)\b/i.test(cmd)){
-        const n=new Date(),d=n.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),t=n.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-        const r='Today is '+d+' and the time right now is '+t+'.';addLog('CLOCK / DATE',r);speak(r);return true;
+      if(/\b(thank you|thanks|ty|dhanyawad|shukriya)\b/i.test(c)||/(धन्यवाद|शुक्रिया)/.test(cmd)){
+        const r=lang==='hi'?'कोई बात नहीं, हमेशा आपकी मदद के लिए तैयार हूँ!':'Anytime! Always happy to help you.';
+        addLog('SURYA',r);speak(r,lang);return true;
       }
       return false;
     }
-
-    function tryOpenApp(cmd){
+    function tryDateTime(cmd,lang){
+      if(/\b(time|date|day|today|aaj|samay|waqt|tarikh)\b/i.test(cmd)||/(समय|तारीख|दिन|आज)/.test(cmd)){
+        const n=new Date(),d=n.toLocaleDateString(lang==='hi'?'hi-IN':'en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),t=n.toLocaleTimeString(lang==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'});
+        const r=lang==='hi'?'आज '+d+' है और अभी समय '+t+' हुआ है।':'Today is '+d+' and the time right now is '+t+'.';
+        addLog('CLOCK / DATE',r);speak(r,lang);return true;
+      }
+      return false;
+    }
+    function tryOpenApp(cmd,lang){
       const apps=[
-        {keys:['youtube'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com/'},
-        {keys:['whatsapp'],name:'WhatsApp',pkg:'com.whatsapp',url:'https://wa.me/'},
-        {keys:['instagram'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com/'},
-        {keys:['facebook'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com/'},
-        {keys:['maps','map','location'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com/'},
-        {keys:['gmail','email'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com/'},
-        {keys:['telegram'],name:'Telegram',pkg:'org.telegram.messenger',url:'https://t.me/'},
-        {keys:['spotify'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com/'},
-        {keys:['amazon'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in/'},
-        {keys:['flipkart'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com/'},
-        {keys:['paytm'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com/'},
-        {keys:['zomato'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com/'},
-        {keys:['swiggy'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com/'},
-        {keys:['netflix'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com/'},
+        {keys:['youtube','यूट्यूब'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com/'},
+        {keys:['whatsapp','व्हाट्सएप'],name:'WhatsApp',pkg:'com.whatsapp',url:'https://wa.me/'},
+        {keys:['instagram','इंस्टाग्राम'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com/'},
+        {keys:['facebook','फेसबुक'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com/'},
+        {keys:['maps','map','location','मैप्स'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com/'},
+        {keys:['gmail','email','जीमेल'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com/'},
+        {keys:['telegram','टेलीग्राम'],name:'Telegram',pkg:'org.telegram.messenger',url:'https://t.me/'},
+        {keys:['spotify','स्पॉटिफाई'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com/'},
+        {keys:['amazon','अमेज़न'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in/'},
+        {keys:['flipkart','फ्लिपकार्ट'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com/'},
+        {keys:['paytm','पेटीएम'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com/'},
+        {keys:['zomato','ज़ोमैटो'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com/'},
+        {keys:['swiggy','स्विगी'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com/'},
+        {keys:['netflix','नेटफ्लिक्स'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com/'},
         {keys:['jiocinema','jio cinema'],name:'JioCinema',pkg:'com.jio.media.jiobeats',url:'https://www.jiocinema.com/'},
-        {keys:['google'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com/'}
+        {keys:['google','गूगल'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com/'}
       ];
-      const openIntent=/\b(open|launch|start)\b/i.test(cmd);
+      const openIntent=/\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd)||/(खोलो|खोल|चलाओ)/.test(cmd);
       for(let i=0;i<apps.length;i++){
         const a=apps[i];
         if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=2)){
           addLog('APP LAUNCHER','Opening '+a.name+' (App if installed, else Browser)',a.url);
-          speak('Sure! Opening '+a.name+' for you.');
-          setTimeout(function(){openAppSmart(a);},250);
-          return true;
+          speak(lang==='hi'?'ज़रूर! '+a.name+' खोल रहा हूँ।':'Sure! Opening '+a.name+' for you.',lang);
+          setTimeout(function(){openAppSmart(a);},250);return true;
         }
       }
       return false;
     }
-        function tryAdvMath(cmd){
+          function tryAdvMath(cmd){
       let s=cmd.toLowerCase();
       const pct=s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
       if(pct){const v=(parseFloat(pct[1])/100)*parseFloat(pct[2]);return Number.isInteger(v)?v:parseFloat(v.toFixed(4));}
       s=s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi,function(_,fn,deg){const rad=(parseFloat(deg)*Math.PI)/180;let r=fn.toLowerCase()==='sin'?Math.sin(rad):fn.toLowerCase()==='cos'?Math.cos(rad):Math.tan(rad);return '('+Number(r.toFixed(6))+')';});
-      s=s.replace(/(?:square root of|sqrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.sqrt('+parseFloat(n)+')';});
-      s=s.replace(/(?:cube root of|cbrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.cbrt('+parseFloat(n)+')';});
+      s=s.replace(/(?:square root of|sqrt|वर्गमूल)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.sqrt('+parseFloat(n)+')';});
+      s=s.replace(/(?:cube root of|cbrt|घनमूल)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.cbrt('+parseFloat(n)+')';});
       s=s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.log10('+parseFloat(n)+')';});
       s=s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,__,n){return 'Math.log('+parseFloat(n)+')';});
-      s=s.replace(/\bpi\b/gi,'('+Math.PI+')');
-      s=s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^)\s*(\d+(?:\.\d+)?)/gi,function(_,b,e){return 'Math.pow('+parseFloat(b)+','+parseFloat(e)+')';});
-      s=s.replace(/into|multiplied by|multiply|x|×/gi,'*').replace(/plus|add|added to/gi,'+').replace(/minus|subtract/gi,'-').replace(/divided by|divide by/gi,'/').replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g,' ').replace(/\s+/g,' ').trim();
+      s=s.replace(/\b(pi|पाई)\b/gi,'('+Math.PI+')');
+      s=s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात)\s*(\d+(?:\.\d+)?)/gi,function(_,b,e){return 'Math.pow('+parseFloat(b)+','+parseFloat(e)+')';});
+      s=s.replace(/into|multiplied by|multiply|x|×|गुणा/gi,'*').replace(/plus|add|added to|जोड़/gi,'+').replace(/minus|subtract|घटा/gi,'-').replace(/divided by|divide by|भाग/gi,'/').replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g,' ').replace(/\s+/g,' ').trim();
       if(/[0-9]/.test(s)&&/(\+|-|\*|\/|Math\.)/.test(s)){
         try{const ans=Function('"use strict";return ('+s+')')();if(typeof ans==='number'&&!isNaN(ans)&&isFinite(ans))return Number.isInteger(ans)?ans:parseFloat(ans.toFixed(4));}catch(e){}
       }
       return null;
     }
 
-    async function searchWiki(q){
+    async function searchWiki(q,lang){
       const m=tryAdvMath(q);
-      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak('The answer is '+m+'!');return;}
-      const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain)\b/gi,'').replace(/[?!.]/g,'').trim();
+      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak(lang==='hi'?'इसका सही उत्तर '+m+' है।':'The answer is '+m+'!',lang);return;}
+      const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain|kya hai|kaun hai|ke bare mein batao|batao)\b/gi,'').replace(/(क्या है|कौन है|के बारे में बताओ|बताओ)/g,'').replace(/[?!।.]/g,'').trim();
       if(topic.length>=2){
-        addLog('WIKIPEDIA (EN)','Searching: "'+topic+'"...');
+        const sub=lang==='hi'?'hi':'en';
+        addLog('WIKIPEDIA ('+sub.toUpperCase()+')','Searching: "'+topic+'"...');
         try{
-          const sr=await fetch('https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(topic)+'&format=json&origin=*').then(function(x){return x.json();});
+          const sr=await fetch('https://'+sub+'.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(topic)+'&format=json&origin=*').then(function(x){return x.json();});
           const title=sr&&sr.query&&sr.query.search&&sr.query.search[0]?sr.query.search[0].title:null;
           if(title){
-            const su=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title)).then(function(x){return x.json();});
+            const su=await fetch('https://'+sub+'.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title)).then(function(x){return x.json();});
             if(su.extract&&su.type!=='disambiguation'){
-              const shortAns=su.extract.split('. ').slice(0,2).join('. ')+'.';
+              const sp=lang==='hi'?'। ':'. ';
+              const shortAns=su.extract.split(sp).slice(0,2).join(sp)+(lang==='hi'?'।':'.');
               addLog('WIKIPEDIA ANSWER',shortAns,su.content_urls&&su.content_urls.desktop?su.content_urls.desktop.page:null);
-              speak(shortAns);return;
+              speak(shortAns,lang);return;
             }
           }
         }catch(e){}
       }
       const gUrl='https://www.google.com/search?q='+encodeURIComponent(q);
       addLog('GOOGLE FALLBACK','Searching: "'+q+'"',gUrl);
-      speak('Let me check Google for '+q+'.');
+      speak(lang==='hi'?'गूगल पर '+q+' के बारे में देख रहा हूँ।':'Let me check Google for '+q+'.',lang);
       setTimeout(function(){window.location.href=gUrl;},250);
     }
 
     async function processCmd(cmd){
       if(!cmd||!cmd.trim()||isSpeaking)return;
       const cleanCmd=cmd.trim();
-      addLog('USER','"'+cleanCmd+'"');
-      if(/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cleanCmd)){isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');speak('Okay, taking a quick nap! Tap activate whenever you need me.');return;}
-      if(tryNotes(cleanCmd))return;
-      if(tryFriendlyChat(cleanCmd))return;
-      if(tryDateTime(cleanCmd))return;
-      if(/\b(play|song|music)\b/i.test(cleanCmd)){
-        const q=cleanCmd.replace(/play|on youtube|song|music/gi,'').trim();
+      const lang=detectLang(cleanCmd);
+      if(lang==='hi')setPreferredLang('hi');
+      addLog('USER ('+lang.toUpperCase()+')','"'+cleanCmd+'"');
+      if(/\b(stop|sleep|mute mic|go to sleep|band ho ja|so jao)\b/i.test(cleanCmd)||/(बंद हो जा|सो जा)/.test(cleanCmd)){
+        isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');
+        speak(lang==='hi'?'ठीक है, मैं अभी आराम करता हूँ। ज़रूरत पड़े तो एक्टिवेट कर लेना!':'Okay, taking a quick nap! Tap activate whenever you need me.',lang);return;
+      }
+      if(tryLangSwitch(cleanCmd))return;
+      if(tryNotes(cleanCmd,lang))return;
+      if(tryFriendlyChat(cleanCmd,lang))return;
+      if(tryDateTime(cleanCmd,lang))return;
+      if(/\b(play|song|music|chalao|gaana|bajao)\b/i.test(cleanCmd)||/(गाना|चलाओ|बजाओ)/.test(cleanCmd)){
+        const q=cleanCmd.replace(/play|on youtube|song|music|chalao|gaana|bajao|गाना|चलाओ|बजाओ/gi,'').trim();
         const webYt='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
         addLog('YOUTUBE','Playing: "'+q+'"',webYt);
-        speak('Playing '+q+' on YouTube!');
-        setTimeout(function(){openAppSmart({name:'YouTube',pkg:'com.google.android.youtube',url:webYt});},250);
-        return;
+        speak(lang==='hi'?'यूट्यूब पर '+q+' चला रहा हूँ!':'Playing '+q+' on YouTube!',lang);
+        setTimeout(function(){openAppSmart({name:'YouTube',pkg:'com.google.android.youtube',url:webYt});},250);return;
       }
-      if(/\b(call|dial)\b/i.test(cleanCmd)){addLog('DIALER','Opening Phone Dialer','tel:');speak('Opening the dialer for you.');setTimeout(function(){window.location.href='tel:';},250);return;}
-      if(tryOpenApp(cleanCmd))return;
-      await searchWiki(cleanCmd);
+      if(/\b(call|dial|phone lagao)\b/i.test(cleanCmd)||/कॉल/.test(cleanCmd)){
+        addLog('DIALER','Opening Phone Dialer','tel:');
+        speak(lang==='hi'?'कॉल डायलर खोल रहा हूँ।':'Opening the dialer for you.',lang);
+        setTimeout(function(){window.location.href='tel:';},250);return;
+      }
+      if(tryOpenApp(cleanCmd,lang))return;
+      await searchWiki(cleanCmd,lang);
     }
 
     document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){const c=b.getAttribute('data-cmd');statusEl.innerText='You: '+c;processCmd(c);});});
-
-    chatForm.addEventListener('submit',function(e){
-      e.preventDefault();
-      const val=chatInput.value.trim();
-      if(!val)return;
-      chatInput.value='';
-      statusEl.innerText='You: '+val;
-      processCmd(val);
-    });
+    chatForm.addEventListener('submit',function(e){e.preventDefault();const val=chatInput.value.trim();if(!val)return;chatInput.value='';statusEl.innerText='You: '+val;processCmd(val);});
 
     if(SR){
-      rec=new SR();rec.lang='en-IN';rec.continuous=false;rec.interimResults=false;
-      rec.onstart=function(){if(isSpeaking){try{rec.abort();}catch(e){}return;}setVis('listening');statusEl.innerText='Listening...';};
+      rec=new SR();rec.lang=preferredLang==='hi'?'hi-IN':'en-IN';rec.continuous=false;rec.interimResults=false;
+      rec.onstart=function(){if(isSpeaking){try{rec.abort();}catch(e){}return;}setVis('listening');statusEl.innerText=preferredLang==='hi'?'सुन रहा हूँ...':'Listening...';};
       rec.onresult=function(e){if(isSpeaking)return;const c=e.results[0][0].transcript;statusEl.innerText='You: '+c;processCmd(c);};
       rec.onend=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},350);};
       rec.onerror=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},600);};
@@ -447,11 +466,11 @@
 
     toggleBtn.addEventListener('click',toggleSurya);
     orbLogo.addEventListener('click',toggleSurya);
-    miniMicBtn.addEventListener('click',function(){
-      if(!SR){statusEl.innerText='Please use Chrome browser.';return;}
-      if(!isListening)toggleSurya();
-      else try{rec.start();}catch(e){}
-    });
+    miniMicBtn.addEventListener('click',function(){if(!SR){statusEl.innerText='Please use Chrome browser.';return;}if(!isListening)toggleSurya();else try{rec.start();}catch(e){}});
   </script>
 </body>
 </html>
+
+      
+                          
+  
