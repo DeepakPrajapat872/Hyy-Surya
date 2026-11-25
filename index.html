@@ -52,34 +52,22 @@
       animation:spinL 3.6s linear infinite;
     }
     .cyber-sphere{
-      width:76px;height:76px;border-radius:50%;position:relative;overflow:hidden;
+      width:78px;height:78px;border-radius:50%;position:relative;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
       background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
       box-shadow:0 0 38px rgba(0,243,255,.95),inset 0 0 16px rgba(255,255,255,.9);
       animation:idleB 2.4s ease-in-out infinite alternate;transition:all .3s ease;
     }
-    .holo-visor{display:flex;align-items:center;gap:12px;z-index:2}
-    .holo-eye{
-      width:11px;height:15px;border-radius:6px;background:#011829;
-      box-shadow:0 0 8px #ffffff;animation:blinkEye 4.2s infinite;
+    .cyber-sphere img{
+      width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;
     }
-    @keyframes blinkEye{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.15)}}
     @keyframes haloPulse{from{transform:scale(.92);opacity:.7}to{transform:scale(1.08);opacity:1}}
     .listening .orbit-1{border-color:#00ff9d;animation-duration:2.2s}
-    .listening .cyber-sphere{
-      background:radial-gradient(circle at 32% 28%,#ffffff,#00ff9d 46%,#006633 92%);
-      box-shadow:0 0 48px rgba(0,255,157,.95),inset 0 0 16px #fff;animation:actP .6s ease-in-out infinite alternate;
-    }
+    .listening .cyber-sphere{box-shadow:0 0 48px rgba(0,255,157,.95),inset 0 0 16px #fff;animation:actP .6s ease-in-out infinite alternate}
     .thinking .orbit-1{border-color:#fde047;animation-duration:1.4s}
-    .thinking .cyber-sphere{
-      background:radial-gradient(circle at 32% 28%,#ffffff,#fde047 46%,#854d0e 92%);
-      box-shadow:0 0 48px rgba(253,224,71,.95),inset 0 0 16px #fff;
-    }
+    .thinking .cyber-sphere{box-shadow:0 0 48px rgba(253,224,71,.95),inset 0 0 16px #fff}
     .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
-    .speaking .cyber-sphere{
-      background:radial-gradient(circle at 32% 28%,#ffffff,#c084fc 46%,#4c1d95 92%);
-      box-shadow:0 0 52px rgba(192,132,252,.95),inset 0 0 16px #fff;animation:spkB .32s ease-in-out infinite alternate;
-    }
+    .speaking .cyber-sphere{box-shadow:0 0 52px rgba(192,132,252,.95),inset 0 0 16px #fff;animation:spkB .32s ease-in-out infinite alternate}
     @keyframes spinR{100%{transform:rotate(360deg)}}
     @keyframes spinL{100%{transform:rotate(-360deg)}}
     @keyframes idleB{from{transform:scale(.95)}to{transform:scale(1.05)}}
@@ -156,7 +144,7 @@
       <div class="orbit-1"></div>
       <div class="orbit-2"></div>
       <div class="cyber-sphere">
-        <div class="holo-visor"><span class="holo-eye"></span><span class="holo-eye"></span></div>
+        <img src="https://deepakprajapat872.github.io/Hyy-Surya/icon-512.png" alt="SURYA" />
       </div>
     </div>
     <div class="title-row">
@@ -191,30 +179,33 @@
 
   <script>
     const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2',LANG_KEY='surya_lang_pref_v1',NAME_KEY='surya_user_name_v1',QA_KEY='surya_custom_qa_v1';
-    function makeIcon(sz){
-      try{
-        const c=document.createElement('canvas');c.width=sz;c.height=sz;
-        const x=c.getContext('2d');if(!x)return '';
-        x.fillStyle='#020b14';x.fillRect(0,0,sz,sz);
-        const r=sz/2;
-        x.strokeStyle='#38bdf8';x.lineWidth=Math.max(4,sz*.032);x.setLineDash([sz*.12,sz*.05]);
-        x.beginPath();x.arc(r,r,sz*.36,0,Math.PI*2);x.stroke();x.setLineDash([]);
-        x.strokeStyle='#00f3ff';x.lineWidth=Math.max(3,sz*.024);
-        x.beginPath();x.arc(r,r,sz*.27,.4,Math.PI*1.65);x.stroke();
-        const g=x.createRadialGradient(r-sz*.05,r-sz*.05,sz*.02,r,r,sz*.19);
-        g.addColorStop(0,'#ffffff');g.addColorStop(.5,'#22d3ee');g.addColorStop(1,'#0284c7');
-        x.fillStyle=g;x.beginPath();x.arc(r,r,sz*.19,0,Math.PI*2);x.fill();
-        return c.toDataURL('image/png');
-      }catch(e){return '';}
-    }
-    (function(){
-      const i192=makeIcon(192),i512=makeIcon(512);
-      const a=document.getElementById('appleIcon');if(a&&i192)a.href=i192;
-      const icons=[];
-      if(i192)icons.push({src:i192,sizes:'192x192',type:'image/png'});
-      if(i512)icons.push({src:i512,sizes:'512x512',type:'image/png'});
+    const ICON_URL='https://deepakprajapat872.github.io/Hyy-Surya/icon-512.png';
+
+    (function setupPWA(){
+      const a=document.getElementById('appleIcon');if(a)a.href=ICON_URL;
       const m=document.getElementById('pwaManifest');
-      if(m)m.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify({name:'SURYA AI',short_name:'SURYA AI',start_url:'./',scope:'./',display:'standalone',background_color:'#020b14',theme_color:'#020b14',icons:icons}));
+      if(m){
+        const manifestObj={
+          name:'SURYA AI',
+          short_name:'SURYA AI',
+          start_url:'https://deepakprajapat872.github.io/Hyy-Surya/',
+          scope:'https://deepakprajapat872.github.io/Hyy-Surya/',
+          display:'standalone',
+          background_color:'#020b14',
+          theme_color:'#020b14',
+          icons:[
+            {src:ICON_URL,sizes:'192x192',type:'image/png',purpose:'any'},
+            {src:ICON_URL,sizes:'512x512',type:'image/png',purpose:'any maskable'}
+          ]
+        };
+        m.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify(manifestObj));
+      }
+      if('serviceWorker' in navigator){
+        const swCode="self.addEventListener('install',e=>{self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(self.clients.claim());});self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));});";
+        const swBlob=new Blob([swCode],{type:'application/javascript'});
+        const swUrl=URL.createObjectURL(swBlob);
+        navigator.serviceWorker.register(swUrl,{scope:'./'}).catch(function(){});
+      }
     })();
 
     const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),statePill=document.getElementById('statePill'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),exportBtn=document.getElementById('exportBtn'),timerBadge=document.getElementById('timerBadge'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
@@ -312,8 +303,7 @@
       if(isAndroid&&app.pkg){
         let intentUrl='';
         if(app.pkg==='com.whatsapp'||app.pkg==='com.whatsapp.w4b'){
-          const sc=app.pkg==='com.whatsapp.w4b'?'whatsapp':'whatsapp';
-          intentUrl='intent://send/#Intent;scheme='+sc+';package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url||'https://wa.me/')+';end';
+          intentUrl='intent://send/#Intent;scheme=whatsapp;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url||'https://wa.me/')+';end';
         }else if(app.directIntent){
           intentUrl='intent://#Intent;package='+app.pkg+';end';
         }else{
@@ -533,7 +523,7 @@
         }
       }
       return false;
-    }
+                                                               }
         function tryAdvMath(cmd){
       let s=cmd.toLowerCase();
       const pct=s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
