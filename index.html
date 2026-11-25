@@ -12,10 +12,7 @@
   <link id="pwaManifest" rel="manifest" />
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{
-      width:100%;min-height:100dvh;overflow-x:hidden;background:#020b14;
-      font-size:17px;
-    }
+    html,body{width:100%;min-height:100dvh;overflow-x:hidden;background:#020b14;font-size:17px}
     body{
       background:radial-gradient(circle at 50% 15%,#104a75 0%,#020b14 58%,#010509 100%);
       color:#00f3ff;font-family:'Segoe UI',sans-serif;
@@ -25,52 +22,43 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .hud-top{
       width:100%;display:flex;justify-content:space-between;align-items:center;
-      font-size:13.5px;font-weight:700;color:#a5f1ff;white-space:nowrap;
+      font-size:13px;font-weight:700;color:#a5f1ff;white-space:nowrap;
       border-bottom:1.5px solid rgba(0,243,255,.3);padding-bottom:8px;gap:6px;
       flex-shrink:0;animation:fadeUp .3s ease both;
     }
-    .badge-group{display:flex;align-items:center;gap:6px;flex-shrink:0}
-    .engine-badge{
-      border:1.5px solid rgba(253,224,71,.85);color:#fde047;background:rgba(253,224,71,.15);
-      padding:4px 10px;border-radius:13px;font-size:11px;font-weight:800;white-space:nowrap;
+    .badge-group{display:flex;align-items:center;gap:5px;flex-shrink:0}
+    .engine-badge,.mute-btn{
+      border-radius:12px;font-size:10.5px;font-weight:800;padding:4px 9px;white-space:nowrap;cursor:pointer;
     }
-    .mute-btn{
-      border:1.5px solid rgba(56,189,248,.75);color:#e0f2fe;background:rgba(56,189,248,.18);
-      padding:4px 10px;border-radius:13px;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap;
-    }
-    .center-stage{
-      width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;
-      flex-shrink:0;margin-top:1px;
-    }
+    .engine-badge{border:1.5px solid rgba(253,224,71,.85);color:#fde047;background:rgba(253,224,71,.15)}
+    .mute-btn{border:1.5px solid rgba(56,189,248,.75);color:#e0f2fe;background:rgba(56,189,248,.18)}
+    .center-stage{width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;margin-top:1px}
     .orb-container{
-      position:relative;width:162px;height:162px;display:flex;align-items:center;justify-content:center;
+      position:relative;width:156px;height:156px;display:flex;align-items:center;justify-content:center;
       cursor:pointer;animation:fadeUp .4s ease both;
     }
     .holo-halo{
-      position:absolute;width:160px;height:160px;border-radius:50%;
+      position:absolute;width:154px;height:154px;border-radius:50%;
       background:radial-gradient(circle,rgba(0,243,255,.22) 0%,transparent 70%);
       animation:haloPulse 2.6s ease-in-out infinite alternate;
     }
     .orbit-1{
-      position:absolute;width:152px;height:152px;border-radius:50%;
+      position:absolute;width:146px;height:146px;border-radius:50%;
       border:3px dashed rgba(0,243,255,.88);animation:spinR 9s linear infinite;
     }
     .orbit-2{
-      position:absolute;width:120px;height:120px;border-radius:50%;
+      position:absolute;width:116px;height:116px;border-radius:50%;
       border:3.5px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
       animation:spinL 3.6s linear infinite;
     }
     .cyber-sphere{
-      width:80px;height:80px;border-radius:50%;position:relative;overflow:hidden;
+      width:76px;height:76px;border-radius:50%;position:relative;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
       background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
       box-shadow:0 0 38px rgba(0,243,255,.95),inset 0 0 16px rgba(255,255,255,.9);
-      animation:idleB 2.4s ease-in-out infinite alternate;
-      transition:all .3s ease;
+      animation:idleB 2.4s ease-in-out infinite alternate;transition:all .3s ease;
     }
-    .holo-visor{
-      display:flex;align-items:center;gap:12px;z-index:2;
-    }
+    .holo-visor{display:flex;align-items:center;gap:12px;z-index:2}
     .holo-eye{
       width:11px;height:15px;border-radius:6px;background:#011829;
       box-shadow:0 0 8px #ffffff;animation:blinkEye 4.2s infinite;
@@ -80,8 +68,7 @@
     .listening .orbit-1{border-color:#00ff9d;animation-duration:2.2s}
     .listening .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#00ff9d 46%,#006633 92%);
-      box-shadow:0 0 48px rgba(0,255,157,.95),inset 0 0 16px #fff;
-      animation:actP .6s ease-in-out infinite alternate;
+      box-shadow:0 0 48px rgba(0,255,157,.95),inset 0 0 16px #fff;animation:actP .6s ease-in-out infinite alternate;
     }
     .thinking .orbit-1{border-color:#fde047;animation-duration:1.4s}
     .thinking .cyber-sphere{
@@ -91,8 +78,7 @@
     .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
     .speaking .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#c084fc 46%,#4c1d95 92%);
-      box-shadow:0 0 52px rgba(192,132,252,.95),inset 0 0 16px #fff;
-      animation:spkB .32s ease-in-out infinite alternate;
+      box-shadow:0 0 52px rgba(192,132,252,.95),inset 0 0 16px #fff;animation:spkB .32s ease-in-out infinite alternate;
     }
     @keyframes spinR{100%{transform:rotate(360deg)}}
     @keyframes spinL{100%{transform:rotate(-360deg)}}
@@ -100,49 +86,41 @@
     @keyframes actP{from{transform:scale(.93)}to{transform:scale(1.13)}}
     @keyframes spkB{from{transform:scale(.96)}to{transform:scale(1.18)}}
     .title-row{display:flex;align-items:center;gap:8px}
-    h1{
-      font-size:34px;font-weight:900;letter-spacing:3px;color:#fff;
-      text-shadow:0 0 20px rgba(0,243,255,.72);
-    }
+    h1{font-size:33px;font-weight:900;letter-spacing:3px;color:#fff;text-shadow:0 0 20px rgba(0,243,255,.72)}
     .state-pill{
       font-size:10.5px;font-weight:800;letter-spacing:1px;padding:3px 9px;border-radius:10px;
       background:rgba(0,243,255,.14);border:1px solid rgba(0,243,255,.45);color:#67e8f9;
     }
-    #status{
-      font-size:15.5px;color:#c7f1ff;text-align:center;width:100%;min-height:22px;line-height:1.32;
-      padding:0 4px;font-weight:500;
-    }
+    #status{font-size:15px;color:#c7f1ff;text-align:center;width:100%;min-height:22px;line-height:1.32;padding:0 4px;font-weight:500}
     .main-btn{
-      padding:13px 52px;font-size:17.5px;font-weight:800;letter-spacing:2px;
+      padding:12px 50px;font-size:17px;font-weight:800;letter-spacing:2px;
       background:linear-gradient(90deg,#189bff,#0066ff);color:#fff;border:none;
       border-radius:32px;box-shadow:0 6px 26px rgba(0,153,255,.55);cursor:pointer;
     }
     .main-btn:active{transform:scale(.96)}
     .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b)}
-    .quick-chips{
-      width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;flex-shrink:0;
-    }
+    .quick-chips{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;flex-shrink:0}
     .chip{
       background:rgba(12,42,68,.72);border:1.5px solid rgba(125,211,252,.44);
-      color:#e6f9ff;padding:8px 13px;border-radius:14px;font-size:13.5px;font-weight:600;cursor:pointer;
+      color:#e6f9ff;padding:7px 11px;border-radius:13px;font-size:12.5px;font-weight:600;cursor:pointer;
     }
     .chip:active{transform:scale(.95)}
     .log-panel{
-      width:100%;height:150px;
+      width:100%;height:148px;
       background:linear-gradient(180deg,rgba(13,44,72,.66) 0%,rgba(5,19,34,.88) 100%);
       border:1.5px solid rgba(125,211,252,.38);border-radius:18px;
-      padding:10px 13px;font-size:13.5px;overflow:hidden;
+      padding:10px 13px;font-size:13px;overflow:hidden;
       display:flex;flex-direction:column;flex-shrink:0;
     }
     .log-header{
       display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px;margin-bottom:6px;
-      flex-shrink:0;
+      border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px;margin-bottom:6px;flex-shrink:0;
     }
-    .log-title{font-weight:800;color:#e6f9ff;font-size:11.5px;letter-spacing:.5px}
-    .clear-btn{
+    .log-title{font-weight:800;color:#e6f9ff;font-size:11px;letter-spacing:.4px}
+    .log-actions{display:flex;gap:6px}
+    .mini-act-btn{
       background:rgba(30,90,140,.62);border:1px solid rgba(125,211,252,.38);
-      color:#dff6ff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:11px;cursor:pointer;
+      color:#dff6ff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;cursor:pointer;
     }
     #logList{flex:1;overflow-y:auto}
     .log-entry{margin-bottom:6px;line-height:1.4;color:#daf6ff}
@@ -153,10 +131,7 @@
       background:rgba(10,34,58,.88);border:1.5px solid rgba(125,211,252,.45);
       border-radius:32px;padding:8px 10px 8px 16px;
     }
-    .chat-input{
-      flex:1;background:transparent;border:none;outline:none;color:#ffffff;
-      font-size:16px;min-width:0;
-    }
+    .chat-input{flex:1;background:transparent;border:none;outline:none;color:#ffffff;font-size:16px;min-width:0}
     .chat-input::placeholder{color:#9ec4d8}
     .icon-btn{
       width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
@@ -172,7 +147,7 @@
     <span id="battery">PWR: --%</span>
     <div class="badge-group">
       <button id="muteBtn" class="mute-btn" type="button">🔊 VOICE ON</button>
-      <span class="engine-badge">MEMORY + WIKI</span>
+      <span class="engine-badge" id="timerBadge">AI CORE v3</span>
     </div>
   </div>
   <div class="center-stage">
@@ -194,25 +169,28 @@
   <div class="quick-chips">
     <button class="chip" type="button" data-cmd="hello surya">👋 Hello</button>
     <button class="chip" type="button" data-cmd="what do you remember">🧠 Memory</button>
-    <button class="chip" type="button" data-cmd="square root of 144">√144</button>
-    <button class="chip" type="button" data-cmd="what is the date and time today">📅 Date & Time</button>
+    <button class="chip" type="button" data-cmd="set timer 1 minute">⏱️ 1m Timer</button>
+    <button class="chip" type="button" data-cmd="100 km to miles">📏 Convert</button>
     <button class="chip" type="button" data-cmd="open youtube">▶️ YouTube</button>
   </div>
   <div class="log-panel">
     <div class="log-header">
-      <div class="log-title">SURYA NEURAL LOG — MEMORY + MATH + WIKIPEDIA</div>
-      <button id="clearLogBtn" class="clear-btn" type="button">Clear</button>
+      <div class="log-title">SURYA NEURAL LOG + MEMORY</div>
+      <div class="log-actions">
+        <button id="exportBtn" class="mini-act-btn" type="button">Backup</button>
+        <button id="clearLogBtn" class="mini-act-btn" type="button">Clear</button>
+      </div>
     </div>
     <div id="logList"></div>
   </div>
   <form class="chat-bar" id="chatForm">
-    <input class="chat-input" id="chatInput" type="text" placeholder="Ask Surya anything..." autocomplete="off" />
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask Surya or type 'Learn: Q = A'..." autocomplete="off" />
     <button class="icon-btn mic-mini" id="miniMicBtn" type="button" title="Voice Input">🎙️</button>
     <button class="icon-btn send-mini" type="submit" title="Send">➤</button>
   </form>
 
   <script>
-    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2',LANG_KEY='surya_lang_pref_v1',NAME_KEY='surya_user_name_v1';
+    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2',LANG_KEY='surya_lang_pref_v1',NAME_KEY='surya_user_name_v1',QA_KEY='surya_custom_qa_v1';
     function makeIcon(sz){
       try{
         const c=document.createElement('canvas');c.width=sz;c.height=sz;
@@ -239,15 +217,15 @@
       if(m)m.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify({name:'SURYA AI',short_name:'SURYA AI',start_url:'./',scope:'./',display:'standalone',background_color:'#020b14',theme_color:'#020b14',icons:icons}));
     })();
 
-    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),statePill=document.getElementById('statePill'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
+    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),statePill=document.getElementById('statePill'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),exportBtn=document.getElementById('exportBtn'),timerBadge=document.getElementById('timerBadge'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-    let isListening=false,isSpeaking=false,isMuted=false,rec=null;
+    let isListening=false,isSpeaking=false,isMuted=false,rec=null,timerInterval=null;
     let preferredLang=(function(){try{return localStorage.getItem(LANG_KEY)||'en';}catch(e){return 'en';}})();
 
     function detectLang(text){
       const t=(text||'').trim().toLowerCase();
       if(/[\u0900-\u097F]/.test(t))return 'hi';
-      if(/\b(hindi|hindi mein|hinglish|kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|baat|yaad)\b/i.test(t)){
+      if(/\b(hindi|hindi mein|hinglish|kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|baat|yaad|sikho)\b/i.test(t)){
         return 'hi';
       }
       if(/\b(speak in english|english mein|in english)\b/i.test(t))return 'en';
@@ -278,8 +256,8 @@
       try{
         const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
         if(list.length){list.forEach(function(item){renderLogItem(item);});}
-        else{addLog('SURYA','Neural Core Online. Tap ACTIVATE to start.',null,false);}
-      }catch(e){addLog('SURYA','Neural Core Online. Tap ACTIVATE to start.',null,false);}
+        else{addLog('SURYA','Neural Core v3 Online. Say "Learn: Q = A" to train me!',null,false);}
+      }catch(e){addLog('SURYA','Neural Core v3 Online.',null,false);}
     })();
 
     function setVis(st){
@@ -294,7 +272,23 @@
     if(navigator.getBattery)navigator.getBattery().then(function(b){const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};f();b.addEventListener('levelchange',f);});
 
     muteBtn.addEventListener('click',function(){isMuted=!isMuted;muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 VOICE ON';if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');});
-    clearLogBtn.addEventListener('click',function(){try{localStorage.removeItem(LOG_KEY);}catch(e){}logList.innerHTML='';addLog('SURYA','Neural Core Online. Tap ACTIVATE to start.',null,false);});
+    clearLogBtn.addEventListener('click',function(){try{localStorage.removeItem(LOG_KEY);}catch(e){}logList.innerHTML='';addLog('SURYA','Logs cleared.',null,false);});
+    exportBtn.addEventListener('click',function(){
+      try{
+        const data={
+          name:localStorage.getItem(NAME_KEY)||'',
+          notes:JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'),
+          customQA:JSON.parse(localStorage.getItem(QA_KEY)||'{}'),
+          logs:JSON.parse(localStorage.getItem(LOG_KEY)||'[]')
+        };
+        const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+        const a=document.createElement('a');
+        a.href=URL.createObjectURL(blob);
+        a.download='surya-ai-backup.json';
+        a.click();
+        addLog('BACKUP','Exported surya-ai-backup.json (Ready to upload to TeraBox/Drive)');
+      }catch(e){}
+    });
         function pickVoice(lang){
       const voices=window.speechSynthesis.getVoices()||[];
       if(lang==='hi')return voices.find(function(v){return /hi(-|_)?in/i.test(v.lang);})||voices.find(function(v){return /^hi/i.test(v.lang);})||null;
@@ -317,18 +311,23 @@
       const isAndroid=/Android/i.test(navigator.userAgent);
       if(isAndroid&&app.pkg){
         let intentUrl='';
-        if(app.pkg==='com.whatsapp'){
-          intentUrl='intent://send/#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
+        if(app.pkg==='com.whatsapp'||app.pkg==='com.whatsapp.w4b'){
+          const sc=app.pkg==='com.whatsapp.w4b'?'whatsapp':'whatsapp';
+          intentUrl='intent://send/#Intent;scheme='+sc+';package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url||'https://wa.me/')+';end';
+        }else if(app.directIntent){
+          intentUrl='intent://#Intent;package='+app.pkg+';end';
         }else{
-          const hostPath=app.url.replace(/^https?:\/\//,'');
+          const hostPath=(app.url||'https://www.google.com/').replace(/^https?:\/\//,'');
           intentUrl='intent://'+hostPath+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
         }
-        const beforeHidden=document.hidden;
+        const wasHidden=document.hidden;
         window.location.href=intentUrl;
-        setTimeout(function(){if(!document.hidden&&beforeHidden===false)window.location.href=app.url;},1300);
+        if(app.url&&!app.directIntent){
+          setTimeout(function(){if(!document.hidden&&!wasHidden)window.location.href=app.url;},1300);
+        }
         return;
       }
-      window.location.href=app.url;
+      if(app.url)window.location.href=app.url;
     }
     function tryLangSwitch(cmd){
       const c=cmd.trim().toLowerCase();
@@ -341,6 +340,69 @@
         setPreferredLang('en');
         const r='Sure! Switched back to English. How can I help you?';
         addLog('SURYA (EN)',r);speak(r,'en');return true;
+      }
+      return false;
+    }
+    function tryCustomQA(cmd,lang){
+      const learnM=cmd.match(/^(?:learn|teach|sikho)\s*:?\s*(.+?)\s*(?:=|->|means|ka jawab)\s*(.+)/i);
+      if(learnM){
+        const qKey=learnM[1].trim().toLowerCase().replace(/[?!.]/g,'');
+        const ansVal=learnM[2].trim();
+        try{
+          const qa=JSON.parse(localStorage.getItem(QA_KEY)||'{}');
+          qa[qKey]=ansVal;
+          localStorage.setItem(QA_KEY,JSON.stringify(qa));
+        }catch(e){}
+        const r=lang==='hi'?'सीख लिया! जब आप "'+qKey+'" पूछेंगे, तो मैं "'+ansVal+'" जवाब दूँगा।':'Learned! When you ask "'+qKey+'", I will reply: "'+ansVal+'".';
+        addLog('TRAINED Q&A',qKey+' -> '+ansVal);speak(r,lang);return true;
+      }
+      try{
+        const qa=JSON.parse(localStorage.getItem(QA_KEY)||'{}');
+        const cleanQ=cmd.trim().toLowerCase().replace(/[?!।.]/g,'');
+        if(qa[cleanQ]){
+          addLog('CUSTOM MEMORY',qa[cleanQ]);speak(qa[cleanQ],lang);return true;
+        }
+      }catch(e){}
+      return false;
+    }
+    function tryTimerAndConvert(cmd,lang){
+      const tM=cmd.match(/(?:set timer|timer|alarm)\s+(?:for\s+)?(\d+)\s*(second|seconds|sec|minute|minutes|min|मिनट|सेकंड)/i);
+      if(tM){
+        const val=parseInt(tM[1],10);
+        const isMin=/min|मिनट/i.test(tM[2]);
+        let secs=isMin?val*60:val;
+        if(timerInterval)clearInterval(timerInterval);
+        addLog('TIMER','Started for '+val+' '+tM[2]);
+        speak(lang==='hi'?val+' '+tM[2]+' का टाइमर शुरू कर दिया है।':'Timer set for '+val+' '+tM[2]+'.',lang);
+        timerInterval=setInterval(function(){
+          secs--;
+          const m=Math.floor(secs/60),s=secs%60;
+          timerBadge.innerText='⏱️ '+m+':'+(s<10?'0'+s:s);
+          if(secs<=0){
+            clearInterval(timerInterval);timerBadge.innerText='AI CORE v3';
+            addLog('TIMER DONE','Time is up!');
+            speak(lang==='hi'?'समय पूरा हो गया है!':'Time is up! Your timer has finished.',lang);
+          }
+        },1000);
+        return true;
+      }
+      const cM=cmd.match(/(\d+(?:\.\d+)?)\s*(km|kilometer|kilometers|m|meter|meters|cm|ft|feet|kg|g|c|celsius|f|fahrenheit)\s*(?:to|in|into|mein)\s*(km|kilometer|kilometers|m|meter|meters|cm|ft|feet|miles|mile|kg|g|c|celsius|f|fahrenheit)/i);
+      if(cM){
+        const num=parseFloat(cM[1]),u1=cM[2].toLowerCase(),u2=cM[3].toLowerCase();
+        let res=null;
+        if(u1.startsWith('km')&&u2.startsWith('mile'))res=(num*0.621371).toFixed(3)+' miles';
+        else if(u1.startsWith('mile')&&u2.startsWith('km'))res=(num*1.60934).toFixed(3)+' km';
+        else if(u1.startsWith('km')&&u2==='m')res=(num*1000)+' meters';
+        else if(u1==='m'&&u2==='cm')res=(num*100)+' cm';
+        else if(u1.startsWith('ft')&&u2==='m')res=(num*0.3048).toFixed(3)+' meters';
+        else if(u1==='m'&&u2.startsWith('ft'))res=(num*3.28084).toFixed(3)+' feet';
+        else if(u1==='kg'&&u2==='g')res=(num*1000)+' grams';
+        else if((u1==='c'||u1==='celsius')&&(u2==='f'||u2==='fahrenheit'))res=((num*9/5)+32).toFixed(2)+' °F';
+        else if((u1==='f'||u1==='fahrenheit')&&(u2==='c'||u2==='celsius'))res=((num-32)*5/9).toFixed(2)+' °C';
+        if(res){
+          const r=num+' '+u1+' = '+res;
+          addLog('CONVERTER',r);speak(r,lang);return true;
+        }
       }
       return false;
     }
@@ -406,28 +468,66 @@
     }
     function tryOpenApp(cmd,lang){
       const apps=[
-        {keys:['youtube','यूट्यूब'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com/'},
+        {keys:['wa business','whatsapp business','व्हाट्सएप बिजनेस'],name:'WA Business',pkg:'com.whatsapp.w4b',url:'https://wa.me/'},
         {keys:['whatsapp','व्हाट्सएप'],name:'WhatsApp',pkg:'com.whatsapp',url:'https://wa.me/'},
+        {keys:['yt music','youtube music','यूट्यूब म्यूजिक'],name:'YT Music',pkg:'com.google.android.apps.youtube.music',url:'https://music.youtube.com/'},
+        {keys:['youtube','यूट्यूब'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com/'},
         {keys:['instagram','इंस्टाग्राम'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com/'},
         {keys:['facebook','फेसबुक'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com/'},
-        {keys:['maps','map','location','मैप्स'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com/'},
-        {keys:['gmail','email','जीमेल'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com/'},
         {keys:['telegram','टेलीग्राम'],name:'Telegram',pkg:'org.telegram.messenger',url:'https://t.me/'},
-        {keys:['spotify','स्पॉटिफाई'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com/'},
-        {keys:['amazon','अमेज़न'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in/'},
-        {keys:['flipkart','फ्लिपकार्ट'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com/'},
-        {keys:['paytm','पेटीएम'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com/'},
-        {keys:['zomato','ज़ोमैटो'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com/'},
-        {keys:['swiggy','स्विगी'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com/'},
-        {keys:['netflix','नेटफ्लिक्स'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com/'},
-        {keys:['jiocinema','jio cinema'],name:'JioCinema',pkg:'com.jio.media.jiobeats',url:'https://www.jiocinema.com/'},
-        {keys:['google','गूगल'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com/'}
+        {keys:['pnb one','pnb','पीएनबी'],name:'PNB ONE',pkg:'com.infrasofttech.robang',url:'https://pnbindia.in/'},
+        {keys:['yono sbi','yono','योनो'],name:'YONO SBI',pkg:'com.sbi.lotusintouch',url:'https://retail.onlinesbi.sbi/'},
+        {keys:['gpay','google pay','जीपे'],name:'GPay',pkg:'com.google.android.apps.nbu.paisa.user',url:'https://pay.google.com/'},
+        {keys:['bharatpe','भारतपे'],name:'BharatPe',pkg:'com.bharatpe.app',url:'https://bharatpe.com/'},
+        {keys:['mobikwik','मोबिक्विक'],name:'MobiKwik',pkg:'com.mobikwik_new',url:'https://www.mobikwik.com/'},
+        {keys:['where is my train','train','ट्रेन'],name:'Where is My Train',pkg:'com.app.whereismytrain',url:'https://whereismytrain.in/'},
+        {keys:['railone','rail one','रेलवन'],name:'RailOne',pkg:'org.cris.aikyatra',url:'https://www.indianrail.gov.in/'},
+        {keys:['digilocker','digi locker','डिजिलॉकर'],name:'DigiLocker',pkg:'com.digilocker.android',url:'https://www.digilocker.gov.in/'},
+        {keys:['classroom','google classroom','क्लासरूम'],name:'Classroom',pkg:'com.google.android.apps.classroom',url:'https://classroom.google.com/'},
+        {keys:['drive','google drive','ड्राइव'],name:'Drive',pkg:'com.google.android.apps.docs',url:'https://drive.google.com/'},
+        {keys:['gmail','email','जीमेल'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com/'},
+        {keys:['maps','map','location','मैप्स'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com/'},
+        {keys:['lens','google lens','लेंस'],name:'Lens',pkg:'com.google.ar.lens',url:'https://lens.google/'},
+        {keys:['gemini','जेमिनी'],name:'Gemini',pkg:'com.google.android.apps.bard',url:'https://gemini.google.com/'},
+        {keys:['myjio','my jio','जियो'],name:'MyJio',pkg:'com.jio.myjio',url:'https://www.jio.com/'},
+        {keys:['jioaicloud','jio cloud','क्लाउड'],name:'JioAICloud',pkg:'com.ril.ajio',url:'https://www.jiocloud.com/'},
+        {keys:['jiogames','jio games','जियो गेम्स'],name:'JioGames',pkg:'com.jio.games',url:'https://games.jio.com/'},
+        {keys:['play store','playstore','प्ले स्टोर'],name:'Play Store',pkg:'com.android.vending',url:'https://play.google.com/store'},
+        {keys:['chrome','क्रोम'],name:'Chrome',pkg:'com.android.chrome',url:'https://www.google.com/'},
+        {keys:['browser','ब्राउज़र'],name:'Browser',pkg:'com.android.browser',url:'https://www.google.com/'},
+        {keys:['google','गूगल'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com/'},
+        {keys:['free fire max','फ्री फायर मैक्स'],name:'Free Fire MAX',pkg:'com.dts.freefiremax',url:'https://play.google.com/store/apps/details?id=com.dts.freefiremax'},
+        {keys:['free fire','free fire india','फ्री फायर','फ्री फायर इंडिया'],name:'Free Fire India',pkg:'com.dts.freefireth',url:'https://play.google.com/store/apps/details?id=com.dts.freefireth'},
+        {keys:['freedrama','free drama','फ्री ड्रामा'],name:'FreeDrama',pkg:'com.freedrama.app',directIntent:true},
+        {keys:['imo','इमो'],name:'imo',pkg:'com.imo.android.imoim',url:'https://imo.im/'},
+        {keys:['aadhaar','aadhar','मा आधार','आधार'],name:'Aadhaar',pkg:'in.gov.uidai.maadhaar',url:'https://myaadhaar.uidai.gov.in/'},
+        {keys:['camera','कैमरा'],name:'Camera',pkg:'com.android.camera',directIntent:true},
+        {keys:['calculator','कैलकुलेटर'],name:'Calculator',pkg:'com.coloros.calculator',directIntent:true},
+        {keys:['calendar','कैलेंडर'],name:'Calendar',pkg:'com.google.android.calendar',url:'https://calendar.google.com/'},
+        {keys:['clock','अलार्म','घड़ी'],name:'Clock',pkg:'com.android.deskclock',directIntent:true},
+        {keys:['compass','कम्पास'],name:'Compass',pkg:'com.coloros.compass2',directIntent:true},
+        {keys:['contacts','संपर्क'],name:'Contacts',pkg:'com.android.contacts',directIntent:true},
+        {keys:['my files','files','फाइल','फाइल्स'],name:'My Files',pkg:'com.coloros.filemanager',directIntent:true},
+        {keys:['phone','dialer','कॉल','फोन'],name:'Phone',pkg:'com.android.dialer',url:'tel:'},
+        {keys:['messages','sms','मैसेज'],name:'Messages',pkg:'com.google.android.apps.messaging',directIntent:true},
+        {keys:['music','म्यूजिक','गाना'],name:'Music',pkg:'com.heytap.music',directIntent:true},
+        {keys:['recorder','रिकॉर्डर'],name:'Recorder',pkg:'com.oplus.soundrecorder',directIntent:true},
+        {keys:['settings','सेटिंग','सेटिंग्स'],name:'Settings',pkg:'com.android.settings',directIntent:true},
+        {keys:['theme store','थीम स्टोर'],name:'Theme Store',pkg:'com.heytap.themestore',directIntent:true},
+        {keys:['wallet','वॉलेट'],name:'Wallet',pkg:'com.finshell.wallet',directIntent:true},
+        {keys:['weather','मौसम'],name:'Weather',pkg:'com.coloros.weather2',directIntent:true},
+        {keys:['photos','फोटो','फोटोज'],name:'Photos',pkg:'com.google.android.apps.photos',url:'https://photos.google.com/'},
+        {keys:['games','गेम्स'],name:'Games',pkg:'com.oplus.games',directIntent:true},
+        {keys:['game assistant','गेम असिस्टेंट'],name:'Game Assistant',pkg:'com.oplus.games',directIntent:true},
+        {keys:['phone manager','फोन मैनेजर'],name:'Phone Manager',pkg:'com.coloros.phonemanager',directIntent:true},
+        {keys:['app market','ऐप मार्केट'],name:'App Market',pkg:'com.heytap.market',directIntent:true},
+        {keys:['apps','ऐप्स'],name:'Apps',pkg:'com.oplus.appdetail',directIntent:true}
       ];
-      const openIntent=/\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd)||/(खोलो|खोल|चलाओ)/.test(cmd);
+      const openIntent=/\b(open|launch|start|kholo|khol|chalu|open karo|chalu karo)\b/i.test(cmd)||/(खोलो|खोल|चलाओ|ओपन|ओपन करो|चालू करो)/.test(cmd);
       for(let i=0;i<apps.length;i++){
         const a=apps[i];
-        if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=2)){
-          addLog('APP LAUNCHER','Opening '+a.name+' (App if installed, else Browser)',a.url);
+        if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=3)){
+          addLog('APP LAUNCHER','Opening '+a.name+' (App if installed, else Browser)',a.url||null);
           speak(lang==='hi'?'ज़रूर! '+a.name+' खोल रहा हूँ।':'Sure! Opening '+a.name+' for you.',lang);
           setTimeout(function(){openAppSmart(a);},250);return true;
         }
@@ -491,6 +591,8 @@
         speak(lang==='hi'?'ठीक है, मैं अभी स्टैंडबाय मोड में जा रहा हूँ। ज़रूरत पड़े तो एक्टिवेट कर लेना!':'Okay, entering standby mode! Tap activate whenever you need me.',lang);return;
       }
       if(tryLangSwitch(cleanCmd))return;
+      if(tryCustomQA(cleanCmd,lang))return;
+      if(tryTimerAndConvert(cleanCmd,lang))return;
       if(tryMemoryAndNotes(cleanCmd,lang))return;
       if(tryFriendlyChat(cleanCmd,lang))return;
       if(tryDateTime(cleanCmd,lang))return;
