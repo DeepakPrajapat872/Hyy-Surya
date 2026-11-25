@@ -3,97 +3,363 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SURYA AI</title>
+  <meta name="theme-color" content="#020b14" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>S.U.R.Y.A.</title>
+
+  <!-- Custom Glowing App Icon for Home Screen -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Cpolygon points='256,55 430,155 430,357 256,457 82,357 82,155' fill='%2306243b' stroke='%2300f3ff' stroke-width='20'/%3E%3Cpolygon points='256,135 360,195 360,317 256,377 152,317 152,195' fill='%2300f3ff'/%3E%3Ccircle cx='256' cy='256' r='45' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Cpolygon points='256,55 430,155 430,357 256,457 82,357 82,155' fill='%2306243b' stroke='%2300f3ff' stroke-width='20'/%3E%3Cpolygon points='256,135 360,195 360,317 256,377 152,317 152,195' fill='%2300f3ff'/%3E%3Ccircle cx='256' cy='256' r='45' fill='%23ffffff'/%3E%3C/svg%3E" />
+
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0; height: 100vh; background: #020b14; color: #00f3ff;
-      font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center; overflow: hidden;
+      min-height: 100vh; background: radial-gradient(circle at center, #051624 0%, #010408 100%);
+      color: #00f3ff; font-family: 'Segoe UI', monospace, sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      padding: 16px; overflow-x: hidden;
     }
-    .arc-reactor {
-      width: 180px; height: 180px; border-radius: 50%;
-      border: 6px solid #00f3ff; box-shadow: 0 0 35px #00f3ff, inset 0 0 25px #00f3ff;
+    .hud-top {
+      width: 100%; max-width: 480px; display: flex; justify-content: space-between;
+      font-size: 12px; border-bottom: 1px solid rgba(0, 243, 255, 0.3); padding-bottom: 8px;
+      letter-spacing: 1px; color: #8be9fd;
+    }
+    .ai-stage {
+      position: relative; width: 220px; height: 170px; margin: 14px 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .hex-core {
+      width: 95px; height: 95px;
+      background: linear-gradient(135deg, rgba(0, 243, 255, 0.25), rgba(0, 102, 255, 0.4));
+      border: 2px solid #00f3ff;
+      clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
       display: flex; align-items: center; justify-content: center;
-      animation: pulse 2s infinite alternate; cursor: pointer;
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+      transition: all 0.3s ease;
+      animation: floatCore 3s ease-in-out infinite;
     }
-    .inner-core {
-      width: 90px; height: 90px; border-radius: 50%;
+    .hex-inner {
+      width: 50px; height: 50px;
       background: radial-gradient(circle, #ffffff, #00f3ff, #0051ff);
-      box-shadow: 0 0 20px #00f3ff;
+      clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+      animation: coreGlow 2s infinite alternate;
     }
-    @keyframes pulse {
-      from { transform: scale(0.95); box-shadow: 0 0 20px #00f3ff; }
-      to { transform: scale(1.05); box-shadow: 0 0 50px #00f3ff; }
+    .wave-bars {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      height: 45px; margin-top: 16px;
     }
-    h1 { letter-spacing: 6px; margin-top: 30px; font-size: 24px; }
-    #status { color: #8be9fd; margin: 10px 20px; font-size: 16px; min-height: 45px; }
+    .bar {
+      width: 5px; height: 10px; background: #00f3ff; border-radius: 4px;
+      box-shadow: 0 0 8px #00f3ff; transition: height 0.15s ease, background 0.3s ease;
+    }
+    .listening .hex-core {
+      border-color: #00ff9d;
+      box-shadow: 0 0 35px rgba(0, 255, 157, 0.7);
+      animation: listenPulse 0.9s infinite alternate;
+    }
+    .listening .bar {
+      background: #00ff9d; box-shadow: 0 0 10px #00ff9d;
+      animation: waveListen 0.6s infinite ease-in-out alternate;
+    }
+    .speaking .hex-core {
+      border-color: #a855f7;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(0, 243, 255, 0.5));
+      animation: speakSpin 1.2s infinite alternate;
+    }
+    .speaking .hex-inner {
+      background: radial-gradient(circle, #ffffff, #d8b4fe, #7e22ce);
+    }
+    .speaking .bar {
+      background: #c084fc; box-shadow: 0 0 12px #c084fc;
+      animation: waveSpeak 0.35s infinite ease-in-out alternate;
+    }
+    .bar:nth-child(1) { animation-delay: 0.05s; }
+    .bar:nth-child(2) { animation-delay: 0.15s; }
+    .bar:nth-child(3) { animation-delay: 0.25s; }
+    .bar:nth-child(4) { animation-delay: 0.10s; }
+    .bar:nth-child(5) { animation-delay: 0.30s; }
+    .bar:nth-child(6) { animation-delay: 0.20s; }
+    .bar:nth-child(7) { animation-delay: 0.35s; }
+    .bar:nth-child(8) { animation-delay: 0.12s; }
+    .bar:nth-child(9) { animation-delay: 0.28s; }
+    .bar:nth-child(10) { animation-delay: 0.18s; }
+
+    @keyframes floatCore { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+    @keyframes coreGlow { from { transform: scale(0.9); opacity: 0.85; } to { transform: scale(1.08); opacity: 1; } }
+    @keyframes listenPulse { from { transform: scale(0.95); } to { transform: scale(1.1); } }
+    @keyframes speakSpin { 0% { transform: scale(1) rotate(-4deg); } 100% { transform: scale(1.12) rotate(4deg); } }
+    @keyframes waveListen { 0% { height: 8px; } 100% { height: 28px; } }
+    @keyframes waveSpeak { 0% { height: 10px; } 100% { height: 42px; } }
+
+    h1 { letter-spacing: 6px; font-size: 22px; text-shadow: 0 0 10px #00f3ff; }
+    #status { color: #e0f7fa; margin: 8px 0; font-size: 15px; min-height: 42px; max-width: 480px; text-align: center; }
+    .log-panel {
+      width: 100%; max-width: 480px; background: rgba(0, 243, 255, 0.06);
+      border: 1px solid rgba(0, 243, 255, 0.35); border-radius: 10px;
+      padding: 10px 12px; text-align: left; font-size: 12px;
+      max-height: 150px; overflow-y: auto; margin: 10px 0;
+    }
+    .log-title { font-weight: bold; color: #00f3ff; border-bottom: 1px solid rgba(0,243,255,0.2); padding-bottom: 4px; margin-bottom: 6px; font-size: 11px; letter-spacing: 1px; }
+    .log-entry { margin-bottom: 6px; line-height: 1.4; color: #a5f3fc; }
+    .log-source { color: #fde047; font-weight: bold; }
+    .log-entry a { color: #38bdf8; text-decoration: underline; }
     button {
-      margin-top: 20px; padding: 14px 32px; font-size: 16px; font-weight: bold;
-      background: transparent; color: #00f3ff; border: 2px solid #00f3ff;
-      border-radius: 30px; box-shadow: 0 0 15px rgba(0,243,255,0.4); cursor: pointer;
+      padding: 12px 34px; font-size: 15px; font-weight: bold; letter-spacing: 2px;
+      background: rgba(0, 243, 255, 0.1); color: #00f3ff; border: 2px solid #00f3ff;
+      border-radius: 30px; box-shadow: 0 0 18px rgba(0,243,255,0.4); cursor: pointer;
     }
     button:active { background: #00f3ff; color: #020b14; }
   </style>
 </head>
 <body>
-  <div class="arc-reactor" onclick="startSurya()"><div class="inner-core"></div></div>
+  <div class="hud-top">
+    <span id="clock">TIME: --:--</span>
+    <span id="battery">PWR: --%</span>
+    <span>MODE: HANDS-FREE</span>
+  </div>
+
+  <div class="ai-stage" id="aiStage" onclick="toggleSurya()">
+    <div class="hex-core"><div class="hex-inner"></div></div>
+    <div class="wave-bars">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
+
   <h1>S.U.R.Y.A.</h1>
-  <div id="status">Tap "ACTIVATE" and speak...</div>
-  <button onclick="startSurya()">ACTIVATE</button>
+  <div id="status">Tap "ACTIVATE" once for continuous mode...</div>
+
+  <div class="log-panel" id="logPanel">
+    <div class="log-title">LIVE EXECUTION &amp; SOURCE LOG</div>
+    <div id="logList">
+      <div class="log-entry"><span class="log-source">[SYSTEM]</span> Ready. Waiting for activation...</div>
+    </div>
+  </div>
+
+  <button id="toggleBtn" onclick="toggleSurya()">ACTIVATE</button>
 
   <script>
     const statusEl = document.getElementById('status');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const logList = document.getElementById('logList');
+    const aiStage = document.getElementById('aiStage');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    let isListening = false;
+    let recognition = null;
+
+    function setVisualState(state) {
+      aiStage.classList.remove('listening', 'speaking');
+      if (state === 'listening') aiStage.classList.add('listening');
+      if (state === 'speaking') aiStage.classList.add('speaking');
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById('clock').innerText = "TIME: " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }, 1000);
+
+    if (navigator.getBattery) {
+      navigator.getBattery().then(b => {
+        const updateBat = () => document.getElementById('battery').innerText = "PWR: " + Math.round(b.level * 100) + "%";
+        updateBat();
+        b.addEventListener('levelchange', updateBat);
+      });
+    }
+
+    function addLog(source, detail, url = null) {
+      const div = document.createElement('div');
+      div.className = 'log-entry';
+      let linkHtml = url ? ` — <a href="${url}" target="_blank">Open Source Link</a>` : '';
+      div.innerHTML = `<span class="log-source">[${source}]</span> ${detail}${linkHtml}`;
+      logList.prepend(div);
+    }
 
     function speak(text) {
       statusEl.innerText = "Surya: " + text;
+      window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-IN';
       utter.rate = 1;
       utter.pitch = 0.95;
+
+      utter.onstart = () => setVisualState('speaking');
+      utter.onend = () => {
+        setVisualState('idle');
+        if (isListening) {
+          try { recognition.start(); } catch (e) {}
+        }
+      };
       window.speechSynthesis.speak(utter);
     }
 
-    function startSurya() {
-      if (!SpeechRecognition) {
-        statusEl.innerText = "Browser voice support nahi kar raha. Chrome use karein.";
+    async function searchWikipedia(query) {
+      addLog("WIKIPEDIA API", `Fetching summary for "${query}"...`);
+      try {
+        const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error("Not found");
+        const data = await res.json();
+        if (data.extract) {
+          const shortAns = data.extract.split('. ').slice(0, 2).join('. ') + '.';
+          addLog("WIKIPEDIA VERIFIED", shortAns, data.content_urls?.desktop?.page);
+          speak(shortAns);
+          return true;
+        }
+      } catch (e) {
+        return false;
+      }
+      return false;
+    }
+
+    async function processCommand(cmd) {
+      addLog("VOICE INPUT", `Heard: "${cmd}"`);
+
+      if (cmd.includes('stop') || cmd.includes('sleep') || cmd.includes('band ho ja')) {
+        isListening = false;
+        toggleBtn.innerText = "ACTIVATE";
+        addLog("SYSTEM", "Continuous listening stopped by user.");
+        speak("Going to sleep mode, sir.");
         return;
       }
-      const recognition = new SpeechRecognition();
+
+      if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('namaste') || cmd.includes('surya')) {
+        addLog("LOCAL AI", "Greeting module triggered.");
+        speak("Hello sir! Surya quantum core is online. How may I assist you?");
+        return;
+      }
+
+      if (cmd.includes('time') || cmd.includes('samay') || cmd.includes('kitne baje')) {
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        addLog("DEVICE CLOCK", `Fetched local time: ${time}`);
+        speak("Sir, the current time is " + time);
+        return;
+      }
+
+      if (cmd.includes('date') || cmd.includes('tarikh') || cmd.includes('aaj kya din')) {
+        const date = new Date().toDateString();
+        addLog("DEVICE CALENDAR", `Fetched local date: ${date}`);
+        speak("Today is " + date);
+        return;
+      }
+
+      if (cmd.includes('battery') || cmd.includes('charge')) {
+        const batText = document.getElementById('battery').innerText;
+        addLog("BATTERY SENSOR", `Read ${batText}`);
+        speak("Sir, system battery is at " + batText.replace('PWR: ', ''));
+        return;
+      }
+
+      const mathMatch = cmd.replace(/into|multiply|x/g, '*').replace(/plus/g, '+').replace(/minus/g, '-').replace(/divide by|divided by/g, '/');
+      if (/^[0-9+\-*/().\s]+$/.test(mathMatch.trim()) && /[+\-*/]/.test(mathMatch)) {
+        try {
+          const ans = Function('"use strict";return (' + mathMatch + ')')();
+          addLog("MATH ENGINE", `Calculated: ${mathMatch.trim()} = ${ans}`);
+          speak("The answer is " + ans);
+          return;
+        } catch (e) {}
+      }
+
+      if (cmd.includes('play') || cmd.includes('chalao') || cmd.includes('song')) {
+        const song = cmd.replace(/play|on youtube|chalao|song|gaana/g, '').trim();
+        const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(song)}`;
+        addLog("YOUTUBE LAUNCHER", `Searching video: "${song}"`, ytUrl);
+        speak("Playing " + song + " on YouTube, sir.");
+        window.open(ytUrl, "_blank");
+        return;
+      }
+
+      if (cmd.includes('open youtube')) {
+        addLog("APP LAUNCHER", "Opening YouTube", "https://www.youtube.com");
+        speak("Opening YouTube, sir.");
+        window.open("https://www.youtube.com", "_blank");
+        return;
+      }
+      if (cmd.includes('open whatsapp')) {
+        addLog("APP LAUNCHER", "Opening WhatsApp Web/App", "https://wa.me/");
+        speak("Opening WhatsApp, sir.");
+        window.open("https://wa.me/", "_blank");
+        return;
+      }
+      if (cmd.includes('open instagram')) {
+        addLog("APP LAUNCHER", "Opening Instagram", "https://www.instagram.com");
+        speak("Opening Instagram, sir.");
+        window.open("https://www.instagram.com", "_blank");
+        return;
+      }
+      if (cmd.includes('open maps') || cmd.includes('location')) {
+        addLog("APP LAUNCHER", "Opening Google Maps", "https://maps.google.com");
+        speak("Opening Google Maps, sir.");
+        window.open("https://maps.google.com", "_blank");
+        return;
+      }
+
+      if (cmd.startsWith('who is') || cmd.startsWith('what is') || cmd.startsWith('tell me about') || cmd.includes('kaun hai') || cmd.includes('kya hai')) {
+        const topic = cmd.replace(/who is|what is|tell me about|kaun hai|kya hai/g, '').trim();
+        const found = await searchWikipedia(topic);
+        if (found) return;
+      }
+
+      const gUrl = `https://www.google.com/search?q=${encodeURIComponent(cmd)}`;
+      addLog("GOOGLE SEARCH", `Redirecting query: "${cmd}"`, gUrl);
+      speak("Searching Google for " + cmd);
+      window.open(gUrl, "_blank");
+    }
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
       recognition.lang = 'en-IN';
-      statusEl.innerText = "Listening...";
-      recognition.start();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        setVisualState('listening');
+        statusEl.innerText = "Listening continuously...";
+      };
 
       recognition.onresult = (event) => {
         const cmd = event.results[0][0].transcript.toLowerCase();
         statusEl.innerText = "You: " + cmd;
+        processCommand(cmd);
+      };
 
-        if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('surya') || cmd.includes('jarvis')) {
-          speak("Hello sir! Surya system is online. How may I assist you?");
-        } else if (cmd.includes('time')) {
-          const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-          speak("Sir, the current time is " + time);
-        } else if (cmd.includes('date')) {
-          const date = new Date().toDateString();
-          speak("Today is " + date);
-        } else if (cmd.includes('open youtube')) {
-          speak("Opening YouTube, sir.");
-          window.open("https://www.youtube.com", "_blank");
-        } else if (cmd.includes('open google')) {
-          speak("Opening Google, sir.");
-          window.open("https://www.google.com", "_blank");
-        } else if (cmd.includes('search')) {
-          const query = cmd.replace('search', '').trim();
-          speak("Searching for " + query);
-          window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
-        } else {
-          speak("Searching Google for " + cmd);
-          window.open("https://www.google.com/search?q=" + encodeURIComponent(cmd), "_blank");
+      recognition.onend = () => {
+        if (!window.speechSynthesis.speaking) setVisualState('idle');
+        if (isListening && !window.speechSynthesis.speaking) {
+          try { recognition.start(); } catch (e) {}
         }
       };
 
       recognition.onerror = () => {
-        statusEl.innerText = "Aawaz clear nahi aayi. Dobara ACTIVATE dabayein.";
+        if (!window.speechSynthesis.speaking) setVisualState('idle');
+        if (isListening && !window.speechSynthesis.speaking) {
+          setTimeout(() => { try { recognition.start(); } catch (e) {} }, 600);
+        }
       };
+    }
+
+    function toggleSurya() {
+      if (!SpeechRecognition) {
+        statusEl.innerText = "Browser voice support nahi kar raha. Chrome use karein.";
+        return;
+      }
+      if (!isListening) {
+        isListening = true;
+        toggleBtn.innerText = "STOP";
+        addLog("SYSTEM", "Hands-free continuous mode activated.");
+        recognition.start();
+      } else {
+        isListening = false;
+        toggleBtn.innerText = "ACTIVATE";
+        setVisualState('idle');
+        recognition.stop();
+        addLog("SYSTEM", "System paused.");
+        statusEl.innerText = "Surya paused. Tap ACTIVATE to resume.";
+      }
     }
   </script>
 </body>
