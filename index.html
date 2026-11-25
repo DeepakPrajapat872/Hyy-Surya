@@ -6,156 +6,179 @@
   <meta name="theme-color" content="#020b14" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>S.U.R.Y.A.</title>
+  <title>SURYA AI</title>
 
-  <!-- Custom Glowing App Icon for Home Screen -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Cpolygon points='256,55 430,155 430,357 256,457 82,357 82,155' fill='%2306243b' stroke='%2300f3ff' stroke-width='20'/%3E%3Cpolygon points='256,135 360,195 360,317 256,377 152,317 152,195' fill='%2300f3ff'/%3E%3Ccircle cx='256' cy='256' r='45' fill='%23ffffff'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Cpolygon points='256,55 430,155 430,357 256,457 82,357 82,155' fill='%2306243b' stroke='%2300f3ff' stroke-width='20'/%3E%3Cpolygon points='256,135 360,195 360,317 256,377 152,317 152,195' fill='%2300f3ff'/%3E%3Ccircle cx='256' cy='256' r='45' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <!-- Custom Cyber Orb App Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Ccircle cx='256' cy='256' r='175' fill='none' stroke='%2300f3ff' stroke-width='20' stroke-dasharray='80 30'/%3E%3Ccircle cx='256' cy='256' r='115' fill='%2306243b' stroke='%2338bdf8' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='55' fill='%2300f3ff'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Ccircle cx='256' cy='256' r='175' fill='none' stroke='%2300f3ff' stroke-width='20' stroke-dasharray='80 30'/%3E%3Ccircle cx='256' cy='256' r='115' fill='%2306243b' stroke='%2338bdf8' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='55' fill='%2300f3ff'/%3E%3C/svg%3E" />
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      min-height: 100vh; background: radial-gradient(circle at center, #051624 0%, #010408 100%);
-      color: #00f3ff; font-family: 'Segoe UI', monospace, sans-serif;
-      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-      padding: 16px; overflow-x: hidden;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #071e30 0%, #010509 100%);
+      color: #00f3ff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 12px 14px;
+      gap: 10px;
     }
     .hud-top {
-      width: 100%; max-width: 480px; display: flex; justify-content: space-between;
-      font-size: 12px; border-bottom: 1px solid rgba(0, 243, 255, 0.3); padding-bottom: 8px;
-      letter-spacing: 1px; color: #8be9fd;
+      width: 100%; max-width: 440px;
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #8be9fd;
+      border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+      padding-bottom: 6px;
     }
-    .ai-stage {
-      position: relative; width: 220px; height: 170px; margin: 14px 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+
+    /* New 3D Orbiting Cyber Orb Logo */
+    .orb-container {
+      position: relative;
+      width: 130px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 4px;
       cursor: pointer;
     }
-    .hex-core {
-      width: 95px; height: 95px;
-      background: linear-gradient(135deg, rgba(0, 243, 255, 0.25), rgba(0, 102, 255, 0.4));
-      border: 2px solid #00f3ff;
-      clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+    .orbit-1 {
+      position: absolute; width: 126px; height: 126px;
+      border-radius: 50%;
+      border: 2.5px dashed #00f3ff;
+      animation: spinRight 8s linear infinite;
+    }
+    .orbit-2 {
+      position: absolute; width: 98px; height: 98px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-left-color: #38bdf8;
+      border-right-color: #00f3ff;
+      animation: spinLeft 3.5s linear infinite;
+    }
+    .cyber-sphere {
+      width: 62px; height: 62px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #00f3ff 45%, #003380 90%);
+      box-shadow: 0 0 25px #00f3ff, inset 0 0 12px #ffffff;
+      animation: idleBreath 2.2s ease-in-out infinite alternate;
       transition: all 0.3s ease;
-      animation: floatCore 3s ease-in-out infinite;
     }
-    .hex-inner {
-      width: 50px; height: 50px;
-      background: radial-gradient(circle, #ffffff, #00f3ff, #0051ff);
-      clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
-      animation: coreGlow 2s infinite alternate;
-    }
-    .wave-bars {
-      display: flex; align-items: center; justify-content: center; gap: 5px;
-      height: 45px; margin-top: 16px;
-    }
-    .bar {
-      width: 5px; height: 10px; background: #00f3ff; border-radius: 4px;
-      box-shadow: 0 0 8px #00f3ff; transition: height 0.15s ease, background 0.3s ease;
-    }
-    .listening .hex-core {
-      border-color: #00ff9d;
-      box-shadow: 0 0 35px rgba(0, 255, 157, 0.7);
-      animation: listenPulse 0.9s infinite alternate;
-    }
-    .listening .bar {
-      background: #00ff9d; box-shadow: 0 0 10px #00ff9d;
-      animation: waveListen 0.6s infinite ease-in-out alternate;
-    }
-    .speaking .hex-core {
-      border-color: #a855f7;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(0, 243, 255, 0.5));
-      animation: speakSpin 1.2s infinite alternate;
-    }
-    .speaking .hex-inner {
-      background: radial-gradient(circle, #ffffff, #d8b4fe, #7e22ce);
-    }
-    .speaking .bar {
-      background: #c084fc; box-shadow: 0 0 12px #c084fc;
-      animation: waveSpeak 0.35s infinite ease-in-out alternate;
-    }
-    .bar:nth-child(1) { animation-delay: 0.05s; }
-    .bar:nth-child(2) { animation-delay: 0.15s; }
-    .bar:nth-child(3) { animation-delay: 0.25s; }
-    .bar:nth-child(4) { animation-delay: 0.10s; }
-    .bar:nth-child(5) { animation-delay: 0.30s; }
-    .bar:nth-child(6) { animation-delay: 0.20s; }
-    .bar:nth-child(7) { animation-delay: 0.35s; }
-    .bar:nth-child(8) { animation-delay: 0.12s; }
-    .bar:nth-child(9) { animation-delay: 0.28s; }
-    .bar:nth-child(10) { animation-delay: 0.18s; }
 
-    @keyframes floatCore { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
-    @keyframes coreGlow { from { transform: scale(0.9); opacity: 0.85; } to { transform: scale(1.08); opacity: 1; } }
-    @keyframes listenPulse { from { transform: scale(0.95); } to { transform: scale(1.1); } }
-    @keyframes speakSpin { 0% { transform: scale(1) rotate(-4deg); } 100% { transform: scale(1.12) rotate(4deg); } }
-    @keyframes waveListen { 0% { height: 8px; } 100% { height: 28px; } }
-    @keyframes waveSpeak { 0% { height: 10px; } 100% { height: 42px; } }
+    .listening .orbit-1 { border-color: #00ff9d; animation-duration: 2.5s; }
+    .listening .orbit-2 { border-left-color: #00ff9d; border-right-color: #00ff9d; animation-duration: 1.5s; }
+    .listening .cyber-sphere {
+      background: radial-gradient(circle at 30% 30%, #ffffff, #00ff9d 45%, #006633 90%);
+      box-shadow: 0 0 35px #00ff9d;
+      animation: activePulse 0.6s infinite alternate;
+    }
 
-    h1 { letter-spacing: 6px; font-size: 22px; text-shadow: 0 0 10px #00f3ff; }
-    #status { color: #e0f7fa; margin: 8px 0; font-size: 15px; min-height: 42px; max-width: 480px; text-align: center; }
+    .speaking .orbit-1 { border-color: #c084fc; animation-duration: 1.8s; }
+    .speaking .orbit-2 { border-left-color: #e879f9; border-right-color: #38bdf8; animation-duration: 1s; }
+    .speaking .cyber-sphere {
+      background: radial-gradient(circle at 30% 30%, #ffffff, #c084fc 45%, #4c1d95 90%);
+      box-shadow: 0 0 40px #c084fc;
+      animation: speakBounce 0.35s infinite alternate;
+    }
+
+    @keyframes spinRight { 100% { transform: rotate(360deg); } }
+    @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
+    @keyframes idleBreath { from { transform: scale(0.94); } to { transform: scale(1.04); } }
+    @keyframes activePulse { from { transform: scale(0.92); } to { transform: scale(1.12); } }
+    @keyframes speakBounce { from { transform: scale(0.95); } to { transform: scale(1.18); } }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 12px #00f3ff;
+    }
+    #status {
+      font-size: 13px;
+      color: #a5f3fc;
+      text-align: center;
+      max-width: 420px;
+      min-height: 20px;
+    }
+    button {
+      padding: 10px 32px;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: #ffffff;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 0 16px rgba(0, 198, 255, 0.5);
+      cursor: pointer;
+    }
+    button.active-stop {
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      box-shadow: 0 0 16px rgba(255, 65, 108, 0.5);
+    }
+
     .log-panel {
-      width: 100%; max-width: 480px; background: rgba(0, 243, 255, 0.06);
-      border: 1px solid rgba(0, 243, 255, 0.35); border-radius: 10px;
-      padding: 10px 12px; text-align: left; font-size: 12px;
-      max-height: 150px; overflow-y: auto; margin: 10px 0;
+      width: 100%; max-width: 440px;
+      background: rgba(0, 243, 255, 0.05);
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 11px;
+      max-height: 150px;
+      overflow-y: auto;
+      margin-top: 4px;
     }
-    .log-title { font-weight: bold; color: #00f3ff; border-bottom: 1px solid rgba(0,243,255,0.2); padding-bottom: 4px; margin-bottom: 6px; font-size: 11px; letter-spacing: 1px; }
-    .log-entry { margin-bottom: 6px; line-height: 1.4; color: #a5f3fc; }
+    .log-title {
+      font-weight: bold; color: #00f3ff;
+      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+      padding-bottom: 3px; margin-bottom: 5px;
+      font-size: 10px; letter-spacing: 1px;
+    }
+    .log-entry { margin-bottom: 5px; line-height: 1.35; color: #cffafe; }
     .log-source { color: #fde047; font-weight: bold; }
     .log-entry a { color: #38bdf8; text-decoration: underline; }
-    button {
-      padding: 12px 34px; font-size: 15px; font-weight: bold; letter-spacing: 2px;
-      background: rgba(0, 243, 255, 0.1); color: #00f3ff; border: 2px solid #00f3ff;
-      border-radius: 30px; box-shadow: 0 0 18px rgba(0,243,255,0.4); cursor: pointer;
-    }
-    button:active { background: #00f3ff; color: #020b14; }
   </style>
 </head>
 <body>
   <div class="hud-top">
     <span id="clock">TIME: --:--</span>
     <span id="battery">PWR: --%</span>
-    <span>MODE: HANDS-FREE</span>
+    <span>HANDS-FREE</span>
   </div>
 
-  <div class="ai-stage" id="aiStage" onclick="toggleSurya()">
-    <div class="hex-core"><div class="hex-inner"></div></div>
-    <div class="wave-bars">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div>
-    </div>
+  <!-- New Cyber Orb Logo -->
+  <div class="orb-container" id="orbLogo" onclick="toggleSurya()">
+    <div class="orbit-1"></div>
+    <div class="orbit-2"></div>
+    <div class="cyber-sphere"></div>
   </div>
 
-  <h1>S.U.R.Y.A.</h1>
-  <div id="status">Tap "ACTIVATE" once for continuous mode...</div>
+  <h1>SURYA</h1>
+  <div id="status">Tap ACTIVATE once for hands-free mode</div>
+  <button id="toggleBtn" onclick="toggleSurya()">ACTIVATE</button>
 
-  <div class="log-panel" id="logPanel">
+  <div class="log-panel">
     <div class="log-title">LIVE EXECUTION &amp; SOURCE LOG</div>
     <div id="logList">
       <div class="log-entry"><span class="log-source">[SYSTEM]</span> Ready. Waiting for activation...</div>
     </div>
   </div>
 
-  <button id="toggleBtn" onclick="toggleSurya()">ACTIVATE</button>
-
   <script>
     const statusEl = document.getElementById('status');
     const toggleBtn = document.getElementById('toggleBtn');
     const logList = document.getElementById('logList');
-    const aiStage = document.getElementById('aiStage');
+    const orbLogo = document.getElementById('orbLogo');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     let isListening = false;
     let recognition = null;
 
     function setVisualState(state) {
-      aiStage.classList.remove('listening', 'speaking');
-      if (state === 'listening') aiStage.classList.add('listening');
-      if (state === 'speaking') aiStage.classList.add('speaking');
+      orbLogo.classList.remove('listening', 'speaking');
+      if (state === 'listening') orbLogo.classList.add('listening');
+      if (state === 'speaking') orbLogo.classList.add('speaking');
     }
 
     setInterval(() => {
@@ -174,12 +197,12 @@
     function addLog(source, detail, url = null) {
       const div = document.createElement('div');
       div.className = 'log-entry';
-      let linkHtml = url ? ` — <a href="${url}" target="_blank">Open Source Link</a>` : '';
+      let linkHtml = url ? ` — <a href="${url}" target="_blank">Open Link</a>` : '';
       div.innerHTML = `<span class="log-source">[${source}]</span> ${detail}${linkHtml}`;
       logList.prepend(div);
     }
 
-    function speak(text) {
+    function speak(text, callback = null) {
       statusEl.innerText = "Surya: " + text;
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
@@ -190,23 +213,40 @@
       utter.onstart = () => setVisualState('speaking');
       utter.onend = () => {
         setVisualState('idle');
-        if (isListening) {
+        if (callback) callback();
+        else if (isListening) {
           try { recognition.start(); } catch (e) {}
         }
       };
       window.speechSynthesis.speak(utter);
     }
 
-    async function searchWikipedia(query) {
-      addLog("WIKIPEDIA API", `Fetching summary for "${query}"...`);
+    async function searchWikipedia(rawQuery) {
+      // Clean Hindi/English question words to extract exact topic
+      const topic = rawQuery
+        .replace(/\b(who is|what is|tell me about|when was|born|died|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|ke bare mein batao|in hindi)\b/gi, '')
+        .trim();
+
+      if (!topic || topic.length < 2) return false;
+      addLog("WIKIPEDIA SEARCH", `Searching topic: "${topic}"...`);
+
       try {
-        const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error("Not found");
-        const data = await res.json();
-        if (data.extract) {
-          const shortAns = data.extract.split('. ').slice(0, 2).join('. ') + '.';
-          addLog("WIKIPEDIA VERIFIED", shortAns, data.content_urls?.desktop?.page);
+        // Step 1: Find closest Wikipedia page title via Search API
+        const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(topic)}&format=json&origin=*`;
+        const searchRes = await fetch(searchUrl);
+        const searchData = await searchRes.json();
+        const bestTitle = searchData?.query?.search?.[0]?.title;
+
+        if (!bestTitle) return false;
+
+        // Step 2: Fetch clean summary of that page
+        const summaryUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bestTitle)}`;
+        const sumRes = await fetch(summaryUrl);
+        const sumData = await sumRes.json();
+
+        if (sumData.extract) {
+          const shortAns = sumData.extract.split('. ').slice(0, 2).join('. ') + '.';
+          addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls?.desktop?.page);
           speak(shortAns);
           return true;
         }
@@ -219,41 +259,46 @@
     async function processCommand(cmd) {
       addLog("VOICE INPUT", `Heard: "${cmd}"`);
 
-      if (cmd.includes('stop') || cmd.includes('sleep') || cmd.includes('band ho ja')) {
+      // Stop / Sleep command
+      if (/\b(stop|sleep|band ho ja)\b/i.test(cmd)) {
         isListening = false;
         toggleBtn.innerText = "ACTIVATE";
-        addLog("SYSTEM", "Continuous listening stopped by user.");
+        toggleBtn.classList.remove('active-stop');
+        addLog("SYSTEM", "Continuous listening stopped.");
         speak("Going to sleep mode, sir.");
         return;
       }
 
-      if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('namaste') || cmd.includes('surya')) {
+      // Exact word greeting check (fixes "hi" inside "tha/thi" bug!)
+      if (/^(hello|hi|hey|namaste|surya|hello surya|hi surya)$/i.test(cmd.trim())) {
         addLog("LOCAL AI", "Greeting module triggered.");
-        speak("Hello sir! Surya quantum core is online. How may I assist you?");
+        speak("Hello sir! Surya system is online. How may I assist you?");
         return;
       }
 
-      if (cmd.includes('time') || cmd.includes('samay') || cmd.includes('kitne baje')) {
+      // Time & Date
+      if (/\b(time|samay|kitne baje)\b/i.test(cmd)) {
         const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        addLog("DEVICE CLOCK", `Fetched local time: ${time}`);
+        addLog("DEVICE CLOCK", `Fetched time: ${time}`);
         speak("Sir, the current time is " + time);
         return;
       }
-
-      if (cmd.includes('date') || cmd.includes('tarikh') || cmd.includes('aaj kya din')) {
+      if (/\b(date|tarikh|aaj kya din)\b/i.test(cmd)) {
         const date = new Date().toDateString();
-        addLog("DEVICE CALENDAR", `Fetched local date: ${date}`);
+        addLog("DEVICE CALENDAR", `Fetched date: ${date}`);
         speak("Today is " + date);
         return;
       }
 
-      if (cmd.includes('battery') || cmd.includes('charge')) {
+      // Battery
+      if (/\b(battery|charge)\b/i.test(cmd)) {
         const batText = document.getElementById('battery').innerText;
         addLog("BATTERY SENSOR", `Read ${batText}`);
         speak("Sir, system battery is at " + batText.replace('PWR: ', ''));
         return;
       }
 
+      // Math calculation
       const mathMatch = cmd.replace(/into|multiply|x/g, '*').replace(/plus/g, '+').replace(/minus/g, '-').replace(/divide by|divided by/g, '/');
       if (/^[0-9+\-*/().\s]+$/.test(mathMatch.trim()) && /[+\-*/]/.test(mathMatch)) {
         try {
@@ -264,50 +309,45 @@
         } catch (e) {}
       }
 
-      if (cmd.includes('play') || cmd.includes('chalao') || cmd.includes('song')) {
-        const song = cmd.replace(/play|on youtube|chalao|song|gaana/g, '').trim();
+      // Play song on YouTube
+      if (/\b(play|chalao|song|gaana)\b/i.test(cmd)) {
+        const song = cmd.replace(/play|on youtube|chalao|song|gaana/gi, '').trim();
         const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(song)}`;
-        addLog("YOUTUBE LAUNCHER", `Searching video: "${song}"`, ytUrl);
-        speak("Playing " + song + " on YouTube, sir.");
-        window.open(ytUrl, "_blank");
+        addLog("YOUTUBE LAUNCHER", `Playing: "${song}"`, ytUrl);
+        speak("Opening YouTube for " + song, () => { window.location.href = ytUrl; });
         return;
       }
 
-      if (cmd.includes('open youtube')) {
+      // Open Apps (Works in Hindi & English without popup block)
+      if (cmd.includes('youtube') && (cmd.includes('open') || cmd.includes('kholo') || cmd.includes('karo'))) {
         addLog("APP LAUNCHER", "Opening YouTube", "https://www.youtube.com");
-        speak("Opening YouTube, sir.");
-        window.open("https://www.youtube.com", "_blank");
+        speak("Opening YouTube, sir.", () => { window.location.href = "https://www.youtube.com"; });
         return;
       }
-      if (cmd.includes('open whatsapp')) {
-        addLog("APP LAUNCHER", "Opening WhatsApp Web/App", "https://wa.me/");
-        speak("Opening WhatsApp, sir.");
-        window.open("https://wa.me/", "_blank");
+      if (cmd.includes('whatsapp') && (cmd.includes('open') || cmd.includes('kholo') || cmd.includes('karo'))) {
+        addLog("APP LAUNCHER", "Opening WhatsApp", "https://wa.me/");
+        speak("Opening WhatsApp, sir.", () => { window.location.href = "https://wa.me/"; });
         return;
       }
-      if (cmd.includes('open instagram')) {
+      if (cmd.includes('instagram') && (cmd.includes('open') || cmd.includes('kholo') || cmd.includes('karo'))) {
         addLog("APP LAUNCHER", "Opening Instagram", "https://www.instagram.com");
-        speak("Opening Instagram, sir.");
-        window.open("https://www.instagram.com", "_blank");
+        speak("Opening Instagram, sir.", () => { window.location.href = "https://www.instagram.com"; });
         return;
       }
-      if (cmd.includes('open maps') || cmd.includes('location')) {
-        addLog("APP LAUNCHER", "Opening Google Maps", "https://maps.google.com");
-        speak("Opening Google Maps, sir.");
-        window.open("https://maps.google.com", "_blank");
+      if (cmd.includes('google') && (cmd.includes('open') || cmd.includes('kholo') || cmd.includes('karo'))) {
+        addLog("APP LAUNCHER", "Opening Google", "https://www.google.com");
+        speak("Opening Google, sir.", () => { window.location.href = "https://www.google.com"; });
         return;
       }
 
-      if (cmd.startsWith('who is') || cmd.startsWith('what is') || cmd.startsWith('tell me about') || cmd.includes('kaun hai') || cmd.includes('kya hai')) {
-        const topic = cmd.replace(/who is|what is|tell me about|kaun hai|kya hai/g, '').trim();
-        const found = await searchWikipedia(topic);
-        if (found) return;
-      }
+      // Try Wikipedia First for ANY General Knowledge Question (Hindi or English)
+      const wikiSuccess = await searchWikipedia(cmd);
+      if (wikiSuccess) return;
 
+      // Fallback Google Search
       const gUrl = `https://www.google.com/search?q=${encodeURIComponent(cmd)}`;
-      addLog("GOOGLE SEARCH", `Redirecting query: "${cmd}"`, gUrl);
-      speak("Searching Google for " + cmd);
-      window.open(gUrl, "_blank");
+      addLog("GOOGLE SEARCH", `Searching: "${cmd}"`, gUrl);
+      speak("Searching Google for " + cmd, () => { window.location.href = gUrl; });
     }
 
     if (SpeechRecognition) {
@@ -350,11 +390,13 @@
       if (!isListening) {
         isListening = true;
         toggleBtn.innerText = "STOP";
+        toggleBtn.classList.add('active-stop');
         addLog("SYSTEM", "Hands-free continuous mode activated.");
         recognition.start();
       } else {
         isListening = false;
         toggleBtn.innerText = "ACTIVATE";
+        toggleBtn.classList.remove('active-stop');
         setVisualState('idle');
         recognition.stop();
         addLog("SYSTEM", "System paused.");
