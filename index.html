@@ -14,60 +14,60 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{width:100%;height:100dvh;overflow:hidden;background:#020b14}
     body{
-      background:radial-gradient(circle at 50% 20%,#0e3b5e 0%,#020b14 58%,#010509 100%);
+      background:radial-gradient(circle at 50% 18%,#0e3b5e 0%,#020b14 58%,#010509 100%);
       color:#00f3ff;font-family:'Segoe UI',sans-serif;
       display:flex;flex-direction:column;justify-content:space-between;align-items:center;
-      padding:14px 16px 16px;gap:10px;
+      padding:12px 14px 14px;gap:8px;
     }
     @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .hud-top{
-      width:100%;max-width:460px;display:flex;justify-content:space-between;align-items:center;
-      font-size:13.5px;color:#93e8ff;border-bottom:1px solid rgba(0,243,255,.25);
-      padding-bottom:9px;gap:6px;flex-shrink:0;animation:fadeUp .3s ease both;
+      width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;
+      font-size:13px;color:#93e8ff;border-bottom:1px solid rgba(0,243,255,.25);
+      padding-bottom:8px;gap:6px;flex-shrink:0;animation:fadeUp .3s ease both;
     }
-    .badge-group{display:flex;align-items:center;gap:7px}
+    .badge-group{display:flex;align-items:center;gap:6px}
     .engine-badge{
       border:1px solid rgba(253,224,71,.78);color:#fde047;background:rgba(253,224,71,.14);
-      padding:4px 11px;border-radius:13px;font-size:11px;font-weight:bold;
+      padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:bold;
     }
     .mute-btn{
       border:1px solid rgba(56,189,248,.68);color:#e0f2fe;background:rgba(56,189,248,.16);
-      padding:4px 11px;border-radius:13px;font-size:11px;font-weight:bold;cursor:pointer;
+      padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:bold;cursor:pointer;
     }
     .center-stage{
-      width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;gap:10px;
-      flex-shrink:0;margin:4px 0;
+      width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:7px;
+      flex-shrink:0;
     }
     .orb-container{
-      position:relative;width:176px;height:176px;display:flex;align-items:center;justify-content:center;
+      position:relative;width:154px;height:154px;display:flex;align-items:center;justify-content:center;
       cursor:pointer;animation:fadeUp .4s ease both;
     }
     .orbit-1{
-      position:absolute;width:168px;height:168px;border-radius:50%;
-      border:3.5px dashed rgba(0,243,255,.82);animation:spinR 9s linear infinite;
+      position:absolute;width:148px;height:148px;border-radius:50%;
+      border:3px dashed rgba(0,243,255,.82);animation:spinR 9s linear infinite;
     }
     .orbit-2{
-      position:absolute;width:130px;height:130px;border-radius:50%;
-      border:4px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
+      position:absolute;width:114px;height:114px;border-radius:50%;
+      border:3.5px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
       animation:spinL 3.8s linear infinite;
     }
     .cyber-sphere{
-      width:84px;height:84px;border-radius:50%;
+      width:74px;height:74px;border-radius:50%;
       background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
-      box-shadow:0 0 36px rgba(0,243,255,.92),inset 0 0 16px rgba(255,255,255,.85);
+      box-shadow:0 0 34px rgba(0,243,255,.92),inset 0 0 15px rgba(255,255,255,.85);
       animation:idleB 2.4s ease-in-out infinite alternate;
       transition:all .3s ease;
     }
     .listening .orbit-1{border-color:#00ff9d;animation-duration:2.4s}
     .listening .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#00ff9d 46%,#006633 92%);
-      box-shadow:0 0 46px rgba(0,255,157,.95),inset 0 0 16px #fff;
+      box-shadow:0 0 44px rgba(0,255,157,.95),inset 0 0 15px #fff;
       animation:actP .65s ease-in-out infinite alternate;
     }
     .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
     .speaking .cyber-sphere{
       background:radial-gradient(circle at 32% 28%,#ffffff,#c084fc 46%,#4c1d95 92%);
-      box-shadow:0 0 50px rgba(192,132,252,.95),inset 0 0 16px #fff;
+      box-shadow:0 0 48px rgba(192,132,252,.95),inset 0 0 15px #fff;
       animation:spkB .35s ease-in-out infinite alternate;
     }
     @keyframes spinR{100%{transform:rotate(360deg)}}
@@ -76,63 +76,63 @@
     @keyframes actP{from{transform:scale(.93)}to{transform:scale(1.13)}}
     @keyframes spkB{from{transform:scale(.96)}to{transform:scale(1.18)}}
     h1{
-      font-size:35px;font-weight:800;letter-spacing:3px;color:#fff;
+      font-size:32px;font-weight:800;letter-spacing:2.8px;color:#fff;
       text-shadow:0 0 18px rgba(0,243,255,.65);
     }
     #status{
-      font-size:15px;color:#bceeff;text-align:center;width:100%;min-height:22px;line-height:1.38;
+      font-size:14px;color:#bceeff;text-align:center;width:100%;min-height:20px;line-height:1.35;
       padding:0 6px;
     }
     .main-btn{
-      padding:14px 50px;font-size:16.5px;font-weight:bold;letter-spacing:1.8px;
+      padding:12px 46px;font-size:15.5px;font-weight:bold;letter-spacing:1.8px;
       background:linear-gradient(90deg,#189bff,#0066ff);color:#fff;border:none;
-      border-radius:30px;box-shadow:0 6px 26px rgba(0,153,255,.52);cursor:pointer;
+      border-radius:28px;box-shadow:0 5px 22px rgba(0,153,255,.5);cursor:pointer;
       transition:transform .18s ease;
     }
     .main-btn:active{transform:scale(.96)}
     .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b)}
     .quick-chips{
-      width:100%;max-width:460px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;flex-shrink:0;
+      width:100%;max-width:440px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;flex-shrink:0;
     }
     .chip{
       background:rgba(12,42,68,.65);border:1px solid rgba(125,211,252,.38);
-      color:#e0f7ff;padding:8px 14px;border-radius:14px;font-size:13px;cursor:pointer;
+      color:#e0f7ff;padding:7px 12px;border-radius:13px;font-size:12.5px;cursor:pointer;
     }
     .chip:active{transform:scale(.95)}
     .log-panel{
-      width:100%;max-width:460px;flex:1;min-height:130px;
+      width:100%;max-width:440px;height:172px;max-height:22vh;flex-shrink:0;
       background:linear-gradient(180deg,rgba(13,44,72,.6) 0%,rgba(5,19,34,.82) 100%);
-      border:1px solid rgba(125,211,252,.32);border-radius:18px;
-      padding:12px 14px;font-size:13.5px;overflow:hidden;
+      border:1px solid rgba(125,211,252,.32);border-radius:16px;
+      padding:10px 12px;font-size:12.5px;overflow:hidden;
       display:flex;flex-direction:column;
     }
     .log-header{
       display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid rgba(125,211,252,.22);padding-bottom:8px;margin-bottom:8px;
+      border-bottom:1px solid rgba(125,211,252,.22);padding-bottom:6px;margin-bottom:7px;
       flex-shrink:0;
     }
-    .log-title{font-weight:bold;color:#e6f9ff;font-size:11.5px;letter-spacing:.6px}
+    .log-title{font-weight:bold;color:#e6f9ff;font-size:11px;letter-spacing:.5px}
     .clear-btn{
       background:rgba(30,90,140,.55);border:1px solid rgba(125,211,252,.32);
-      color:#dff6ff;font-size:12px;padding:4px 12px;border-radius:11px;cursor:pointer;
+      color:#dff6ff;font-size:11.5px;padding:3px 11px;border-radius:10px;cursor:pointer;
     }
     #logList{flex:1;overflow-y:auto}
-    .log-entry{margin-bottom:8px;line-height:1.45;color:#d6f5ff}
+    .log-entry{margin-bottom:6px;line-height:1.4;color:#d6f5ff}
     .log-source{color:#67e8f9;font-weight:bold}
     .log-entry a{color:#38bdf8;text-decoration:underline}
     .chat-bar{
-      width:100%;max-width:460px;display:flex;align-items:center;gap:10px;flex-shrink:0;
-      background:rgba(10,34,58,.78);border:1px solid rgba(125,211,252,.38);
-      border-radius:30px;padding:8px 10px 8px 18px;
+      width:100%;max-width:440px;display:flex;align-items:center;gap:8px;flex-shrink:0;
+      background:rgba(10,34,58,.82);border:1px solid rgba(125,211,252,.4);
+      border-radius:28px;padding:7px 9px 7px 16px;
     }
     .chat-input{
       flex:1;background:transparent;border:none;outline:none;color:#ffffff;
-      font-size:15.5px;min-width:0;
+      font-size:14.5px;min-width:0;
     }
     .chat-input::placeholder{color:#9ec4d8}
     .icon-btn{
-      width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;font-size:17.5px;flex-shrink:0;
+      width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:16.5px;flex-shrink:0;
     }
     .mic-mini{background:rgba(56,189,248,.22);color:#e0f7ff;border:1px solid rgba(125,211,252,.4)}
     .send-mini{background:linear-gradient(135deg,#22b8ff,#0066ff);color:#fff}
