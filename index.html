@@ -4,180 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#020b14" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>SURYA AI</title>
-
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Ccircle cx='256' cy='256' r='175' fill='none' stroke='%2300f3ff' stroke-width='20' stroke-dasharray='80 30'/%3E%3Ccircle cx='256' cy='256' r='115' fill='%2306243b' stroke='%2338bdf8' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='55' fill='%2300f3ff'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%23020b14'/%3E%3Ccircle cx='256' cy='256' r='175' fill='none' stroke='%2300f3ff' stroke-width='20' stroke-dasharray='80 30'/%3E%3Ccircle cx='256' cy='256' r='115' fill='%2306243b' stroke='%2338bdf8' stroke-width='12'/%3E%3Ccircle cx='256' cy='256' r='55' fill='%2300f3ff'/%3E%3C/svg%3E" />
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
     body {
-      min-height: 100vh;
       background: radial-gradient(circle at top, #071e30 0%, #010509 100%);
       color: #00f3ff;
       font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 12px 14px;
-      gap: 9px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 12px 14px; gap: 9px;
     }
     .hud-top {
       width: 100%; max-width: 440px;
       display: flex; justify-content: space-between; align-items: center;
       font-size: 11px; color: #8be9fd;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.25);
-      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(0, 243, 255, 0.25); padding-bottom: 6px;
       gap: 6px;
     }
-    .badge-group {
-      display: flex; align-items: center; gap: 6px;
-    }
+    .badge-group { display: flex; align-items: center; gap: 6px; }
     .engine-badge {
-      border: 1px solid #fde047;
-      color: #fde047;
+      border: 1px solid #fde047; color: #fde047;
       background: rgba(253, 224, 71, 0.12);
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: bold;
+      padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold;
     }
     .mute-btn {
-      border: 1px solid #38bdf8;
-      color: #e0f2fe;
+      border: 1px solid #38bdf8; color: #e0f2fe;
       background: rgba(56, 189, 248, 0.15);
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: bold;
-      cursor: pointer;
+      padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; cursor: pointer;
     }
-
-    /* 3D Orbiting Cyber Orb Logo */
     .orb-container {
-      position: relative;
-      width: 120px; height: 120px;
-      display: flex; align-items: center; justify-content: center;
-      margin-top: 2px;
-      cursor: pointer;
+      position: relative; width: 120px; height: 120px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
     .orbit-1 {
-      position: absolute; width: 116px; height: 116px;
-      border-radius: 50%;
-      border: 2.5px dashed #00f3ff;
-      animation: spinRight 8s linear infinite;
+      position: absolute; width: 116px; height: 116px; border-radius: 50%;
+      border: 2.5px dashed #00f3ff; animation: spinRight 8s linear infinite;
     }
     .orbit-2 {
-      position: absolute; width: 90px; height: 90px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-left-color: #38bdf8;
-      border-right-color: #00f3ff;
+      position: absolute; width: 90px; height: 90px; border-radius: 50%;
+      border: 3px solid transparent; border-left-color: #38bdf8; border-right-color: #00f3ff;
       animation: spinLeft 3.5s linear infinite;
     }
     .cyber-sphere {
-      width: 56px; height: 56px;
-      border-radius: 50%;
+      width: 56px; height: 56px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #ffffff, #00f3ff 45%, #003380 90%);
       box-shadow: 0 0 25px #00f3ff, inset 0 0 12px #ffffff;
       animation: idleBreath 2.2s ease-in-out infinite alternate;
-      transition: all 0.3s ease;
     }
-
     .listening .orbit-1 { border-color: #00ff9d; animation-duration: 2.5s; }
-    .listening .orbit-2 { border-left-color: #00ff9d; border-right-color: #00ff9d; animation-duration: 1.5s; }
     .listening .cyber-sphere {
       background: radial-gradient(circle at 30% 30%, #ffffff, #00ff9d 45%, #006633 90%);
       box-shadow: 0 0 35px #00ff9d;
       animation: activePulse 0.6s infinite alternate;
     }
-
     .speaking .orbit-1 { border-color: #c084fc; animation-duration: 1.8s; }
-    .speaking .orbit-2 { border-left-color: #e879f9; border-right-color: #38bdf8; animation-duration: 1s; }
     .speaking .cyber-sphere {
       background: radial-gradient(circle at 30% 30%, #ffffff, #c084fc 45%, #4c1d95 90%);
       box-shadow: 0 0 40px #c084fc;
       animation: speakBounce 0.35s infinite alternate;
     }
-
     @keyframes spinRight { 100% { transform: rotate(360deg); } }
     @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
     @keyframes idleBreath { from { transform: scale(0.94); } to { transform: scale(1.04); } }
     @keyframes activePulse { from { transform: scale(0.92); } to { transform: scale(1.12); } }
     @keyframes speakBounce { from { transform: scale(0.95); } to { transform: scale(1.18); } }
 
-    h1 {
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #ffffff;
-      text-shadow: 0 0 12px #00f3ff;
-    }
-    #status {
-      font-size: 13px;
-      color: #a5f3fc;
-      text-align: center;
-      max-width: 420px;
-      min-height: 20px;
-    }
+    h1 { font-size: 23px; font-weight: 800; letter-spacing: 2px; color: #fff; text-shadow: 0 0 12px #00f3ff; }
+    #status { font-size: 13px; color: #a5f3fc; text-align: center; max-width: 420px; min-height: 20px; }
     .main-btn {
-      padding: 10px 32px;
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: #ffffff;
-      border: none;
-      border-radius: 25px;
-      box-shadow: 0 0 16px rgba(0, 198, 255, 0.5);
-      cursor: pointer;
+      padding: 10px 32px; font-size: 14px; font-weight: bold; letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff); color: #fff;
+      border: none; border-radius: 25px; box-shadow: 0 0 16px rgba(0, 198, 255, 0.5); cursor: pointer;
     }
-    .main-btn.active-stop {
-      background: linear-gradient(90deg, #ff416c, #ff4b2b);
-      box-shadow: 0 0 16px rgba(255, 65, 108, 0.5);
-    }
-
-    .quick-chips {
-      width: 100%; max-width: 440px;
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
-    }
+    .main-btn.active-stop { background: linear-gradient(90deg, #ff416c, #ff4b2b); }
+    .quick-chips { width: 100%; max-width: 440px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
     .chip {
-      background: rgba(0, 243, 255, 0.08);
-      border: 1px solid rgba(0, 243, 255, 0.35);
-      color: #cffafe;
-      padding: 4px 10px;
-      border-radius: 14px;
-      font-size: 11px;
-      cursor: pointer;
+      background: rgba(0, 243, 255, 0.08); border: 1px solid rgba(0, 243, 255, 0.35);
+      color: #cffafe; padding: 4px 10px; border-radius: 14px; font-size: 11px; cursor: pointer;
     }
-
     .log-panel {
-      width: 100%; max-width: 440px;
-      background: rgba(0, 243, 255, 0.05);
-      border: 1px solid rgba(0, 243, 255, 0.3);
-      border-radius: 10px;
-      padding: 8px 10px;
-      font-size: 11px;
-      max-height: 165px;
-      overflow-y: auto;
-      margin-top: 2px;
+      width: 100%; max-width: 440px; background: rgba(0, 243, 255, 0.05);
+      border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 10px;
+      padding: 8px 10px; font-size: 11px; max-height: 165px; overflow-y: auto;
     }
     .log-header {
       display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-      padding-bottom: 3px; margin-bottom: 5px;
+      border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 3px; margin-bottom: 5px;
     }
-    .log-title {
-      font-weight: bold; color: #00f3ff;
-      font-size: 10px; letter-spacing: 1px;
-    }
-    .clear-btn {
-      background: none; border: none; color: #94a3b8;
-      font-size: 10px; cursor: pointer; text-decoration: underline;
-    }
+    .log-title { font-weight: bold; color: #00f3ff; font-size: 10px; letter-spacing: 1px; }
+    .clear-btn { background: none; border: none; color: #94a3b8; font-size: 10px; cursor: pointer; text-decoration: underline; }
     .log-entry { margin-bottom: 5px; line-height: 1.35; color: #cffafe; }
     .log-source { color: #fde047; font-weight: bold; }
     .log-entry a { color: #38bdf8; text-decoration: underline; }
@@ -230,10 +146,7 @@
     const clearLogBtn = document.getElementById('clearLogBtn');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    let isListening = false;
-    let isSpeaking = false;
-    let isMuted = false;
-    let recognition = null;
+    let isListening = false, isSpeaking = false, isMuted = false, recognition = null;
 
     function setVisualState(state) {
       orbLogo.classList.remove('listening', 'speaking');
@@ -243,29 +156,31 @@
 
     function updateClock() {
       const now = new Date();
-      document.getElementById('clock').innerText = "TIME: " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      document.getElementById('clock').innerText = "TIME: " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
     updateClock();
     setInterval(updateClock, 1000);
 
     if (navigator.getBattery) {
       navigator.getBattery().then(function(b) {
-        const updateBat = function() {
-          document.getElementById('battery').innerText = "PWR: " + Math.round(b.level * 100) + "%";
-        };
-        updateBat();
-        b.addEventListener('levelchange', updateBat);
+        const upd = function() { document.getElementById('battery').innerText = "PWR: " + Math.round(b.level * 100) + "%"; };
+        upd();
+        b.addEventListener('levelchange', upd);
       });
+    }
+
+    function addLog(source, detail, url = null) {
+      const div = document.createElement('div');
+      div.className = 'log-entry';
+      const linkHtml = url ? ' — <a href="' + url + '" target="_blank">Open</a>' : '';
+      div.innerHTML = '<span class="log-source">[' + source + ']</span> ' + detail + linkHtml;
+      logList.prepend(div);
     }
 
     muteBtn.addEventListener('click', function() {
       isMuted = !isMuted;
       muteBtn.innerText = isMuted ? "🔇 MUTED" : "🔊 VOICE ON";
-      if (isMuted) {
-        window.speechSynthesis.cancel();
-        isSpeaking = false;
-        setVisualState(isListening ? 'listening' : 'idle');
-      }
+      if (isMuted) { window.speechSynthesis.cancel(); isSpeaking = false; setVisualState(isListening ? 'listening' : 'idle'); }
       addLog("SYSTEM", isMuted ? "Voice output muted." : "Voice output enabled.");
     });
 
@@ -273,19 +188,9 @@
       logList.innerHTML = '<div class="log-entry"><span class="log-source">[SURYA]</span> Log cleared.</div>';
     });
 
-    function addLog(source, detail, url = null) {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      let linkHtml = url ? ' — <a href="' + url + '" target="_blank">Open</a>' : '';
-      div.innerHTML = '<span class="log-source">[' + source + ']</span> ' + detail + linkHtml;
-      logList.prepend(div);
-    }
-
     function detectLanguage(text) {
       if (/[\u0900-\u097F]/.test(text)) return 'hi';
-      if (/\b(kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|vargmool|ghat)\b/i.test(text)) {
-        return 'hi';
-      }
+      if (/\b(kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|vargmool|ghat)\b/i.test(text)) return 'hi';
       return 'en';
     }
 
@@ -293,49 +198,24 @@
       const cleanSpeech = text.replace(/[*#_`]/g, '');
       statusEl.innerText = "Surya: " + cleanSpeech;
       window.speechSynthesis.cancel();
-
-      if (recognition) {
-        try { recognition.abort(); } catch (e) {}
-      }
+      if (recognition) try { recognition.abort(); } catch (e) {}
 
       if (isMuted) {
-        isSpeaking = false;
-        setVisualState('idle');
-        if (callback) {
-          callback();
-        } else if (isListening) {
-          setTimeout(function() {
-            if (isListening && !isSpeaking) {
-              try { recognition.start(); } catch (e) {}
-            }
-          }, 300);
-        }
+        isSpeaking = false; setVisualState('idle');
+        if (callback) callback();
+        else if (isListening) setTimeout(function() { if (isListening && !isSpeaking && recognition) try { recognition.start(); } catch (e) {} }, 300);
         return;
       }
 
       isSpeaking = true;
       const utter = new SpeechSynthesisUtterance(cleanSpeech);
       utter.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
-      utter.rate = 1.0;
-      utter.pitch = 0.96;
-
+      utter.rate = 1.0; utter.pitch = 0.96;
       utter.onstart = function() { setVisualState('speaking'); };
-      utter.onend = function() {
-        isSpeaking = false;
-        setVisualState('idle');
-        if (callback) {
-          callback();
-        } else if (isListening) {
-          setTimeout(function() {
-            if (isListening && !isSpeaking) {
-              try { recognition.start(); } catch (e) {}
-            }
-          }, 350);
-        }
-      };
-      utter.onerror = function() {
-        isSpeaking = false;
-        setVisualState('idle');
+      utter.onend = utter.onerror = function() {
+        isSpeaking = false; setVisualState('idle');
+        if (callback) callback();
+        else if (isListening) setTimeout(function() { if (isListening && !isSpeaking && recognition) try { recognition.start(); } catch (e) {} }, 350);
       };
       window.speechSynthesis.speak(utter);
     }
@@ -343,18 +223,10 @@
     function tryDateTime(cmd, lang) {
       if (/\b(time|samay|waqt|date|day|aaj|tarik|tarikh)\b/i.test(cmd) || /(समय|वक्त|तारीख|दिन|आज)/.test(cmd)) {
         const now = new Date();
-        const dateStr = now.toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', {
-          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-        });
-        const timeStr = now.toLocaleTimeString(lang === 'hi' ? 'hi-IN' : 'en-IN', {
-          hour: '2-digit', minute: '2-digit'
-        });
-        const reply = lang === 'hi'
-          ? "आज " + dateStr + " है और अभी समय " + timeStr + " हुआ है।"
-          : "Today is " + dateStr + " and the current time is " + timeStr + ".";
-        addLog("CLOCK / DATE", reply);
-        speak(reply, lang);
-        return true;
+        const dateStr = now.toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const timeStr = now.toLocaleTimeString(lang === 'hi' ? 'hi-IN' : 'en-IN', { hour: '2-digit', minute: '2-digit' });
+        const reply = lang === 'hi' ? "आज " + dateStr + " है और अभी समय " + timeStr + " हुआ है।" : "Today is " + dateStr + " and the current time is " + timeStr + ".";
+        addLog("CLOCK / DATE", reply); speak(reply, lang); return true;
       }
       return false;
     }
@@ -378,21 +250,13 @@
         { keys: ['jiocinema', 'jio cinema', 'जियो सिनेमा'], name: 'JioCinema', url: 'https://www.jiocinema.com' },
         { keys: ['google', 'गूगल'], name: 'Google', url: 'https://www.google.com' }
       ];
-
       const hasOpenIntent = /\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd) || /(खोलो|खोल|चलाओ)/.test(cmd);
-
       for (let i = 0; i < apps.length; i++) {
         const app = apps[i];
-        if (app.keys.some(function(k) { return cmd.toLowerCase().includes(k); })) {
-          if (hasOpenIntent || cmd.trim().split(' ').length <= 2) {
-            addLog("APP LAUNCHER", "Opening " + app.name, app.url);
-            speak(
-              lang === 'hi' ? "जी सर, " + app.name + " खोल रहा हूँ।" : "Sure sir, opening " + app.name + ".",
-              lang,
-              function() { window.location.href = app.url; }
-            );
-            return true;
-          }
+        if (app.keys.some(function(k) { return cmd.toLowerCase().includes(k); }) && (hasOpenIntent || cmd.trim().split(' ').length <= 2)) {
+          addLog("APP LAUNCHER", "Opening " + app.name, app.url);
+          speak(lang === 'hi' ? "जी सर, " + app.name + " खोल रहा हूँ।" : "Sure sir, opening " + app.name + ".", lang, function() { window.location.href = app.url; });
+          return true;
         }
       }
       return false;
@@ -400,59 +264,32 @@
 
     function tryAdvanceMath(cmd) {
       let s = cmd.toLowerCase();
-
       const pctMatch = s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*(?:of|ka|ki)\s*(\d+(?:\.\d+)?)/i);
       if (pctMatch) {
         const val = (parseFloat(pctMatch[1]) / 100) * parseFloat(pctMatch[2]);
         return Number.isInteger(val) ? val : parseFloat(val.toFixed(4));
       }
-
       s = s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi, function(_, fn, deg) {
         const rad = (parseFloat(deg) * Math.PI) / 180;
-        let res = 0;
-        if (fn.toLowerCase() === 'sin') res = Math.sin(rad);
-        if (fn.toLowerCase() === 'cos') res = Math.cos(rad);
-        if (fn.toLowerCase() === 'tan') {
-          if (Math.abs(parseFloat(deg) % 180) === 90) return 'NaN';
-          res = Math.tan(rad);
-        }
+        let res = fn.toLowerCase() === 'sin' ? Math.sin(rad) : fn.toLowerCase() === 'cos' ? Math.cos(rad) : Math.tan(rad);
         return '(' + Number(res.toFixed(6)) + ')';
       });
-
-      s = s.replace(/(?:square root of|sqrt|वर्गमूल|vargmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) {
-        return 'Math.sqrt(' + parseFloat(n) + ')';
-      });
-      s = s.replace(/(?:cube root of|cbrt|घनमूल|ghanmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) {
-        return 'Math.cbrt(' + parseFloat(n) + ')';
-      });
-
-      s = s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) {
-        return 'Math.log10(' + parseFloat(n) + ')';
-      });
-      s = s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, __, n) {
-        return 'Math.log(' + parseFloat(n) + ')';
-      });
+      s = s.replace(/(?:square root of|sqrt|वर्गमूल|vargmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.sqrt(' + parseFloat(n) + ')'; });
+      s = s.replace(/(?:cube root of|cbrt|घनमूल|ghanmool)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.cbrt(' + parseFloat(n) + ')'; });
+      s = s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.log10(' + parseFloat(n) + ')'; });
+      s = s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, __, n) { return 'Math.log(' + parseFloat(n) + ')'; });
       s = s.replace(/\b(pi|पाई)\b/gi, '(' + Math.PI + ')');
-
-      s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात|ghat)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) {
-        return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')';
-      });
-
-      s = s
-        .replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
-        .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
-        .replace(/minus|subtract|घटा|माइनस|ghata/gi, '-')
-        .replace(/divided by|divide by|भाग|डिवाइड|bhag/gi, '/')
-        .replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
+      s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात|ghat)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) { return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')'; });
+      s = s.replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
+           .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
+           .replace(/minus|subtract|घटा|माइनस|ghata/gi, '-')
+           .replace(/divided by|divide by|भाग|डिवाइड|bhag/gi, '/')
+           .replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g, ' ').replace(/\s+/g, ' ').trim();
 
       if (/[0-9]/.test(s) && /(\+|-|\*|\/|Math\.)/.test(s)) {
         try {
           const ans = Function('"use strict";return (' + s + ')')();
-          if (typeof ans === 'number' && !isNaN(ans) && isFinite(ans)) {
-            return Number.isInteger(ans) ? ans : parseFloat(ans.toFixed(4));
-          }
+          if (typeof ans === 'number' && !isNaN(ans) && isFinite(ans)) return Number.isInteger(ans) ? ans : parseFloat(ans.toFixed(4));
         } catch (e) {}
       }
       return null;
@@ -465,31 +302,80 @@
         speak(lang === 'hi' ? "सर, इसका उत्तर " + mathAns + " है।" : "Sir, the answer is " + mathAns + ".", lang);
         return;
       }
-
       const cleanTopic = rawQuery
         .replace(/\b(who is|who was|what is|tell me about|when was|where is|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|kya hota hai|kaha hai|ke bare mein batao|batao|in hindi|hindi mein)\b/gi, '')
         .replace(/(का जन्म कब हुआ था|को फांसी कब हुई थी|कौन है|कौन थे|क्या है|क्या होता है|कहाँ है|के बारे में बताओ|बताओ)/g, '')
-        .replace(/[?।!]/g, '')
-        .trim();
+        .replace(/[?।!]/g, '').trim();
 
       if (cleanTopic.length >= 2) {
         const wikiSub = lang === 'hi' ? 'hi' : 'en';
         addLog("WIKIPEDIA (" + wikiSub.toUpperCase() + ")", 'Searching: "' + cleanTopic + '"...');
         try {
-          const searchUrl = "https://" + wikiSub + ".wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*";
-          const searchRes = await fetch(searchUrl);
-          const searchData = await searchRes.json();
-          const bestTitle = searchData && searchData.query && searchData.query.search && searchData.query.search[0] ? searchData.query.search[0].title : null;
-
+          const sRes = await fetch("https://" + wikiSub + ".wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*");
+          const sData = await sRes.json();
+          const bestTitle = sData && sData.query && sData.query.search && sData.query.search[0] ? sData.query.search[0].title : null;
           if (bestTitle) {
-            const summaryUrl = "https://" + wikiSub + ".wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle);
-            const sumRes = await fetch(summaryUrl);
+            const sumRes = await fetch("https://" + wikiSub + ".wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle));
             const sumData = await sumRes.json();
-
             if (sumData.extract && sumData.type !== 'disambiguation') {
-              const splitChar = lang === 'hi' ? '। ' : '. ';
-              const shortAns = sumData.extract.split(splitChar).slice(0, 2).join(splitChar) + (lang === 'hi' ? '।' : '.');
+              const sp = lang === 'hi' ? '। ' : '. ';
+              const shortAns = sumData.extract.split(sp).slice(0, 2).join(sp) + (lang === 'hi' ? '।' : '.');
               addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls && sumData.content_urls.desktop ? sumData.content_urls.desktop.page : null);
-              speak(shortAns, lang);
-              return;
+              speak(shortAns, lang); return;
+            }
+          }
+        } catch (e) {}
+      }
+      const gUrl = "https://www.google.com/search?q=" + encodeURIComponent(rawQuery);
+      addLog("GOOGLE FALLBACK", 'Searching: "' + rawQuery + '"', gUrl);
+      speak(lang === 'hi' ? "गूगल पर " + rawQuery + " दिखा रहा हूँ सर।" : "Showing Google results for " + rawQuery + ".", lang, function() { window.location.href = gUrl; });
+    }
+
+    async function processCommand(cmd) {
+      if (isSpeaking) return;
+      const lang = detectLanguage(cmd);
+      addLog("USER (" + lang.toUpperCase() + ")", '"' + cmd + '"');
+
+      if (/\b(stop|sleep|band ho ja|so jao|रुक जाओ|बंद हो जाओ)\b/i.test(cmd)) {
+        isListening = false; toggleBtn.innerText = "ACTIVATE"; toggleBtn.classList.remove('active-stop');
+        speak(lang === 'hi' ? "ठीक है सर, मैं स्लीप मोड में जा रहा हूँ।" : "Going to sleep mode, sir.", lang); return;
+      }
+      if (tryDateTime(cmd, lang)) return;
+      if (/\b(play|chalao|song|gaana|bajao)\b/i.test(cmd) || cmd.includes('गाना') || cmd.includes('चलाओ') || cmd.includes('बजाओ')) {
+        const query = cmd.replace(/play|on youtube|chalao|song|gaana|bajao|गाना|चलाओ|बजाओ|यूट्यूब पर/gi, '').trim();
+        const ytUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
+        addLog("YOUTUBE", 'Playing: "' + query + '"', ytUrl);
+        speak(lang === 'hi' ? "यूट्यूब पर " + query + " चला रहा हूँ सर।" : "Playing " + query + " on YouTube, sir.", lang, function() { window.location.href = ytUrl; }); return;
+      }
+      if (/\b(call|phone lagao|कॉल)\b/i.test(cmd)) {
+        addLog("DIALER", "Opening Phone Dialer", "tel:");
+        speak(lang === 'hi' ? "जी सर, कॉल डायलर खोल रहा हूँ।" : "Opening phone dialer, sir.", lang, function() { window.location.href = "tel:"; }); return;
+      }
+      if (tryOpenApp(cmd, lang)) return;
+      await searchWikipedia(cmd, lang);
+    }
+
+    document.querySelectorAll('.chip').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const cmd = btn.getAttribute('data-cmd');
+        statusEl.innerText = "You: " + cmd;
+        processCommand(cmd);
+      });
+    });
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'hi-IN';
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onstart = function() {
+        if (isSpeaking) { try { recognition.abort(); } catch (e) {} return; }
+        setVisualState('listening'); statusEl.innerText = "Listening... (Hindi / English)";
+      };
+      recognition.onresult = function(event) {
+        if (isSpeaking) return;
+        const cmd = event.results[0][0].transcript;
+        statusEl.innerText = "You: " + cmd; processCommand(cmd);
+      };
+      recognition.onend = function() {
     
