@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SURYA AI</title>
+  <style>
+    body {
+      margin: 0; height: 100vh; background: #020b14; color: #00f3ff;
+      font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; overflow: hidden;
+    }
+    .arc-reactor {
+      width: 180px; height: 180px; border-radius: 50%;
+      border: 6px solid #00f3ff; box-shadow: 0 0 35px #00f3ff, inset 0 0 25px #00f3ff;
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse 2s infinite alternate; cursor: pointer;
+    }
+    .inner-core {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: radial-gradient(circle, #ffffff, #00f3ff, #0051ff);
+      box-shadow: 0 0 20px #00f3ff;
+    }
+    @keyframes pulse {
+      from { transform: scale(0.95); box-shadow: 0 0 20px #00f3ff; }
+      to { transform: scale(1.05); box-shadow: 0 0 50px #00f3ff; }
+    }
+    h1 { letter-spacing: 6px; margin-top: 30px; font-size: 24px; }
+    #status { color: #8be9fd; margin: 10px 20px; font-size: 16px; min-height: 45px; }
+    button {
+      margin-top: 20px; padding: 14px 32px; font-size: 16px; font-weight: bold;
+      background: transparent; color: #00f3ff; border: 2px solid #00f3ff;
+      border-radius: 30px; box-shadow: 0 0 15px rgba(0,243,255,0.4); cursor: pointer;
+    }
+    button:active { background: #00f3ff; color: #020b14; }
+  </style>
+</head>
+<body>
+  <div class="arc-reactor" onclick="startSurya()"><div class="inner-core"></div></div>
+  <h1>S.U.R.Y.A.</h1>
+  <div id="status">Tap "ACTIVATE" and speak...</div>
+  <button onclick="startSurya()">ACTIVATE</button>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    function speak(text) {
+      statusEl.innerText = "Surya: " + text;
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 1;
+      utter.pitch = 0.95;
+      window.speechSynthesis.speak(utter);
+    }
+
+    function startSurya() {
+      if (!SpeechRecognition) {
+        statusEl.innerText = "Browser voice support nahi kar raha. Chrome use karein.";
+        return;
+      }
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      statusEl.innerText = "Listening...";
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const cmd = event.results[0][0].transcript.toLowerCase();
+        statusEl.innerText = "You: " + cmd;
+
+        if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('surya') || cmd.includes('jarvis')) {
+          speak("Hello sir! Surya system is online. How may I assist you?");
+        } else if (cmd.includes('time')) {
+          const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          speak("Sir, the current time is " + time);
+        } else if (cmd.includes('date')) {
+          const date = new Date().toDateString();
+          speak("Today is " + date);
+        } else if (cmd.includes('open youtube')) {
+          speak("Opening YouTube, sir.");
+          window.open("https://www.youtube.com", "_blank");
+        } else if (cmd.includes('open google')) {
+          speak("Opening Google, sir.");
+          window.open("https://www.google.com", "_blank");
+        } else if (cmd.includes('search')) {
+          const query = cmd.replace('search', '').trim();
+          speak("Searching for " + query);
+          window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
+        } else {
+          speak("Searching Google for " + cmd);
+          window.open("https://www.google.com/search?q=" + encodeURIComponent(cmd), "_blank");
+        }
+      };
+
+      recognition.onerror = () => {
+        statusEl.innerText = "Aawaz clear nahi aayi. Dobara ACTIVATE dabayein.";
+      };
+    }
+  </script>
+</body>
+</html>
