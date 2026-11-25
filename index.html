@@ -4,99 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#020b14" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="SURYA AI" />
   <title>SURYA AI</title>
+  <link id="appleIcon" rel="apple-touch-icon" sizes="180x180" />
+  <link id="pwaManifest" rel="manifest" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
-    body {
-      background: radial-gradient(circle at top, #071e30 0%, #010509 100%);
-      color: #00f3ff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex; flex-direction: column; align-items: center;
-      padding: 12px 14px; gap: 9px;
-    }
-    .hud-top {
-      width: 100%; max-width: 440px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 11px; color: #8be9fd;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.25); padding-bottom: 6px;
-      gap: 6px;
-    }
-    .badge-group { display: flex; align-items: center; gap: 6px; }
-    .engine-badge {
-      border: 1px solid #fde047; color: #fde047;
-      background: rgba(253, 224, 71, 0.12);
-      padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold;
-    }
-    .mute-btn {
-      border: 1px solid #38bdf8; color: #e0f2fe;
-      background: rgba(56, 189, 248, 0.15);
-      padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; cursor: pointer;
-    }
-    .orb-container {
-      position: relative; width: 120px; height: 120px;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-    }
-    .orbit-1 {
-      position: absolute; width: 116px; height: 116px; border-radius: 50%;
-      border: 2.5px dashed #00f3ff; animation: spinRight 8s linear infinite;
-    }
-    .orbit-2 {
-      position: absolute; width: 90px; height: 90px; border-radius: 50%;
-      border: 3px solid transparent; border-left-color: #38bdf8; border-right-color: #00f3ff;
-      animation: spinLeft 3.5s linear infinite;
-    }
-    .cyber-sphere {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #00f3ff 45%, #003380 90%);
-      box-shadow: 0 0 25px #00f3ff, inset 0 0 12px #ffffff;
-      animation: idleBreath 2.2s ease-in-out infinite alternate;
-    }
-    .listening .orbit-1 { border-color: #00ff9d; animation-duration: 2.5s; }
-    .listening .cyber-sphere {
-      background: radial-gradient(circle at 30% 30%, #ffffff, #00ff9d 45%, #006633 90%);
-      box-shadow: 0 0 35px #00ff9d;
-      animation: activePulse 0.6s infinite alternate;
-    }
-    .speaking .orbit-1 { border-color: #c084fc; animation-duration: 1.8s; }
-    .speaking .cyber-sphere {
-      background: radial-gradient(circle at 30% 30%, #ffffff, #c084fc 45%, #4c1d95 90%);
-      box-shadow: 0 0 40px #c084fc;
-      animation: speakBounce 0.35s infinite alternate;
-    }
-    @keyframes spinRight { 100% { transform: rotate(360deg); } }
-    @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
-    @keyframes idleBreath { from { transform: scale(0.94); } to { transform: scale(1.04); } }
-    @keyframes activePulse { from { transform: scale(0.92); } to { transform: scale(1.12); } }
-    @keyframes speakBounce { from { transform: scale(0.95); } to { transform: scale(1.18); } }
-
-    h1 { font-size: 23px; font-weight: 800; letter-spacing: 2px; color: #fff; text-shadow: 0 0 12px #00f3ff; }
-    #status { font-size: 13px; color: #a5f3fc; text-align: center; max-width: 420px; min-height: 20px; }
-    .main-btn {
-      padding: 10px 32px; font-size: 14px; font-weight: bold; letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff); color: #fff;
-      border: none; border-radius: 25px; box-shadow: 0 0 16px rgba(0, 198, 255, 0.5); cursor: pointer;
-    }
-    .main-btn.active-stop { background: linear-gradient(90deg, #ff416c, #ff4b2b); }
-    .quick-chips { width: 100%; max-width: 440px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-    .chip {
-      background: rgba(0, 243, 255, 0.08); border: 1px solid rgba(0, 243, 255, 0.35);
-      color: #cffafe; padding: 4px 10px; border-radius: 14px; font-size: 11px; cursor: pointer;
-    }
-    .log-panel {
-      width: 100%; max-width: 440px; background: rgba(0, 243, 255, 0.05);
-      border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 10px;
-      padding: 8px 10px; font-size: 11px; max-height: 165px; overflow-y: auto;
-    }
-    .log-header {
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 3px; margin-bottom: 5px;
-    }
-    .log-title { font-weight: bold; color: #00f3ff; font-size: 10px; letter-spacing: 1px; }
-    .clear-btn { background: none; border: none; color: #94a3b8; font-size: 10px; cursor: pointer; text-decoration: underline; }
-    .log-entry { margin-bottom: 5px; line-height: 1.35; color: #cffafe; }
-    .log-source { color: #fde047; font-weight: bold; }
-    .log-entry a { color: #38bdf8; text-decoration: underline; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;min-height:100vh;overflow-x:hidden}
+    body{background:radial-gradient(circle at top,#071e30 0%,#010509 100%);color:#00f3ff;font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;align-items:center;padding:12px 14px;gap:9px}
+    .hud-top{width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#8be9fd;border-bottom:1px solid rgba(0,243,255,.25);padding-bottom:6px;gap:6px}
+    .badge-group{display:flex;align-items:center;gap:6px}
+    .engine-badge{border:1px solid #fde047;color:#fde047;background:rgba(253,224,71,.12);padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold}
+    .mute-btn{border:1px solid #38bdf8;color:#e0f2fe;background:rgba(56,189,248,.15);padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold;cursor:pointer}
+    .orb-container{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .orbit-1{position:absolute;width:116px;height:116px;border-radius:50%;border:2.5px dashed #00f3ff;animation:spinR 8s linear infinite}
+    .orbit-2{position:absolute;width:90px;height:90px;border-radius:50%;border:3px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;animation:spinL 3.5s linear infinite}
+    .cyber-sphere{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#00f3ff 45%,#003380 90%);box-shadow:0 0 25px #00f3ff,inset 0 0 12px #fff;animation:idleB 2.2s ease-in-out infinite alternate}
+    .listening .orbit-1{border-color:#00ff9d;animation-duration:2.5s}
+    .listening .cyber-sphere{background:radial-gradient(circle at 30% 30%,#fff,#00ff9d 45%,#006633 90%);box-shadow:0 0 35px #00ff9d;animation:actP .6s infinite alternate}
+    .speaking .orbit-1{border-color:#c084fc;animation-duration:1.8s}
+    .speaking .cyber-sphere{background:radial-gradient(circle at 30% 30%,#fff,#c084fc 45%,#4c1d95 90%);box-shadow:0 0 40px #c084fc;animation:spkB .35s infinite alternate}
+    @keyframes spinR{100%{transform:rotate(360deg)}}
+    @keyframes spinL{100%{transform:rotate(-360deg)}}
+    @keyframes idleB{from{transform:scale(.94)}to{transform:scale(1.04)}}
+    @keyframes actP{from{transform:scale(.92)}to{transform:scale(1.12)}}
+    @keyframes spkB{from{transform:scale(.95)}to{transform:scale(1.18)}}
+    h1{font-size:23px;font-weight:800;letter-spacing:2px;color:#fff;text-shadow:0 0 12px #00f3ff}
+    #status{font-size:13px;color:#a5f3fc;text-align:center;max-width:420px;min-height:20px}
+    .main-btn{padding:10px 32px;font-size:14px;font-weight:bold;letter-spacing:1.5px;background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff;border:none;border-radius:25px;box-shadow:0 0 16px rgba(0,198,255,.5);cursor:pointer}
+    .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b)}
+    .quick-chips{width:100%;max-width:440px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+    .chip{background:rgba(0,243,255,.08);border:1px solid rgba(0,243,255,.35);color:#cffafe;padding:4px 10px;border-radius:14px;font-size:11px;cursor:pointer}
+    .log-panel{width:100%;max-width:440px;background:rgba(0,243,255,.05);border:1px solid rgba(0,243,255,.3);border-radius:10px;padding:8px 10px;font-size:11px;max-height:165px;overflow-y:auto}
+    .log-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,243,255,.2);padding-bottom:3px;margin-bottom:5px}
+    .log-title{font-weight:bold;color:#00f3ff;font-size:10px;letter-spacing:1px}
+    .clear-btn{background:none;border:none;color:#94a3b8;font-size:10px;cursor:pointer;text-decoration:underline}
+    .log-entry{margin-bottom:5px;line-height:1.35;color:#cffafe}
+    .log-source{color:#fde047;font-weight:bold}
+    .log-entry a{color:#38bdf8;text-decoration:underline}
   </style>
 </head>
 <body>
@@ -108,17 +55,10 @@
       <span class="engine-badge">WIKIPEDIA</span>
     </div>
   </div>
-
-  <div class="orb-container" id="orbLogo">
-    <div class="orbit-1"></div>
-    <div class="orbit-2"></div>
-    <div class="cyber-sphere"></div>
-  </div>
-
+  <div class="orb-container" id="orbLogo"><div class="orbit-1"></div><div class="orbit-2"></div><div class="cyber-sphere"></div></div>
   <h1>SURYA</h1>
   <div id="status">Tap ACTIVATE for Voice Assistant</div>
   <button id="toggleBtn" class="main-btn" type="button">ACTIVATE</button>
-
   <div class="quick-chips">
     <button class="chip" type="button" data-cmd="square root of 144">√144</button>
     <button class="chip" type="button" data-cmd="2 to the power 8">2^8</button>
@@ -126,274 +66,182 @@
     <button class="chip" type="button" data-cmd="what is the date and time today">📅 Date & Time</button>
     <button class="chip" type="button" data-cmd="open youtube">▶️ YouTube</button>
   </div>
-
   <div class="log-panel">
     <div class="log-header">
       <div class="log-title">SURYA ENGINE LOG (ADVANCED MATH + WIKIPEDIA)</div>
       <button id="clearLogBtn" class="clear-btn" type="button">Clear</button>
     </div>
-    <div id="logList">
-      <div class="log-entry"><span class="log-source">[SURYA]</span> System Ready. Tap ACTIVATE to start.</div>
-    </div>
+    <div id="logList"><div class="log-entry"><span class="log-source">[SURYA]</span> System Ready. Tap ACTIVATE to start.</div></div>
   </div>
 
   <script>
-    const statusEl = document.getElementById('status');
-    const toggleBtn = document.getElementById('toggleBtn');
-    const logList = document.getElementById('logList');
-    const orbLogo = document.getElementById('orbLogo');
-    const muteBtn = document.getElementById('muteBtn');
-    const clearLogBtn = document.getElementById('clearLogBtn');
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    function makeIcon(sz){
+      try{
+        const c=document.createElement('canvas');c.width=sz;c.height=sz;
+        const x=c.getContext('2d');if(!x)return '';
+        x.fillStyle='#020b14';x.fillRect(0,0,sz,sz);
+        const r=sz/2;
+        x.strokeStyle='#00f3ff';x.lineWidth=Math.max(4,sz*.035);x.setLineDash([sz*.14,sz*.06]);
+        x.beginPath();x.arc(r,r,sz*.34,0,Math.PI*2);x.stroke();x.setLineDash([]);
+        const g=x.createRadialGradient(r-sz*.06,r-sz*.06,sz*.02,r,r,sz*.22);
+        g.addColorStop(0,'#fff');g.addColorStop(.5,'#00f3ff');g.addColorStop(1,'#003380');
+        x.fillStyle=g;x.beginPath();x.arc(r,r,sz*.22,0,Math.PI*2);x.fill();
+        return c.toDataURL('image/png');
+      }catch(e){return '';}
+    }
+    (function(){
+      const i192=makeIcon(192),i512=makeIcon(512);
+      const a=document.getElementById('appleIcon');if(a&&i192)a.href=i192;
+      const icons=[];
+      if(i192)icons.push({src:i192,sizes:'192x192',type:'image/png'});
+      if(i512)icons.push({src:i512,sizes:'512x512',type:'image/png'});
+      const m=document.getElementById('pwaManifest');
+      if(m)m.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify({name:'SURYA AI',short_name:'SURYA AI',start_url:'./',scope:'./',display:'standalone',background_color:'#020b14',theme_color:'#020b14',icons:icons}));
+    })();
 
-    let isListening = false, isSpeaking = false, isMuted = false, recognition = null;
+    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn');
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    let isListening=false,isSpeaking=false,isMuted=false,rec=null;
 
-    function setVisualState(state) {
-      orbLogo.classList.remove('listening', 'speaking');
-      if (state === 'listening') orbLogo.classList.add('listening');
-      if (state === 'speaking') orbLogo.classList.add('speaking');
+    function setVis(st){orbLogo.classList.remove('listening','speaking');if(st==='listening')orbLogo.classList.add('listening');if(st==='speaking')orbLogo.classList.add('speaking');}
+    function updClock(){const n=new Date();document.getElementById('clock').innerText='TIME: '+n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+    updClock();setInterval(updClock,1000);
+    if(navigator.getBattery)navigator.getBattery().then(function(b){const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};f();b.addEventListener('levelchange',f);});
+    function addLog(src,det,url=null){const d=document.createElement('div');d.className='log-entry';d.innerHTML='<span class="log-source">['+src+']</span> '+det+(url?' — <a href="'+url+'" target="_blank">Open</a>':'');logList.prepend(d);}
+
+    muteBtn.addEventListener('click',function(){isMuted=!isMuted;muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 VOICE ON';if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');});
+    clearLogBtn.addEventListener('click',function(){logList.innerHTML='<div class="log-entry"><span class="log-source">[SURYA]</span> Log cleared.</div>';});
+
+    function speak(text,cb){
+      const clean=text.replace(/[*#_`]/g,'');statusEl.innerText='Surya: '+clean;window.speechSynthesis.cancel();
+      if(rec)try{rec.abort();}catch(e){}
+      if(isMuted){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},300);return;}
+      isSpeaking=true;const u=new SpeechSynthesisUtterance(clean);u.lang='en-IN';u.rate=1.0;u.pitch=.96;
+      u.onstart=function(){setVis('speaking');};
+      u.onend=u.onerror=function(){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},350);};
+      window.speechSynthesis.speak(u);
     }
 
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').innerText = "TIME: " + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    if (navigator.getBattery) {
-      navigator.getBattery().then(function(b) {
-        const upd = function() { document.getElementById('battery').innerText = "PWR: " + Math.round(b.level * 100) + "%"; };
-        upd();
-        b.addEventListener('levelchange', upd);
-      });
-    }
-
-    function addLog(source, detail, url = null) {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      const linkHtml = url ? ' — <a href="' + url + '" target="_blank">Open</a>' : '';
-      div.innerHTML = '<span class="log-source">[' + source + ']</span> ' + detail + linkHtml;
-      logList.prepend(div);
-    }
-
-    muteBtn.addEventListener('click', function() {
-      isMuted = !isMuted;
-      muteBtn.innerText = isMuted ? "🔇 MUTED" : "🔊 VOICE ON";
-      if (isMuted) { window.speechSynthesis.cancel(); isSpeaking = false; setVisualState(isListening ? 'listening' : 'idle'); }
-      addLog("SYSTEM", isMuted ? "Voice output muted." : "Voice output enabled.");
-    });
-
-    clearLogBtn.addEventListener('click', function() {
-      logList.innerHTML = '<div class="log-entry"><span class="log-source">[SURYA]</span> Log cleared.</div>';
-    });
-
-    function speak(text, callback) {
-      const cleanSpeech = text.replace(/[*#_`]/g, '');
-      statusEl.innerText = "Surya: " + cleanSpeech;
-      window.speechSynthesis.cancel();
-      if (recognition) try { recognition.abort(); } catch (e) {}
-
-      if (isMuted) {
-        isSpeaking = false; setVisualState('idle');
-        if (callback) callback();
-        else if (isListening) setTimeout(function() { if (isListening && !isSpeaking && recognition) try { recognition.start(); } catch (e) {} }, 300);
+    function launchApp(app){
+      if(/Android/i.test(navigator.userAgent)&&app.pkg){
+        window.location.href='intent://'+app.url.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package='+app.pkg+';S.browser_fallback_url='+encodeURIComponent(app.url)+';end';
         return;
       }
-
-      isSpeaking = true;
-      const utter = new SpeechSynthesisUtterance(cleanSpeech);
-      utter.lang = 'en-IN';
-      utter.rate = 1.0; utter.pitch = 0.96;
-      utter.onstart = function() { setVisualState('speaking'); };
-      utter.onend = utter.onerror = function() {
-        isSpeaking = false; setVisualState('idle');
-        if (callback) callback();
-        else if (isListening) setTimeout(function() { if (isListening && !isSpeaking && recognition) try { recognition.start(); } catch (e) {} }, 350);
-      };
-      window.speechSynthesis.speak(utter);
+      window.location.href=app.url;
     }
 
-    function tryDateTime(cmd) {
-      if (/\b(time|date|day|today)\b/i.test(cmd)) {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-        const reply = "Today is " + dateStr + " and the current time is " + timeStr + ".";
-        addLog("CLOCK / DATE", reply); speak(reply); return true;
+    function tryDateTime(cmd){
+      if(/\b(time|date|day|today)\b/i.test(cmd)){
+        const n=new Date(),d=n.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),t=n.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+        const r='Today is '+d+' and the current time is '+t+'.';addLog('CLOCK / DATE',r);speak(r);return true;
       }
       return false;
     }
 
-    function tryOpenApp(cmd) {
-      const apps = [
-        { keys: ['youtube'], name: 'YouTube', url: 'https://www.youtube.com' },
-        { keys: ['whatsapp'], name: 'WhatsApp', url: 'https://wa.me/' },
-        { keys: ['instagram'], name: 'Instagram', url: 'https://www.instagram.com' },
-        { keys: ['facebook'], name: 'Facebook', url: 'https://www.facebook.com' },
-        { keys: ['maps', 'map', 'location'], name: 'Google Maps', url: 'https://maps.google.com' },
-        { keys: ['gmail', 'email'], name: 'Gmail', url: 'https://mail.google.com' },
-        { keys: ['telegram'], name: 'Telegram', url: 'https://t.me/' },
-        { keys: ['spotify'], name: 'Spotify', url: 'https://open.spotify.com' },
-        { keys: ['amazon'], name: 'Amazon', url: 'https://www.amazon.in' },
-        { keys: ['flipkart'], name: 'Flipkart', url: 'https://www.flipkart.com' },
-        { keys: ['paytm'], name: 'Paytm', url: 'https://paytm.com' },
-        { keys: ['zomato'], name: 'Zomato', url: 'https://www.zomato.com' },
-        { keys: ['swiggy'], name: 'Swiggy', url: 'https://www.swiggy.com' },
-        { keys: ['netflix'], name: 'Netflix', url: 'https://www.netflix.com' },
-        { keys: ['jiocinema', 'jio cinema'], name: 'JioCinema', url: 'https://www.jiocinema.com' },
-        { keys: ['google'], name: 'Google', url: 'https://www.google.com' }
+    function tryOpenApp(cmd){
+      const apps=[
+        {keys:['youtube'],name:'YouTube',pkg:'com.google.android.youtube',url:'https://www.youtube.com'},
+        {keys:['whatsapp'],name:'WhatsApp',pkg:'com.whatsapp',url:'https://wa.me/'},
+        {keys:['instagram'],name:'Instagram',pkg:'com.instagram.android',url:'https://www.instagram.com'},
+        {keys:['facebook'],name:'Facebook',pkg:'com.facebook.katana',url:'https://www.facebook.com'},
+        {keys:['maps','map','location'],name:'Google Maps',pkg:'com.google.android.apps.maps',url:'https://maps.google.com'},
+        {keys:['gmail','email'],name:'Gmail',pkg:'com.google.android.gm',url:'https://mail.google.com'},
+        {keys:['telegram'],name:'Telegram',pkg:'org.telegram.messenger',url:'https://t.me/'},
+        {keys:['spotify'],name:'Spotify',pkg:'com.spotify.music',url:'https://open.spotify.com'},
+        {keys:['amazon'],name:'Amazon',pkg:'in.amazon.mShop.android.shopping',url:'https://www.amazon.in'},
+        {keys:['flipkart'],name:'Flipkart',pkg:'com.flipkart.android',url:'https://www.flipkart.com'},
+        {keys:['paytm'],name:'Paytm',pkg:'net.one97.paytm',url:'https://paytm.com'},
+        {keys:['zomato'],name:'Zomato',pkg:'com.application.zomato',url:'https://www.zomato.com'},
+        {keys:['swiggy'],name:'Swiggy',pkg:'in.swiggy.android',url:'https://www.swiggy.com'},
+        {keys:['netflix'],name:'Netflix',pkg:'com.netflix.mediaclient',url:'https://www.netflix.com'},
+        {keys:['jiocinema','jio cinema'],name:'JioCinema',pkg:'com.jio.media.jiobeats',url:'https://www.jiocinema.com'},
+        {keys:['google'],name:'Google',pkg:'com.google.android.googlequicksearchbox',url:'https://www.google.com'}
       ];
-      const hasOpenIntent = /\b(open|launch|start)\b/i.test(cmd);
-      for (let i = 0; i < apps.length; i++) {
-        const app = apps[i];
-        if (app.keys.some(function(k) { return cmd.toLowerCase().includes(k); }) && (hasOpenIntent || cmd.trim().split(' ').length <= 2)) {
-          addLog("APP LAUNCHER", "Opening " + app.name, app.url);
-          speak("Sure sir, opening " + app.name + ".", function() { window.location.href = app.url; });
-          return true;
+      const openIntent=/\b(open|launch|start)\b/i.test(cmd);
+      for(let i=0;i<apps.length;i++){
+        const a=apps[i];
+        if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=2)){
+          addLog('APP LAUNCHER','Opening '+a.name,a.url);speak('Sure sir, opening '+a.name+'.',function(){launchApp(a);});return true;
         }
       }
       return false;
     }
-
-    function tryAdvanceMath(cmd) {
-      let s = cmd.toLowerCase();
-      const pctMatch = s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
-      if (pctMatch) {
-        const val = (parseFloat(pctMatch[1]) / 100) * parseFloat(pctMatch[2]);
-        return Number.isInteger(val) ? val : parseFloat(val.toFixed(4));
-      }
-      s = s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi, function(_, fn, deg) {
-        const rad = (parseFloat(deg) * Math.PI) / 180;
-        let res = fn.toLowerCase() === 'sin' ? Math.sin(rad) : fn.toLowerCase() === 'cos' ? Math.cos(rad) : Math.tan(rad);
-        return '(' + Number(res.toFixed(6)) + ')';
-      });
-      s = s.replace(/(?:square root of|sqrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.sqrt(' + parseFloat(n) + ')'; });
-      s = s.replace(/(?:cube root of|cbrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.cbrt(' + parseFloat(n) + ')'; });
-      s = s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, n) { return 'Math.log10(' + parseFloat(n) + ')'; });
-      s = s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(_, __, n) { return 'Math.log(' + parseFloat(n) + ')'; });
-      s = s.replace(/\bpi\b/gi, '(' + Math.PI + ')');
-      s = s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^)\s*(\d+(?:\.\d+)?)/gi, function(_, base, exp) { return 'Math.pow(' + parseFloat(base) + ',' + parseFloat(exp) + ')'; });
-      s = s.replace(/into|multiplied by|multiply|x|×/gi, '*')
-           .replace(/plus|add|added to/gi, '+')
-           .replace(/minus|subtract/gi, '-')
-           .replace(/divided by|divide by/gi, '/')
-           .replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g, ' ').replace(/\s+/g, ' ').trim();
-
-      if (/[0-9]/.test(s) && /(\+|-|\*|\/|Math\.)/.test(s)) {
-        try {
-          const ans = Function('"use strict";return (' + s + ')')();
-          if (typeof ans === 'number' && !isNaN(ans) && isFinite(ans)) return Number.isInteger(ans) ? ans : parseFloat(ans.toFixed(4));
-        } catch (e) {}
+        function tryAdvMath(cmd){
+      let s=cmd.toLowerCase();
+      const pct=s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
+      if(pct){const v=(parseFloat(pct[1])/100)*parseFloat(pct[2]);return Number.isInteger(v)?v:parseFloat(v.toFixed(4));}
+      s=s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi,function(_,fn,deg){const rad=(parseFloat(deg)*Math.PI)/180;let r=fn.toLowerCase()==='sin'?Math.sin(rad):fn.toLowerCase()==='cos'?Math.cos(rad):Math.tan(rad);return '('+Number(r.toFixed(6))+')';});
+      s=s.replace(/(?:square root of|sqrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.sqrt('+parseFloat(n)+')';});
+      s=s.replace(/(?:cube root of|cbrt)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.cbrt('+parseFloat(n)+')';});
+      s=s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.log10('+parseFloat(n)+')';});
+      s=s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,__,n){return 'Math.log('+parseFloat(n)+')';});
+      s=s.replace(/\bpi\b/gi,'('+Math.PI+')');
+      s=s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^)\s*(\d+(?:\.\d+)?)/gi,function(_,b,e){return 'Math.pow('+parseFloat(b)+','+parseFloat(e)+')';});
+      s=s.replace(/into|multiplied by|multiply|x|×/gi,'*').replace(/plus|add|added to/gi,'+').replace(/minus|subtract/gi,'-').replace(/divided by|divide by/gi,'/').replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g,' ').replace(/\s+/g,' ').trim();
+      if(/[0-9]/.test(s)&&/(\+|-|\*|\/|Math\.)/.test(s)){
+        try{const ans=Function('"use strict";return ('+s+')')();if(typeof ans==='number'&&!isNaN(ans)&&isFinite(ans))return Number.isInteger(ans)?ans:parseFloat(ans.toFixed(4));}catch(e){}
       }
       return null;
     }
 
-    async function searchWikipedia(rawQuery) {
-      const mathAns = tryAdvanceMath(rawQuery);
-      if (mathAns !== null) {
-        addLog("ADVANCED MATH", "Result = " + mathAns);
-        speak("Sir, the answer is " + mathAns + ".");
-        return;
-      }
-      const cleanTopic = rawQuery
-        .replace(/\b(who is|who was|what is|tell me about|when was|where is|explain)\b/gi, '')
-        .replace(/[?!.]/g, '').trim();
-
-      if (cleanTopic.length >= 2) {
-        addLog("WIKIPEDIA (EN)", 'Searching: "' + cleanTopic + '"...');
-        try {
-          const sRes = await fetch("https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*");
-          const sData = await sRes.json();
-          const bestTitle = sData && sData.query && sData.query.search && sData.query.search[0] ? sData.query.search[0].title : null;
-          if (bestTitle) {
-            const sumRes = await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle));
-            const sumData = await sumRes.json();
-            if (sumData.extract && sumData.type !== 'disambiguation') {
-              const shortAns = sumData.extract.split('. ').slice(0, 2).join('. ') + '.';
-              addLog("WIKIPEDIA ANSWER", shortAns, sumData.content_urls && sumData.content_urls.desktop ? sumData.content_urls.desktop.page : null);
-              speak(shortAns); return;
+    async function searchWiki(q){
+      const m=tryAdvMath(q);
+      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak('Sir, the answer is '+m+'.');return;}
+      const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain)\b/gi,'').replace(/[?!.]/g,'').trim();
+      if(topic.length>=2){
+        addLog('WIKIPEDIA (EN)','Searching: "'+topic+'"...');
+        try{
+          const sr=await fetch('https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(topic)+'&format=json&origin=*').then(function(x){return x.json();});
+          const title=sr&&sr.query&&sr.query.search&&sr.query.search[0]?sr.query.search[0].title:null;
+          if(title){
+            const su=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title)).then(function(x){return x.json();});
+            if(su.extract&&su.type!=='disambiguation'){
+              const shortAns=su.extract.split('. ').slice(0,2).join('. ')+'.';
+              addLog('WIKIPEDIA ANSWER',shortAns,su.content_urls&&su.content_urls.desktop?su.content_urls.desktop.page:null);
+              speak(shortAns);return;
             }
           }
-        } catch (e) {}
+        }catch(e){}
       }
-      const gUrl = "https://www.google.com/search?q=" + encodeURIComponent(rawQuery);
-      addLog("GOOGLE FALLBACK", 'Searching: "' + rawQuery + '"', gUrl);
-      speak("Showing Google results for " + rawQuery + ".", function() { window.location.href = gUrl; });
+      const gUrl='https://www.google.com/search?q='+encodeURIComponent(q);
+      addLog('GOOGLE FALLBACK','Searching: "'+q+'"',gUrl);
+      speak('Showing Google results for '+q+'.',function(){window.location.href=gUrl;});
     }
 
-    async function processCommand(cmd) {
-      if (isSpeaking) return;
-      addLog("USER", '"' + cmd + '"');
-
-      if (/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cmd)) {
-        isListening = false; toggleBtn.innerText = "ACTIVATE"; toggleBtn.classList.remove('active-stop');
-        speak("Going to sleep mode, sir."); return;
-      }
-      if (tryDateTime(cmd)) return;
-      if (/\b(play|song|music)\b/i.test(cmd)) {
-        const query = cmd.replace(/play|on youtube|song|music/gi, '').trim();
-        const ytUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
-        addLog("YOUTUBE", 'Playing: "' + query + '"', ytUrl);
-        speak("Playing " + query + " on YouTube, sir.", function() { window.location.href = ytUrl; }); return;
-      }
-      if (/\b(call|dial)\b/i.test(cmd)) {
-        addLog("DIALER", "Opening Phone Dialer", "tel:");
-        speak("Opening phone dialer, sir.", function() { window.location.href = "tel:"; }); return;
-      }
-      if (tryOpenApp(cmd)) return;
-      await searchWikipedia(cmd);
+    async function processCmd(cmd){
+      if(isSpeaking)return;
+      addLog('USER','"'+cmd+'"');
+      if(/\b(stop|sleep|mute mic|go to sleep)\b/i.test(cmd)){isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');speak('Going to sleep mode, sir.');return;}
+      if(tryDateTime(cmd))return;
+      if(/\b(play|song|music)\b/i.test(cmd)){const q=cmd.replace(/play|on youtube|song|music/gi,'').trim();const u='https://www.youtube.com/results?search_query='+encodeURIComponent(q);addLog('YOUTUBE','Playing: "'+q+'"',u);speak('Playing '+q+' on YouTube, sir.',function(){window.location.href=u;});return;}
+      if(/\b(call|dial)\b/i.test(cmd)){addLog('DIALER','Opening Phone Dialer','tel:');speak('Opening phone dialer, sir.',function(){window.location.href='tel:';});return;}
+      if(tryOpenApp(cmd))return;
+      await searchWiki(cmd);
     }
 
-    document.querySelectorAll('.chip').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const cmd = btn.getAttribute('data-cmd');
-        statusEl.innerText = "You: " + cmd;
-        processCommand(cmd);
-      });
-    });
+    document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){const c=b.getAttribute('data-cmd');statusEl.innerText='You: '+c;processCmd(c);});});
 
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-IN';
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.onstart = function() {
-        if (isSpeaking) { try { recognition.abort(); } catch (e) {} return; }
-        setVisualState('listening'); statusEl.innerText = "Listening...";
-      };
-      recognition.onresult = function(event) {
-        if (isSpeaking) return;
-        const cmd = event.results[0][0].transcript;
-        statusEl.innerText = "You: " + cmd; processCommand(cmd);
-      };
-      recognition.onend = function() {
-        if (!isSpeaking) setVisualState('idle');
-        if (isListening && !isSpeaking) setTimeout(function() { if (isListening && !isSpeaking) try { recognition.start(); } catch (e) {} }, 350);
-      };
-      recognition.onerror = function() {
-        if (!isSpeaking) setVisualState('idle');
-        if (isListening && !isSpeaking) setTimeout(function() { if (isListening && !isSpeaking) try { recognition.start(); } catch (e) {} }, 600);
-      };
+    if(SR){
+      rec=new SR();rec.lang='en-IN';rec.continuous=false;rec.interimResults=false;
+      rec.onstart=function(){if(isSpeaking){try{rec.abort();}catch(e){}return;}setVis('listening');statusEl.innerText='Listening...';};
+      rec.onresult=function(e){if(isSpeaking)return;const c=e.results[0][0].transcript;statusEl.innerText='You: '+c;processCmd(c);};
+      rec.onend=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},350);};
+      rec.onerror=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},600);};
     }
 
-    function toggleSurya() {
-      if (!SpeechRecognition) { statusEl.innerText = "Please use Chrome browser."; return; }
-      if (!isListening) {
-        isListening = true; toggleBtn.innerText = "STOP"; toggleBtn.classList.add('active-stop');
-        addLog("SYSTEM", "Surya Assistant Active.");
-        try { recognition.start(); } catch (e) { statusEl.innerText = "Please allow microphone permission."; }
-      } else {
-        isListening = false; isSpeaking = false; window.speechSynthesis.cancel();
-        toggleBtn.innerText = "ACTIVATE"; toggleBtn.classList.remove('active-stop');
-        setVisualState('idle');
-        try { recognition.abort(); } catch (e) {}
-        addLog("SYSTEM", "Paused."); statusEl.innerText = "Surya paused. Tap ACTIVATE to resume.";
+    function toggleSurya(){
+      if(!SR){statusEl.innerText='Please use Chrome browser.';return;}
+      if(!isListening){
+        isListening=true;toggleBtn.innerText='STOP';toggleBtn.classList.add('active-stop');addLog('SYSTEM','Surya Assistant Active.');
+        try{rec.start();}catch(e){statusEl.innerText='Please allow microphone permission.';}
+      }else{
+        isListening=false;isSpeaking=false;window.speechSynthesis.cancel();toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');setVis('idle');
+        try{rec.abort();}catch(e){}addLog('SYSTEM','Paused.');statusEl.innerText='Surya paused. Tap ACTIVATE to resume.';
       }
     }
 
-    toggleBtn.addEventListener('click', toggleSurya);
-    orbLogo.addEventListener('click', toggleSurya);
+    toggleBtn.addEventListener('click',toggleSurya);
+    orbLogo.addEventListener('click',toggleSurya);
   </script>
 </body>
 </html>
