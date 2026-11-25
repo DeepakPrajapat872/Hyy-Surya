@@ -1,517 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#020b14" />
-  <title>SURYA AI</title>
-
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #071e30 0%, #010509 100%);
-      color: #00f3ff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 12px 14px;
-      gap: 10px;
-    }
-    .hud-top {
-      width: 100%; max-width: 440px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 11px; color: #8be9fd;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.25);
-      padding-bottom: 6px;
-    }
-    .key-btn {
-      background: rgba(0, 243, 255, 0.15);
-      border: 1px solid #00f3ff;
-      color: #00f3ff;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .key-btn.gemini-active {
-      border-color: #00ff9d;
-      color: #00ff9d;
-      background: rgba(0, 255, 157, 0.12);
-    }
-    .key-btn.wiki-fallback {
-      border-color: #fde047;
-      color: #fde047;
-      background: rgba(253, 224, 71, 0.12);
-    }
-
-    /* Inline API Key Drawer (Never blocked by Chrome) */
-    #keyBox {
-      display: none;
-      width: 100%; max-width: 440px;
-      background: #061c2e;
-      border: 1px solid #00f3ff;
-      border-radius: 10px;
-      padding: 10px;
-      gap: 6px;
-      flex-direction: column;
-    }
-    #keyBox input {
-      width: 100%;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #38bdf8;
-      background: #010a12;
-      color: #ffffff;
-      font-size: 12px;
-    }
-    .key-actions {
-      display: flex; gap: 8px; justify-content: flex-end;
-    }
-    .small-btn {
-      padding: 6px 14px;
-      border-radius: 6px;
-      border: none;
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .save-btn { background: #00ff9d; color: #010a12; }
-    .cancel-btn { background: #334155; color: #ffffff; }
-
-    /* Cyber Orb Logo */
-    .orb-container {
-      position: relative;
-      width: 120px; height: 120px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-    }
-    .orbit-1 {
-      position: absolute; width: 116px; height: 116px;
-      border-radius: 50%;
-      border: 2.5px dashed #00f3ff;
-      animation: spinRight 8s linear infinite;
-    }
-    .orbit-2 {
-      position: absolute; width: 90px; height: 90px;
-      border-radius: 50%;
-      border: 3px solid transparent;
-      border-left-color: #38bdf8;
-      border-right-color: #00f3ff;
-      animation: spinLeft 3.5s linear infinite;
-    }
-    .cyber-sphere {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #00f3ff 45%, #003380 90%);
-      box-shadow: 0 0 25px #00f3ff, inset 0 0 12px #ffffff;
-      animation: idleBreath 2.2s ease-in-out infinite alternate;
-    }
-    .listening .orbit-1 { border-color: #00ff9d; animation-duration: 2.5s; }
-    .listening .cyber-sphere {
-      background: radial-gradient(circle at 30% 30%, #ffffff, #00ff9d 45%, #006633 90%);
-      box-shadow: 0 0 35px #00ff9d;
-    }
-    .speaking .orbit-1 { border-color: #c084fc; animation-duration: 1.8s; }
-    .speaking .cyber-sphere {
-      background: radial-gradient(circle at 30% 30%, #ffffff, #c084fc 45%, #4c1d95 90%);
-      box-shadow: 0 0 40px #c084fc;
-    }
-
-    @keyframes spinRight { 100% { transform: rotate(360deg); } }
-    @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
-    @keyframes idleBreath { from { transform: scale(0.94); } to { transform: scale(1.04); } }
-
-    h1 {
-      font-size: 23px; font-weight: 800; letter-spacing: 2px;
-      color: #ffffff; text-shadow: 0 0 12px #00f3ff;
-    }
-    #status {
-      font-size: 13px; color: #a5f3fc; text-align: center;
-      max-width: 420px; min-height: 20px;
-    }
-    .main-btn {
-      padding: 11px 34px;
-      font-size: 14px; font-weight: bold; letter-spacing: 1.5px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: #ffffff; border: none; border-radius: 25px;
-      box-shadow: 0 0 16px rgba(0, 198, 255, 0.5);
-      cursor: pointer;
-    }
-    .main-btn.active-stop {
-      background: linear-gradient(90deg, #ff416c, #ff4b2b);
-    }
-
-    .log-panel {
-      width: 100%; max-width: 440px;
-      background: rgba(0, 243, 255, 0.05);
-      border: 1px solid rgba(0, 243, 255, 0.3);
-      border-radius: 10px;
-      padding: 8px 10px;
-      font-size: 11px;
-      max-height: 165px;
-      overflow-y: auto;
-    }
-    .log-title {
-      font-weight: bold; color: #00f3ff;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-      padding-bottom: 3px; margin-bottom: 5px;
-      font-size: 10px;
-    }
-    .log-entry { margin-bottom: 5px; line-height: 1.35; color: #cffafe; }
-    .log-source { color: #fde047; font-weight: bold; }
-    .log-entry a { color: #38bdf8; text-decoration: underline; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURYA AI</title>
+<style>
+body{background:#020b14;color:#00f3ff;font-family:sans-serif;text-align:center;padding:15px}
+.top{display:flex;justify-content:space-between;font-size:12px;border-bottom:1px solid #00f3ff44;padding-bottom:8px;margin-bottom:15px}
+button{padding:10px 22px;border:none;border-radius:20px;background:#0099ff;color:#fff;font-weight:bold;cursor:pointer;margin:5px}
+.kbtn{padding:4px 10px;font-size:11px;background:#06243b;border:1px solid #00f3ff}
+#kbox{display:none;margin:10px auto;max-width:350px;background:#061c2e;padding:10px;border-radius:8px;border:1px solid #00f3ff}
+input{width:90%;padding:8px;margin-bottom:8px;border-radius:5px;border:1px solid #00f3ff;background:#000;color:#fff}
+.orb{width:90px;height:90px;margin:15px auto;border-radius:50%;background:radial-gradient(#fff,#00f3ff,#003380);box-shadow:0 0 25px #00f3ff}
+.log{max-width:400px;margin:15px auto;text-align:left;background:#00f3ff11;padding:10px;border-radius:8px;font-size:12px;max-height:160px;overflow-y:auto}
+</style>
 </head>
 <body>
-  <div class="hud-top">
-    <span id="clock">TIME: --:--</span>
-    <span id="battery">PWR: --%</span>
-    <button id="engineBadge" class="key-btn" type="button">🔑 SET GEMINI KEY</button>
-  </div>
+<div class="top">
+  <span id="clk">TIME: --:--</span>
+  <button class="kbtn" onclick="toggleBox()">🔑 SET GEMINI KEY</button>
+</div>
 
-  <!-- On-Screen API Key Box -->
-  <div id="keyBox">
-    <input type="text" id="apiKeyInput" placeholder="Apni Gemini API Key yahan paste karein..." />
-    <div class="key-actions">
-      <button type="button" class="small-btn cancel-btn" id="closeKeyBtn">Cancel</button>
-      <button type="button" class="small-btn save-btn" id="saveKeyBtn">Save Key</button>
-    </div>
-  </div>
+<div id="kbox">
+  <input id="kin" placeholder="Gemini API Key paste karein...">
+  <br>
+  <button class="kbtn" onclick="saveKey()">Save Key</button>
+  <button class="kbtn" onclick="toggleBox()">Close</button>
+</div>
 
-  <div class="orb-container" id="orbLogo">
-    <div class="orbit-1"></div>
-    <div class="orbit-2"></div>
-    <div class="cyber-sphere"></div>
-  </div>
+<div class="orb"></div>
+<h2>SURYA AI</h2>
+<p id="st">Tap ACTIVATE to start</p>
+<button id="mbtn" onclick="toggleMic()">ACTIVATE</button>
 
-  <h1>SURYA</h1>
-  <div id="status">Tap ACTIVATE for Auto-Switching AI Assistant</div>
-  <button id="toggleBtn" class="main-btn" type="button">ACTIVATE</button>
+<div class="log" id="lg"><div>[SURYA] System Ready.</div></div>
 
-  <div class="log-panel">
-    <div class="log-title">HYBRID AI ENGINE LOG (GEMINI / WIKIPEDIA)</div>
-    <div id="logList">
-      <div class="log-entry"><span class="log-source">[SURYA]</span> System Ready. Tap SET GEMINI KEY above to connect Gemini!</div>
-    </div>
-  </div>
+<script>
+let key = localStorage.getItem('s_key') || '';
+let on = false, speaking = false;
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const rec = SR ? new SR() : null;
 
-  <script>
-    const statusEl = document.getElementById('status');
-    const toggleBtn = document.getElementById('toggleBtn');
-    const logList = document.getElementById('logList');
-    const orbLogo = document.getElementById('orbLogo');
-    const engineBadge = document.getElementById('engineBadge');
-    const keyBox = document.getElementById('keyBox');
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const saveKeyBtn = document.getElementById('saveKeyBtn');
-    const closeKeyBtn = document.getElementById('closeKeyBtn');
+setInterval(()=>{ document.getElementById('clk').innerText = "TIME: " + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }, 1000);
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let isListening = false;
-    let isSpeaking = false;
-    let recognition = null;
-    let geminiApiKey = localStorage.getItem('surya_gemini_key') || '';
+function log(m){ document.getElementById('lg').innerHTML = "<div>"+m+"</div>" + document.getElementById('lg').innerHTML; }
+function toggleBox(){ const b=document.getElementById('kbox'); b.style.display = b.style.display==='block'?'none':'block'; document.getElementById('kin').value=key; }
+function saveKey(){ key=document.getElementById('kin').value.trim(); localStorage.setItem('s_key',key); toggleBox(); log("[KEY] Gemini Key Saved!"); }
 
-    function addLog(source, detail, url = null) {
-      const div = document.createElement('div');
-      div.className = 'log-entry';
-      let linkHtml = url ? ' — <a href="' + url + '" target="_blank">Open</a>' : '';
-      div.innerHTML = '<span class="log-source">[' + source + ']</span> ' + detail + linkHtml;
-      logList.prepend(div);
-    }
+function say(t, hi, cb){
+  document.getElementById('st').innerText = "Surya: " + t;
+  speechSynthesis.cancel(); speaking = true;
+  if(rec) try{rec.abort();}catch(e){}
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = hi ? 'hi-IN' : 'en-IN';
+  u.onend = ()=>{ speaking=false; if(cb) cb(); else if(on) try{rec.start();}catch(e){} };
+  speechSynthesis.speak(u);
+}
 
-    function setEngineStatus(mode) {
-      engineBadge.classList.remove('gemini-active', 'wiki-fallback');
-      if (!geminiApiKey) {
-        engineBadge.innerText = "🔑 SET GEMINI KEY";
-      } else if (mode === 'gemini') {
-        engineBadge.innerText = "🟢 ENGINE: GEMINI";
-        engineBadge.classList.add('gemini-active');
-      } else if (mode === 'wiki') {
-        engineBadge.innerText = "🟡 ENGINE: WIKIPEDIA";
-        engineBadge.classList.add('wiki-fallback');
-      }
-    }
-    setEngineStatus(geminiApiKey ? 'gemini' : 'none');
+async function ask(q){
+  const hi = /[\u0900-\u097F]|\b(kya|kaun|kab|kaise|kholo|batao|hai|kitna)\b/i.test(q);
+  log("[YOU] " + q);
 
-    // Open & Save API Key Drawer
-    engineBadge.addEventListener('click', function() {
-      apiKeyInput.value = geminiApiKey;
-      keyBox.style.display = keyBox.style.display === 'flex' ? 'none' : 'flex';
-    });
+  if(q.includes('youtube')||q.includes('यूट्यूब')){ say(hi?"यूट्यूब खोल रहा हूँ":"Opening YouTube",hi,()=>location.href="https://youtube.com"); return; }
+  if(q.includes('whatsapp')||q.includes('व्हाट्सएप')){ say(hi?"व्हाट्सएप खोल रहा हूँ":"Opening WhatsApp",hi,()=>location.href="https://wa.me/"); return; }
+  if(q.includes('instagram')||q.includes('इंस्टाग्राम')){ say(hi?"इंस्टाग्राम खोल रहा हूँ":"Opening Instagram",hi,()=>location.href="https://instagram.com"); return; }
 
-    closeKeyBtn.addEventListener('click', function() {
-      keyBox.style.display = 'none';
-    });
-
-    saveKeyBtn.addEventListener('click', function() {
-      geminiApiKey = apiKeyInput.value.trim();
-      localStorage.setItem('surya_gemini_key', geminiApiKey);
-      keyBox.style.display = 'none';
-      setEngineStatus(geminiApiKey ? 'gemini' : 'none');
-      addLog("SYSTEM", geminiApiKey ? "Gemini Key saved! Auto-failover enabled." : "Key cleared. Using Wikipedia.");
-    });
-
-    function setVisualState(state) {
-      orbLogo.classList.remove('listening', 'speaking');
-      if (state === 'listening') orbLogo.classList.add('listening');
-      if (state === 'speaking') orbLogo.classList.add('speaking');
-    }
-
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clock').innerText = "TIME: " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    if (navigator.getBattery) {
-      navigator.getBattery().then(function(b) {
-        const updateBat = function() {
-          document.getElementById('battery').innerText = "PWR: " + Math.round(b.level * 100) + "%";
-        };
-        updateBat();
-        b.addEventListener('levelchange', updateBat);
+  if(key){
+    try{
+      const r = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="+key,{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({contents:[{parts:[{text:"Reply briefly in "+(hi?"Hindi":"English")+" without symbols: "+q}]}]})
       });
-    }
-
-    function detectLanguage(text) {
-      if (/[\u0900-\u097F]/.test(text)) return 'hi';
-      if (/\b(kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun)\b/i.test(text)) {
-        return 'hi';
+      if(r.ok){
+        const d = await r.json();
+        const ans = d.candidates[0].content.parts[0].text;
+        log("[GEMINI] " + ans); say(ans, hi); return;
       }
-      return 'en';
-    }
+      log("[AUTO-SWITCH] Gemini limit hit, shifting to Wikipedia...");
+    }catch(e){}
+  }
 
-    function speak(text, lang, callback) {
-      const cleanSpeech = text.replace(/[*#_`]/g, '');
-      statusEl.innerText = "Surya: " + cleanSpeech;
-      window.speechSynthesis.cancel();
-      isSpeaking = true;
+  try{
+    const sub = hi ? 'hi' : 'en';
+    const w = await fetch("https://"+sub+".wikipedia.org/w/api.php?action=query&list=search&srsearch="+encodeURIComponent(q)+"&format=json&origin=*").then(x=>x.json());
+    const title = w.query.search[0].title;
+    const s = await fetch("https://"+sub+".wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(title)).then(x=>x.json());
+    log("[WIKIPEDIA] " + s.extract); say(s.extract.split('.')[0], hi);
+  }catch(e){
+    say(hi?"गूगल पर खोज रहा हूँ":"Searching Google",hi,()=>location.href="https://google.com/search?q="+encodeURIComponent(q));
+  }
+}
 
-      if (recognition) {
-        try { recognition.abort(); } catch (e) {}
-      }
+if(rec){
+  rec.lang = 'hi-IN';
+  rec.onresult = e => ask(e.results[0][0].transcript.toLowerCase());
+  rec.onend = () => { if(on && !speaking) try{rec.start();}catch(e){} };
+}
 
-      const utter = new SpeechSynthesisUtterance(cleanSpeech);
-      utter.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
-      utter.rate = 1.0;
-
-      utter.onstart = function() { setVisualState('speaking'); };
-      utter.onend = function() {
-        isSpeaking = false;
-        setVisualState('idle');
-        if (callback) {
-          callback();
-        } else if (isListening) {
-          setTimeout(function() {
-            if (isListening && !isSpeaking) {
-              try { recognition.start(); } catch (e) {}
-            }
-          }, 350);
-        }
-      };
-      utter.onerror = function() {
-        isSpeaking = false;
-        setVisualState('idle');
-      };
-      window.speechSynthesis.speak(utter);
-    }
-
-    function tryOpenApp(cmd, lang) {
-      const apps = [
-        { keys: ['youtube', 'यूट्यूब'], name: 'YouTube', url: 'https://www.youtube.com' },
-        { keys: ['whatsapp', 'व्हाट्सएप'], name: 'WhatsApp', url: 'https://wa.me/' },
-        { keys: ['instagram', 'इंस्टाग्राम'], name: 'Instagram', url: 'https://www.instagram.com' },
-        { keys: ['facebook', 'फेसबुक'], name: 'Facebook', url: 'https://www.facebook.com' },
-        { keys: ['maps', 'map', 'मैप्स', 'लोकेशन'], name: 'Google Maps', url: 'https://maps.google.com' },
-        { keys: ['gmail', 'email', 'जीमेल'], name: 'Gmail', url: 'https://mail.google.com' },
-        { keys: ['telegram', 'टेलीग्राम'], name: 'Telegram', url: 'https://t.me/' },
-        { keys: ['spotify', 'स्पॉटिफाई'], name: 'Spotify', url: 'https://open.spotify.com' },
-        { keys: ['amazon', 'अमेज़न', 'अमेजॉन'], name: 'Amazon', url: 'https://www.amazon.in' },
-        { keys: ['flipkart', 'फ्लिपकार्ट'], name: 'Flipkart', url: 'https://www.flipkart.com' },
-        { keys: ['paytm', 'पेटीएम'], name: 'Paytm', url: 'https://paytm.com' },
-        { keys: ['zomato', 'ज़ोमैटो'], name: 'Zomato', url: 'https://www.zomato.com' },
-        { keys: ['swiggy', 'स्विगी'], name: 'Swiggy', url: 'https://www.swiggy.com' },
-        { keys: ['google', 'गूगल'], name: 'Google', url: 'https://www.google.com' }
-      ];
-
-      const hasOpenIntent = /\b(open|launch|start|kholo|khol|chalu)\b/i.test(cmd) || /(खोलो|खोल|चलाओ)/.test(cmd);
-
-      for (let i = 0; i < apps.length; i++) {
-        const app = apps[i];
-        if (app.keys.some(function(k) { return cmd.toLowerCase().includes(k); })) {
-          if (hasOpenIntent || cmd.trim().split(' ').length <= 2) {
-            addLog("APP LAUNCHER", "Opening " + app.name, app.url);
-            speak(
-              lang === 'hi' ? "जी सर, " + app.name + " खोल रहा हूँ।" : "Sure sir, opening " + app.name + ".",
-              lang,
-              function() { window.location.href = app.url; }
-            );
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    function tryLocalMath(cmd) {
-      let expr = cmd
-        .replace(/into|multiplied by|multiply|x|×|गुणा|guna/gi, '*')
-        .replace(/plus|add|added to|जोड़|प्लस|jod/gi, '+')
-        .replace(/minus|subtract|घटा|माइनस|ghata/gi, '-')
-        .replace(/divided by|divide by|भाग|डिवाइड|bhag/gi, '/')
-        .replace(/[^0-9+\-*/().]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      if (/[0-9]\s*[+\-*/]\s*[0-9]/.test(expr)) {
-        try {
-          const ans = Function('"use strict";return (' + expr + ')')();
-          if (typeof ans === 'number' && !isNaN(ans)) {
-            return Number.isInteger(ans) ? ans : ans.toFixed(2);
-          }
-        } catch (e) {}
-      }
-      return null;
-    }
-
-    async function fallbackToWikipedia(rawQuery, lang) {
-      setEngineStatus(geminiApiKey ? 'wiki' : 'none');
-
-      const mathAns = tryLocalMath(rawQuery);
-      if (mathAns !== null) {
-        addLog("LOCAL MATH", "Result = " + mathAns);
-        speak(lang === 'hi' ? "सर, इसका उत्तर " + mathAns + " होता है।" : "Sir, the answer is " + mathAns + ".", lang);
-        return;
-      }
-
-      const cleanTopic = rawQuery
-        .replace(/\b(who is|who was|what is|tell me about|when was|where is|ka janm kab hua tha|ko fansi kab hui thi|kaun hai|kaun the|kya hai|kya hota hai|kaha hai|ke bare mein batao|batao|in hindi|hindi mein)\b/gi, '')
-        .replace(/(का जन्म कब हुआ था|को फांसी कब हुई थी|कौन है|कौन थे|क्या है|क्या होता है|कहाँ है|के बारे में बताओ|बताओ)/g, '')
-        .replace(/[?।!]/g, '')
-        .trim();
-
-      if (cleanTopic.length >= 2) {
-        const wikiSub = lang === 'hi' ? 'hi' : 'en';
-        addLog("WIKIPEDIA (" + wikiSub.toUpperCase() + ")", 'Searching: "' + cleanTopic + '"...');
-        try {
-          const searchUrl = "https://" + wikiSub + ".wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(cleanTopic) + "&format=json&origin=*";
-          const searchRes = await fetch(searchUrl);
-          const searchData = await searchRes.json();
-          const bestTitle = searchData && searchData.query && searchData.query.search && searchData.query.search[0] ? searchData.query.search[0].title : null;
-
-          if (bestTitle) {
-            const summaryUrl = "https://" + wikiSub + ".wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(bestTitle);
-            const sumRes = await fetch(summaryUrl);
-            const sumData = await sumRes.json();
-
-            if (sumData.extract && sumData.type !== 'disambiguation') {
-              const splitChar = lang === 'hi' ? '। ' : '. ';
-              const shortAns = sumData.extract.split(splitChar).slice(0, 2).join(splitChar) + (lang === 'hi' ? '।' : '.');
-              addLog("WIKIPEDIA ANSWER", shortAns);
-              speak(shortAns, lang);
-              return;
-            }
-          }
-        } catch (e) {}
-      }
-
-      const gUrl = "https://www.google.com/search?q=" + encodeURIComponent(rawQuery);
-      addLog("GOOGLE FALLBACK", 'Searching: "' + rawQuery + '"', gUrl);
-      speak(lang === 'hi' ? "गूगल पर " + rawQuery + " दिखा रहा हूँ सर।" : "Showing Google results for " + rawQuery + ".", lang, function() { window.location.href = gUrl; });
-    }
-
-    async function askHybridAI(promptText, lang) {
-      if (!geminiApiKey) {
-        await fallbackToWikipedia(promptText, lang);
-        return;
-      }
-
-      statusEl.innerText = lang === 'hi' ? "Surya (Gemini) सोच रहा है..." : "Surya (Gemini) is thinking...";
-      const systemPrompt = "You are SURYA, a smart personal voice assistant (like Jarvis). Reply in the EXACT same language the user spoke (" + (lang === 'hi' ? "Natural Hindi / Hinglish" : "Natural English") + "). Keep answers concise and conversational (2 to 3 short sentences max). Do not use emojis or markdown.";
-
-      try {
-        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(geminiApiKey);
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: systemPrompt + "\n\nUser: " + promptText }]
-            }]
-          })
-        });
-
-        if (!response.ok) {
-          addLog("AUTO-SWITCH", "Gemini unavailable (" + response.status + "). Shifting to Wikipedia...");
-          await fallbackToWikipedia(promptText, lang);
-          return;
-        }
-
-        const data = await response.json();
-        const reply = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] ? data.candidates[0].content.parts[0].text : null;
-
-        if (reply) {
-          setEngineStatus('gemini');
-          addLog("GEMINI AI", reply);
-          speak(reply, lang);
-        } else {
-          await fallbackToWikipedia(promptText, lang);
-        }
-      } catch (err) {
-        addLog("SWITCHING", "Gemini unreachable. Shifting to Wikipedia...");
-        await fallbackToWikipedia(promptText, lang);
-      }
-    }
-
-    async function processCommand(cmd) {
-      if (isSpeaking) return;
-      const lang = detectLanguage(cmd);
-      addLog("USER (" + lang.toUpperCase() + ")", '"' + cmd + '"');
-
-      if (/\b(stop|sleep|band ho ja|so jao|रुक जाओ|बंद हो जाओ)\b/i.test(cmd)) {
-        isListening = false;
-        toggleBtn.innerText = "ACTIVATE";
-        toggleBtn.classList.remove('active-stop');
-        speak(lang === 'hi' ? "ठीक है सर, मैं स्लीप मोड में जा रहा हूँ।" : "Going to sleep mode, sir.", lang);
-        return;
-      }
-
-      if (/\b(play|chalao|song|gaana|bajao)\b/i.test(cmd) || cmd.includes('गाना') || cmd.includes('चलाओ') || cmd.includes('बजाओ')) {
-        const query = cmd.replace(/play|on youtube|chalao|song|gaana|bajao|गाना|चलाओ|बजाओ|यूट्यूब पर/gi, '').trim();
-        const ytUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
-        addLog("YOUTUBE", 'Playing: "' + query + '"', ytUrl);
-        speak(lang === 'hi' ? "यूट्यूब पर " + query + " चला रहा हूँ सर।" : "Playing " + query + " on YouTube, sir.", lang, function() { window.location.href = ytUrl; });
-        return;
-      }
-
-      if (/\b(call|phone lagao|कॉल)\b/i.test(cmd)) {
-        addLog("DIALER", "Opening Phone Dialer", "tel:");
-        speak(lang === 'hi' ? "जी सर, कॉल डायलर खोल रहा हूँ।" : "Opening phone dialer, sir.", lang, function() { window.location.href = "tel:"; });
-        return;
-      }
-
-      if (tryOpenApp(cmd, lang)) return;
-      await askHybridAI(cmd, lang);
-    }
-
-    if (SpeechRecognition) {
-      recognition = new SpeechRecognition();
-      recognition.lang = 'hi-IN';
-      recognition.continuous = false;
-      recognition.interimResults = false;
-
-      recognition.onstart = function() {
-        if (isSpeaking) {
-          try { recognition.abort(); } catch (e) {}
-          return;
-        }
-        setVisualState('listening');
-        statusEl.innerText = "Listening... (Hindi / English)";
-      };
-
-      recognition.onre
+function toggleMic(){
+  if(!rec) return alert("Use Chrome");
+  on = !on;
+  document.getElementById('mbtn').innerText = on ? "STOP" : "ACTIVATE";
+  if(on){ log("[MIC] Listening..."); rec.start(); } else { rec.abort(); speaking=false; speechSynthesis.cancel(); }
+}
+</script>
+</body>
+</html>
