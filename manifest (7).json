@@ -1,0 +1,20 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "SURYA AI",
+  "orientation": "any",
+  "scope": "/hyy-Surya",
+  "short_name": "SURYA AI",
+  "start_url": "/hyy-Surya",
+  "theme_color": "#020b14",
+  "id": "https://deepakprajapat872.github.io/Hyy-Surya/",
+  "description": "SURYA AI is a fast, smart AI assistant web app designed for quick answers, productivity, and smooth app-like access.",
+  "display_override": [
+    "browser",
+    "window-controls-overlay",
+    "fullscreen",
+    "minimal-ui",
+    "standalone"
+  ]
+}
