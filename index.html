@@ -22,45 +22,44 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
     .hud-top{
       width:100%;display:flex;justify-content:space-between;align-items:center;
-      font-size:13px;font-weight:700;color:#a5f1ff;white-space:nowrap;
-      border-bottom:1.5px solid rgba(0,243,255,.3);padding-bottom:8px;gap:6px;
+      font-size:12.5px;font-weight:700;color:#a5f1ff;white-space:nowrap;
+      border-bottom:1.5px solid rgba(0,243,255,.3);padding-bottom:8px;gap:5px;
       flex-shrink:0;animation:fadeUp .3s ease both;
     }
-    .badge-group{display:flex;align-items:center;gap:5px;flex-shrink:0}
+    .badge-group{display:flex;align-items:center;gap:4px;flex-shrink:0}
     .engine-badge,.mute-btn{
-      border-radius:12px;font-size:10.5px;font-weight:800;padding:4px 9px;white-space:nowrap;cursor:pointer;
+      border-radius:12px;font-size:10px;font-weight:800;padding:4px 8px;white-space:nowrap;cursor:pointer;
     }
     .engine-badge{border:1.5px solid rgba(253,224,71,.85);color:#fde047;background:rgba(253,224,71,.15)}
+    .engine-badge.groq-live{border-color:#00ff9d;color:#00ff9d;background:rgba(0,255,157,.16)}
     .mute-btn{border:1.5px solid rgba(56,189,248,.75);color:#e0f2fe;background:rgba(56,189,248,.18)}
     .center-stage{width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;margin-top:1px}
     .orb-container{
-      position:relative;width:156px;height:156px;display:flex;align-items:center;justify-content:center;
+      position:relative;width:152px;height:152px;display:flex;align-items:center;justify-content:center;
       cursor:pointer;animation:fadeUp .4s ease both;
     }
     .holo-halo{
-      position:absolute;width:154px;height:154px;border-radius:50%;
+      position:absolute;width:150px;height:150px;border-radius:50%;
       background:radial-gradient(circle,rgba(0,243,255,.22) 0%,transparent 70%);
       animation:haloPulse 2.6s ease-in-out infinite alternate;
     }
     .orbit-1{
-      position:absolute;width:146px;height:146px;border-radius:50%;
+      position:absolute;width:142px;height:142px;border-radius:50%;
       border:3px dashed rgba(0,243,255,.88);animation:spinR 9s linear infinite;
     }
     .orbit-2{
-      position:absolute;width:116px;height:116px;border-radius:50%;
+      position:absolute;width:112px;height:112px;border-radius:50%;
       border:3.5px solid transparent;border-left-color:#38bdf8;border-right-color:#00f3ff;
       animation:spinL 3.6s linear infinite;
     }
     .cyber-sphere{
-      width:78px;height:78px;border-radius:50%;position:relative;overflow:hidden;
+      width:76px;height:76px;border-radius:50%;position:relative;overflow:hidden;
       display:flex;align-items:center;justify-content:center;
       background:radial-gradient(circle at 32% 28%,#ffffff,#38e8ff 46%,#004c99 92%);
       box-shadow:0 0 38px rgba(0,243,255,.95),inset 0 0 16px rgba(255,255,255,.9);
       animation:idleB 2.4s ease-in-out infinite alternate;transition:all .3s ease;
     }
-    .cyber-sphere img{
-      width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;
-    }
+    .cyber-sphere img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
     @keyframes haloPulse{from{transform:scale(.92);opacity:.7}to{transform:scale(1.08);opacity:1}}
     .listening .orbit-1{border-color:#00ff9d;animation-duration:2.2s}
     .listening .cyber-sphere{box-shadow:0 0 48px rgba(0,255,157,.95),inset 0 0 16px #fff;animation:actP .6s ease-in-out infinite alternate}
@@ -74,59 +73,76 @@
     @keyframes actP{from{transform:scale(.93)}to{transform:scale(1.13)}}
     @keyframes spkB{from{transform:scale(.96)}to{transform:scale(1.18)}}
     .title-row{display:flex;align-items:center;gap:8px}
-    h1{font-size:33px;font-weight:900;letter-spacing:3px;color:#fff;text-shadow:0 0 20px rgba(0,243,255,.72)}
+    h1{font-size:32px;font-weight:900;letter-spacing:3px;color:#fff;text-shadow:0 0 20px rgba(0,243,255,.72)}
     .state-pill{
       font-size:10.5px;font-weight:800;letter-spacing:1px;padding:3px 9px;border-radius:10px;
       background:rgba(0,243,255,.14);border:1px solid rgba(0,243,255,.45);color:#67e8f9;
     }
-    #status{font-size:15px;color:#c7f1ff;text-align:center;width:100%;min-height:22px;line-height:1.32;padding:0 4px;font-weight:500}
+    #status{font-size:14.5px;color:#c7f1ff;text-align:center;width:100%;min-height:22px;line-height:1.35;padding:0 4px;font-weight:500}
     .main-btn{
-      padding:12px 50px;font-size:17px;font-weight:800;letter-spacing:2px;
+      padding:11px 46px;font-size:16.5px;font-weight:800;letter-spacing:2px;
       background:linear-gradient(90deg,#189bff,#0066ff);color:#fff;border:none;
       border-radius:32px;box-shadow:0 6px 26px rgba(0,153,255,.55);cursor:pointer;
     }
     .main-btn:active{transform:scale(.96)}
     .main-btn.active-stop{background:linear-gradient(90deg,#ff416c,#ff4b2b)}
-    .quick-chips{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;flex-shrink:0}
+    .quick-chips{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:5px;flex-shrink:0}
     .chip{
       background:rgba(12,42,68,.72);border:1.5px solid rgba(125,211,252,.44);
-      color:#e6f9ff;padding:7px 11px;border-radius:13px;font-size:12.5px;font-weight:600;cursor:pointer;
+      color:#e6f9ff;padding:6px 10px;border-radius:13px;font-size:12px;font-weight:600;cursor:pointer;
     }
     .chip:active{transform:scale(.95)}
     .log-panel{
-      width:100%;height:148px;
+      width:100%;height:165px;
       background:linear-gradient(180deg,rgba(13,44,72,.66) 0%,rgba(5,19,34,.88) 100%);
       border:1.5px solid rgba(125,211,252,.38);border-radius:18px;
-      padding:10px 13px;font-size:13px;overflow:hidden;
+      padding:10px 12px;font-size:13px;overflow:hidden;
       display:flex;flex-direction:column;flex-shrink:0;
     }
     .log-header{
       display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px;margin-bottom:6px;flex-shrink:0;
+      border-bottom:1px solid rgba(125,211,252,.25);padding-bottom:6px;margin-bottom:6px;flex-shrink:0;gap:4px;
     }
-    .log-title{font-weight:800;color:#e6f9ff;font-size:11px;letter-spacing:.4px}
-    .log-actions{display:flex;gap:6px}
+    .log-title{font-weight:800;color:#e6f9ff;font-size:10.5px;letter-spacing:.3px}
+    .log-actions{display:flex;gap:4px;flex-shrink:0}
     .mini-act-btn{
       background:rgba(30,90,140,.62);border:1px solid rgba(125,211,252,.38);
-      color:#dff6ff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;cursor:pointer;
+      color:#dff6ff;font-size:10.5px;font-weight:700;padding:3px 7px;border-radius:10px;cursor:pointer;
     }
     #logList{flex:1;overflow-y:auto}
-    .log-entry{margin-bottom:6px;line-height:1.4;color:#daf6ff}
+    .log-entry{margin-bottom:7px;line-height:1.42;color:#daf6ff;word-break:break-word}
     .log-source{color:#67e8f9;font-weight:bold}
     .log-entry a{color:#38bdf8;text-decoration:underline}
-    .chat-bar{
-      width:100%;display:flex;align-items:center;gap:9px;flex-shrink:0;
-      background:rgba(10,34,58,.88);border:1.5px solid rgba(125,211,252,.45);
-      border-radius:32px;padding:8px 10px 8px 16px;
+    .copy-mini{
+      margin-left:6px;background:rgba(0,243,255,.14);border:1px solid rgba(0,243,255,.35);
+      color:#a5f1ff;border-radius:6px;padding:1px 5px;font-size:10px;cursor:pointer;
     }
-    .chat-input{flex:1;background:transparent;border:none;outline:none;color:#ffffff;font-size:16px;min-width:0}
-    .chat-input::placeholder{color:#9ec4d8}
+    .chat-bar{
+      width:100%;display:flex;align-items:center;gap:8px;flex-shrink:0;
+      background:rgba(10,34,58,.88);border:1.5px solid rgba(125,211,252,.45);
+      border-radius:32px;padding:7px 9px 7px 15px;
+    }
+    .chat-input{flex:1;background:transparent;border:none;outline:none;color:#ffffff;font-size:15.5px;min-width:0}
+        .chat-input::placeholder{color:#9ec4d8}
     .icon-btn{
-      width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;font-size:18.5px;flex-shrink:0;
+      width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
     }
     .mic-mini{background:rgba(56,189,248,.24);color:#e0f7ff;border:1.5px solid rgba(125,211,252,.45)}
     .send-mini{background:linear-gradient(135deg,#22b8ff,#0066ff);color:#fff}
+    .modal-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,6,14,.88);
+      z-index:999;align-items:center;justify-content:center;padding:16px;
+    }
+    .modal-card{
+      width:100%;max-width:380px;background:#071c30;border:1.5px solid rgba(0,243,255,.55);
+      border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;
+      box-shadow:0 12px 35px rgba(0,0,0,.75);
+    }
+    .modal-input{
+      width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(125,211,252,.45);
+      background:#020b14;color:#fff;font-size:14px;outline:none;
+    }
   </style>
 </head>
 <body>
@@ -134,10 +150,12 @@
     <span id="clock">TIME: --:--</span>
     <span id="battery">PWR: --%</span>
     <div class="badge-group">
-      <button id="muteBtn" class="mute-btn" type="button">🔊 VOICE ON</button>
-      <span class="engine-badge" id="timerBadge">AI CORE v3</span>
+      <button id="keyBtn" class="mute-btn" type="button">🔑 KEY</button>
+      <button id="muteBtn" class="mute-btn" type="button">🔊 ON</button>
+      <span class="engine-badge" id="timerBadge">AI CORE v4</span>
     </div>
   </div>
+
   <div class="center-stage">
     <div class="orb-container" id="orbLogo">
       <div class="holo-halo"></div>
@@ -151,38 +169,69 @@
       <h1>SURYA</h1>
       <span class="state-pill" id="statePill">STANDBY</span>
     </div>
-    <div id="status">Tap ACTIVATE for Voice Assistant</div>
+    <div id="status">Tap ACTIVATE or Ask Anything Below</div>
     <button id="toggleBtn" class="main-btn" type="button">ACTIVATE</button>
   </div>
+
   <div class="quick-chips">
     <button class="chip" type="button" data-cmd="hello surya">👋 Hello</button>
     <button class="chip" type="button" data-cmd="what do you remember">🧠 Memory</button>
+    <button class="chip" type="button" data-cmd="my tasks">✅ Tasks</button>
     <button class="chip" type="button" data-cmd="set timer 1 minute">⏱️ 1m Timer</button>
-    <button class="chip" type="button" data-cmd="100 km to miles">📏 Convert</button>
+    <button class="chip" type="button" data-cmd="generate password">🔐 Password</button>
     <button class="chip" type="button" data-cmd="open youtube">▶️ YouTube</button>
   </div>
+
   <div class="log-panel">
     <div class="log-header">
       <div class="log-title">SURYA NEURAL LOG + MEMORY</div>
       <div class="log-actions">
+        <button id="resetAiBtn" class="mini-act-btn" type="button">Reset AI</button>
         <button id="exportBtn" class="mini-act-btn" type="button">Backup</button>
         <button id="clearLogBtn" class="mini-act-btn" type="button">Clear</button>
       </div>
     </div>
     <div id="logList"></div>
   </div>
+
   <form class="chat-bar" id="chatForm">
-    <input class="chat-input" id="chatInput" type="text" placeholder="Ask Surya or type 'Learn: Q = A'..." autocomplete="off" />
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask Groq AI, 'Add task...', or 'Learn: Q = A'..." autocomplete="off" />
     <button class="icon-btn mic-mini" id="miniMicBtn" type="button" title="Voice Input">🎙️</button>
     <button class="icon-btn send-mini" type="submit" title="Send">➤</button>
   </form>
 
+  <!-- Groq API Key Modal -->
+  <div id="groqModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div style="font-weight:800;font-size:15.5px;color:#fff;">🔑 Groq AI API Key Setup</div>
+      <div style="font-size:12px;color:#a5f1ff;line-height:1.45;">
+        Apni Groq key (<code>gsk_...</code>) yahan paste karein. Yeh sirf aapke is device ke localStorage mein safe rahegi.
+      </div>
+      <input id="groqKeyInput" class="modal-input" type="password" placeholder="Paste gsk_... key here" />
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button id="clearKeyBtn" type="button" class="mini-act-btn" style="border-color:#ff6b6b;color:#ffb3b3;">Remove</button>
+        <button id="closeKeyModal" type="button" class="mini-act-btn">Cancel</button>
+        <button id="saveKeyBtn" type="button" class="mini-act-btn" style="background:#0066ff;color:#fff;">Save Key</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const LOG_KEY='surya_saved_logs_v2',NOTES_KEY='surya_saved_notes_v2',LANG_KEY='surya_lang_pref_v1',NAME_KEY='surya_user_name_v1',QA_KEY='surya_custom_qa_v1';
+    const LOG_KEY='surya_saved_logs_v2',
+          NOTES_KEY='surya_saved_notes_v2',
+          LANG_KEY='surya_lang_pref_v1',
+          NAME_KEY='surya_user_name_v1',
+          QA_KEY='surya_custom_qa_v1',
+          TASKS_KEY='surya_tasks_v1',
+          GROQ_KEY_STORAGE='surya_groq_api_key_v1';
+
+    const GROQ_ENDPOINT='https://api.groq.com/openai/v1/chat/completions';
+    const GROQ_MODEL='llama-3.3-70b-versatile';
     const ICON_URL='https://deepakprajapat872.github.io/Hyy-Surya/icon-512.png';
 
     (function setupPWA(){
-      const a=document.getElementById('appleIcon');if(a)a.href=ICON_URL;
+      const a=document.getElementById('appleIcon');
+      if(a)a.href=ICON_URL;
       const m=document.getElementById('pwaManifest');
       if(m){
         const manifestObj={
@@ -208,30 +257,121 @@
       }
     })();
 
-    const statusEl=document.getElementById('status'),toggleBtn=document.getElementById('toggleBtn'),logList=document.getElementById('logList'),orbLogo=document.getElementById('orbLogo'),statePill=document.getElementById('statePill'),muteBtn=document.getElementById('muteBtn'),clearLogBtn=document.getElementById('clearLogBtn'),exportBtn=document.getElementById('exportBtn'),timerBadge=document.getElementById('timerBadge'),chatForm=document.getElementById('chatForm'),chatInput=document.getElementById('chatInput'),miniMicBtn=document.getElementById('miniMicBtn');
+    const statusEl=document.getElementById('status'),
+          toggleBtn=document.getElementById('toggleBtn'),
+          logList=document.getElementById('logList'),
+          orbLogo=document.getElementById('orbLogo'),
+          statePill=document.getElementById('statePill'),
+          muteBtn=document.getElementById('muteBtn'),
+          clearLogBtn=document.getElementById('clearLogBtn'),
+          exportBtn=document.getElementById('exportBtn'),
+          resetAiBtn=document.getElementById('resetAiBtn'),
+          timerBadge=document.getElementById('timerBadge'),
+          chatForm=document.getElementById('chatForm'),
+          chatInput=document.getElementById('chatInput'),
+          miniMicBtn=document.getElementById('miniMicBtn'),
+          keyBtn=document.getElementById('keyBtn'),
+          groqModal=document.getElementById('groqModal'),
+          groqKeyInput=document.getElementById('groqKeyInput'),
+          saveKeyBtn=document.getElementById('saveKeyBtn'),
+          clearKeyBtn=document.getElementById('clearKeyBtn'),
+          closeKeyModal=document.getElementById('closeKeyModal');
+
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     let isListening=false,isSpeaking=false,isMuted=false,rec=null,timerInterval=null;
     let preferredLang=(function(){try{return localStorage.getItem(LANG_KEY)||'en';}catch(e){return 'en';}})();
 
+    function getDefaultSystemPrompt(){
+      let nm='';
+      try{nm=localStorage.getItem(NAME_KEY)||'';}catch(e){}
+      return 'You are SURYA AI, a fast, smart, warm and helpful personal assistant for an Indian user'+(nm?' named '+nm:'')+'. Reply clearly, concisely, and naturally in the user\'s language (Hinglish, Hindi, or English). Keep voice-friendly answers brief unless detailed steps are requested.';
+    }
+
+    let groqMessages=[{role:'system',content:getDefaultSystemPrompt()}];
+
+    function getGroqKey(){
+      try{return (localStorage.getItem(GROQ_KEY_STORAGE)||'').trim();}catch(e){return '';}
+    }
+    function setGroqKey(val){
+      try{
+        const clean=(val||'').trim();
+        if(clean)localStorage.setItem(GROQ_KEY_STORAGE,clean);
+        else localStorage.removeItem(GROQ_KEY_STORAGE);
+      }catch(e){}
+      updateEngineBadge();
+    }
+    function updateEngineBadge(){
+      if(!timerInterval){
+        if(getGroqKey()){
+          timerBadge.innerText='GROQ AI ON';
+          timerBadge.classList.add('groq-live');
+        }else{
+          timerBadge.innerText='AI CORE v4';
+          timerBadge.classList.remove('groq-live');
+        }
+      }
+    }
+    updateEngineBadge();
+        keyBtn.addEventListener('click',function(){
+      groqKeyInput.value=getGroqKey();
+      groqModal.style.display='flex';
+    });
+    closeKeyModal.addEventListener('click',function(){groqModal.style.display='none';});
+    saveKeyBtn.addEventListener('click',function(){
+      setGroqKey(groqKeyInput.value);
+      groqModal.style.display='none';
+      addLog('GROQ AI',getGroqKey()?'API Key saved! Surya AI is now powered by Groq LLM.':'API Key empty — running in Local + Wiki mode.');
+    });
+    clearKeyBtn.addEventListener('click',function(){
+      groqKeyInput.value='';
+      setGroqKey('');
+      groqModal.style.display='none';
+      addLog('GROQ AI','API Key removed from this device.');
+    });
+    resetAiBtn.addEventListener('click',function(){
+      groqMessages=[{role:'system',content:getDefaultSystemPrompt()}];
+      addLog('GROQ AI','Conversation memory reset.');
+    });
+
     function detectLang(text){
       const t=(text||'').trim().toLowerCase();
       if(/[\u0900-\u097F]/.test(t))return 'hi';
-      if(/\b(hindi|hindi mein|hinglish|kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|baat|yaad|sikho)\b/i.test(t)){
+      if(/\b(hindi|hindi mein|hinglish|kya|kaun|kab|kaha|kaise|kholo|karo|chalao|batao|mera|meri|tum|aap|hai|hain|tha|thi|kitna|kitne|sunao|lagao|bhejo|kyun|aaj|samay|waqt|din|tarik|tarikh|baat|yaad|sikho|task|kaam)\b/i.test(t)){
         return 'hi';
       }
       if(/\b(speak in english|english mein|in english)\b/i.test(t))return 'en';
       return preferredLang||'en';
     }
+
     function setPreferredLang(lang){
       preferredLang=lang==='hi'?'hi':'en';
       try{localStorage.setItem(LANG_KEY,preferredLang);}catch(e){}
       if(rec)rec.lang=preferredLang==='hi'?'hi-IN':'en-IN';
     }
+
+    function escapeHtml(str){
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
     function renderLogItem(item){
-      const d=document.createElement('div');d.className='log-entry';
-      d.innerHTML='<span class="log-source">['+item.src+']</span> '+item.det+(item.url?' — <a href="'+item.url+'" target="_blank">Open</a>':'');
+      const d=document.createElement('div');
+      d.className='log-entry';
+      const safeDet=escapeHtml(item.det).replace(/\n/g,'<br>');
+      d.innerHTML='<span class="log-source">['+escapeHtml(item.src)+']</span> '+safeDet+(item.url?' — <a href="'+item.url+'" target="_blank">Open</a>':'');
+      const cp=document.createElement('button');
+      cp.type='button';
+      cp.className='copy-mini';
+      cp.innerText='📋';
+      cp.title='Copy';
+      cp.addEventListener('click',function(){
+        if(navigator.clipboard)navigator.clipboard.writeText(item.det).catch(function(){});
+        cp.innerText='✓';
+        setTimeout(function(){cp.innerText='📋';},1000);
+      });
+      d.appendChild(cp);
       logList.prepend(d);
     }
+
     function addLog(src,det,url=null,persist=true){
       const entry={src:src,det:det,url:url};
       renderLogItem(entry);
@@ -239,16 +379,17 @@
         try{
           const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
           list.push(entry);
-          localStorage.setItem(LOG_KEY,JSON.stringify(list.slice(-45)));
+          localStorage.setItem(LOG_KEY,JSON.stringify(list.slice(-50)));
         }catch(e){}
       }
     }
+
     (function loadSavedLogs(){
       try{
         const list=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
         if(list.length){list.forEach(function(item){renderLogItem(item);});}
-        else{addLog('SURYA','Neural Core v3 Online. Say "Learn: Q = A" to train me!',null,false);}
-      }catch(e){addLog('SURYA','Neural Core v3 Online.',null,false);}
+        else{addLog('SURYA','Neural Core v4 Online. Tap 🔑 KEY to connect Groq AI or say "Learn: Q = A"!',null,false);}
+      }catch(e){addLog('SURYA','Neural Core v4 Online.',null,false);}
     })();
 
     function setVis(st){
@@ -258,17 +399,37 @@
       else if(st==='thinking'){orbLogo.classList.add('thinking');statePill.innerText='THINKING';}
       else{statePill.innerText=isListening?'READY':'STANDBY';}
     }
-    function updClock(){const n=new Date();document.getElementById('clock').innerText='TIME: '+n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
-    updClock();setInterval(updClock,1000);
-    if(navigator.getBattery)navigator.getBattery().then(function(b){const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};f();b.addEventListener('levelchange',f);});
 
-    muteBtn.addEventListener('click',function(){isMuted=!isMuted;muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 VOICE ON';if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');});
-    clearLogBtn.addEventListener('click',function(){try{localStorage.removeItem(LOG_KEY);}catch(e){}logList.innerHTML='';addLog('SURYA','Logs cleared.',null,false);});
+    function updClock(){
+      const n=new Date();
+      document.getElementById('clock').innerText='TIME: '+n.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    }
+    updClock();setInterval(updClock,1000);
+
+    if(navigator.getBattery)navigator.getBattery().then(function(b){
+      const f=function(){document.getElementById('battery').innerText='PWR: '+Math.round(b.level*100)+'%';};
+      f();b.addEventListener('levelchange',f);
+    });
+
+    muteBtn.addEventListener('click',function(){
+      isMuted=!isMuted;
+      muteBtn.innerText=isMuted?'🔇 MUTED':'🔊 ON';
+      if(isMuted){window.speechSynthesis.cancel();isSpeaking=false;setVis(isListening?'listening':'idle');}
+      addLog('SYSTEM',isMuted?'Voice output muted.':'Voice output enabled.');
+    });
+
+    clearLogBtn.addEventListener('click',function(){
+      try{localStorage.removeItem(LOG_KEY);}catch(e){}
+      logList.innerHTML='';
+      addLog('SURYA','Logs cleared.',null,false);
+    });
+
     exportBtn.addEventListener('click',function(){
       try{
         const data={
           name:localStorage.getItem(NAME_KEY)||'',
           notes:JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'),
+          tasks:JSON.parse(localStorage.getItem(TASKS_KEY)||'[]'),
           customQA:JSON.parse(localStorage.getItem(QA_KEY)||'{}'),
           logs:JSON.parse(localStorage.getItem(LOG_KEY)||'[]')
         };
@@ -277,27 +438,42 @@
         a.href=URL.createObjectURL(blob);
         a.download='surya-ai-backup.json';
         a.click();
-        addLog('BACKUP','Exported surya-ai-backup.json (Ready to upload to TeraBox/Drive)');
+        addLog('BACKUP','Exported surya-ai-backup.json (Notes, Tasks, Q&A & Logs)');
       }catch(e){}
     });
-        function pickVoice(lang){
+
+    function pickVoice(lang){
       const voices=window.speechSynthesis.getVoices()||[];
       if(lang==='hi')return voices.find(function(v){return /hi(-|_)?in/i.test(v.lang);})||voices.find(function(v){return /^hi/i.test(v.lang);})||null;
       return voices.find(function(v){return /en(-|_)?in/i.test(v.lang);})||voices.find(function(v){return /^en/i.test(v.lang);})||null;
     }
+
     function speak(text,lang='en',cb=null){
-      const clean=text.replace(/[*#_`]/g,'');statusEl.innerText='Surya: '+clean;window.speechSynthesis.cancel();
+      const clean=text.replace(/[*#_`]/g,'').replace(/\s+/g,' ').trim();
+      const shortStatus=clean.length>140?clean.slice(0,137)+'...':clean;
+      statusEl.innerText='Surya: '+shortStatus;
+      window.speechSynthesis.cancel();
       if(rec)try{rec.abort();}catch(e){}
-      if(isMuted){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},300);return;}
+      if(isMuted){
+        isSpeaking=false;setVis('idle');
+        if(cb)cb();
+        else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},300);
+        return;
+      }
       isSpeaking=true;
       const u=new SpeechSynthesisUtterance(clean);
       u.lang=lang==='hi'?'hi-IN':'en-IN';
       const v=pickVoice(lang);if(v)u.voice=v;
       u.rate=1.0;u.pitch=1.0;
       u.onstart=function(){setVis('speaking');};
-      u.onend=u.onerror=function(){isSpeaking=false;setVis('idle');if(cb)cb();else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},350);};
+      u.onend=u.onerror=function(){
+        isSpeaking=false;setVis('idle');
+        if(cb)cb();
+        else if(isListening)setTimeout(function(){if(isListening&&!isSpeaking&&rec)try{rec.start();}catch(e){}},350);
+      };
       window.speechSynthesis.speak(u);
     }
+
     function openAppSmart(app){
       const isAndroid=/Android/i.test(navigator.userAgent);
       if(isAndroid&&app.pkg){
@@ -319,6 +495,7 @@
       }
       if(app.url)window.location.href=app.url;
     }
+
     function tryLangSwitch(cmd){
       const c=cmd.trim().toLowerCase();
       if(/\b(hindi mein baat karo|speak in hindi|hindi me bolo|talk in hindi|hindi)\b/i.test(c)||/हिन्दी में बात|हिंदी में बात/.test(cmd)){
@@ -333,6 +510,7 @@
       }
       return false;
     }
+
     function tryCustomQA(cmd,lang){
       const learnM=cmd.match(/^(?:learn|teach|sikho)\s*:?\s*(.+?)\s*(?:=|->|means|ka jawab)\s*(.+)/i);
       if(learnM){
@@ -349,12 +527,72 @@
       try{
         const qa=JSON.parse(localStorage.getItem(QA_KEY)||'{}');
         const cleanQ=cmd.trim().toLowerCase().replace(/[?!।.]/g,'');
-        if(qa[cleanQ]){
-          addLog('CUSTOM MEMORY',qa[cleanQ]);speak(qa[cleanQ],lang);return true;
-        }
+        if(qa[cleanQ]){addLog('CUSTOM MEMORY',qa[cleanQ]);speak(qa[cleanQ],lang);return true;}
       }catch(e){}
       return false;
     }
+
+    function tryTasks(cmd,lang){
+      const addM=cmd.match(/^(?:add task|new task|todo|to-do|kaam jodo|task jodo)\s*:?\s*(.+)/i);
+      if(addM){
+        const t=addM[1].trim();
+        let tasks=[];
+        try{tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');}catch(e){}
+        tasks.push({text:t,done:false});
+        try{localStorage.setItem(TASKS_KEY,JSON.stringify(tasks.slice(-30)));}catch(e){}
+        const r=lang==='hi'?'टास्क जोड़ दिया है: '+t:'Task added: '+t;
+        addLog('TASK ADDED',r);speak(r,lang);return true;
+      }
+      const doneM=cmd.match(/^(?:complete task|done task|finish task|task done)\s*#?(\d+)/i);
+      if(doneM){
+        const idx=parseInt(doneM[1],10)-1;
+        let tasks=[];
+        try{tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');}catch(e){}
+        if(tasks[idx]){
+          tasks[idx].done=true;
+          try{localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));}catch(e){}
+          const r=lang==='hi'?'टास्क '+(idx+1)+' पूरा हो गया: '+tasks[idx].text:'Marked task '+(idx+1)+' done: '+tasks[idx].text;
+          addLog('TASK DONE',r);speak(r,lang);return true;
+        }
+      }
+      if(/\b(my tasks|show tasks|todo list|task list|mere kaam|mere task)\b/i.test(cmd)){
+        let tasks=[];
+        try{tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');}catch(e){}
+        if(!tasks.length){
+          const r=lang==='hi'?'आपकी टास्क लिस्ट खाली है। "Add task..." बोलकर नया काम जोड़ें।':'Your task list is empty. Say "Add task..." to create one.';
+          addLog('TASKS',r);speak(r,lang);return true;
+        }
+        const lines=tasks.map(function(x,i){return (i+1)+'. '+(x.done?'[Done] ':'[Pending] ')+x.text;});
+        const out=lines.join(' | ');
+        addLog('MY TASKS',out);
+        speak(lang==='hi'?'आपके '+tasks.length+' टास्क हैं: '+out:'You have '+tasks.length+' tasks: '+out,lang);
+        return true;
+      }
+      return false;
+    }
+
+    function trySmartTools(cmd,lang){
+      if(/\b(generate password|random password|strong password|password banao)\b/i.test(cmd)){
+        const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789@#$_!';
+        let pwd='';
+        for(let i=0;i<12;i++)pwd+=chars.charAt(Math.floor(Math.random()*chars.length));
+        addLog('PASSWORD GEN','Generated: '+pwd);
+        speak(lang==='hi'?'नया मज़बूत पासवर्ड लॉग में बना दिया है।':'Generated a strong 12-character password in your log.',lang);
+        return true;
+      }
+      if(/\b(toss a coin|flip a coin|coin toss|sikka uchhalo)\b/i.test(cmd)){
+        const side=Math.random()<0.5?(lang==='hi'?'हेड्स (Heads)':'Heads'):(lang==='hi'?'टेल्स (Tails)':'Tails');
+        const r=lang==='hi'?'सिक्का उछाला — '+side+' आया!':'Coin flipped — it is '+side+'!';
+        addLog('COIN TOSS',r);speak(r,lang);return true;
+      }
+      if(/\b(roll a dice|roll dice|dice|pasa phenko)\b/i.test(cmd)){
+        const num=Math.floor(Math.random()*6)+1;
+        const r=lang==='hi'?'पासा फेंका — नंबर '+num+' आया!':'Rolled the dice — you got '+num+'!';
+        addLog('DICE',r);speak(r,lang);return true;
+      }
+      return false;
+    }
+
     function tryTimerAndConvert(cmd,lang){
       const tM=cmd.match(/(?:set timer|timer|alarm)\s+(?:for\s+)?(\d+)\s*(second|seconds|sec|minute|minutes|min|मिनट|सेकंड)/i);
       if(tM){
@@ -369,7 +607,9 @@
           const m=Math.floor(secs/60),s=secs%60;
           timerBadge.innerText='⏱️ '+m+':'+(s<10?'0'+s:s);
           if(secs<=0){
-            clearInterval(timerInterval);timerBadge.innerText='AI CORE v3';
+            clearInterval(timerInterval);
+            timerInterval=null;
+            updateEngineBadge();
             addLog('TIMER DONE','Time is up!');
             speak(lang==='hi'?'समय पूरा हो गया है!':'Time is up! Your timer has finished.',lang);
           }
@@ -395,20 +635,27 @@
         }
       }
       return false;
-    }
-    function tryMemoryAndNotes(cmd,lang){
+        }
+        function tryMemoryAndNotes(cmd,lang){
       const nameM=cmd.match(/(?:my name is|call me|mera naam)\s+([a-zA-Z\u0900-\u097F ]{2,25})/i);
       if(nameM){
         const nm=nameM[1].trim();
         try{localStorage.setItem(NAME_KEY,nm);}catch(e){}
+        groqMessages[0]={role:'system',content:getDefaultSystemPrompt()};
         const r=lang==='hi'?'याद रखूँगा '+nm+'! आपसे दोस्ती करके बहुत अच्छा लगा।':'I will remember that, '+nm+'! Great to have you with me.';
         addLog('MEMORY SAVED','Name = '+nm);speak(r,lang);return true;
       }
       const saveM=cmd.match(/^(?:note|save note|remember|yaad rakhna)\s+(.+)/i);
       if(saveM){
         const txt=saveM[1].trim();
-        try{const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');notes.push(txt);localStorage.setItem(NOTES_KEY,JSON.stringify(notes.slice(-30)));}catch(e){}
-        addLog('MEMORY SAVED',txt);speak(lang==='hi'?'ठीक है, मैंने इसे अपनी मेमोरी में सेव कर लिया है: '+txt+'.':'Got it! I have stored that in my memory: '+txt+'.',lang);return true;
+        try{
+          const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+          notes.push(txt);
+          localStorage.setItem(NOTES_KEY,JSON.stringify(notes.slice(-30)));
+        }catch(e){}
+        addLog('MEMORY SAVED',txt);
+        speak(lang==='hi'?'ठीक है, मैंने इसे अपनी मेमोरी में सेव कर लिया है: '+txt+'.':'Got it! I have stored that in my memory: '+txt+'.',lang);
+        return true;
       }
       if(/\b(what do you remember|my memory|show my notes|read notes|my notes|kya yaad hai|mera naam kya)\b/i.test(cmd)){
         let nm='';try{nm=localStorage.getItem(NAME_KEY)||'';}catch(e){}
@@ -426,6 +673,7 @@
       }
       return false;
     }
+
     function tryFriendlyChat(cmd,lang){
       const c=cmd.trim().toLowerCase();
       let nm='';try{nm=localStorage.getItem(NAME_KEY)||'';}catch(e){}
@@ -439,7 +687,7 @@
         addLog('SURYA',r);speak(r,lang);return true;
       }
       if(/\b(who are you|your name|tum kaun|aap kaun)\b/i.test(c)||/(कौन हो|नाम क्या)/.test(cmd)){
-        const r=lang==='hi'?'मैं सूर्या एआई हूँ, आपका स्मार्ट और दोस्ताना असिस्टेंट—मेमोरी, गणित, जानकारी और ऐप्स में मदद के लिए तैयार।':'I am Surya AI, your smart companion built to remember your notes, solve math, search knowledge, and launch apps.';
+        const r=lang==='hi'?'मैं सूर्या एआई हूँ, आपका स्मार्ट और दोस्ताना असिस्टेंट—Groq AI, मेमोरी, गणित, टास्क और ऐप्स में मदद के लिए तैयार।':'I am Surya AI, your smart companion powered by Groq AI, memory, math, tasks, and app launcher.';
         addLog('SURYA',r);speak(r,lang);return true;
       }
       if(/\b(thank you|thanks|ty|dhanyawad|shukriya)\b/i.test(c)||/(धन्यवाद|शुक्रिया)/.test(cmd)){
@@ -448,14 +696,18 @@
       }
       return false;
     }
+
     function tryDateTime(cmd,lang){
       if(/\b(time|date|day|today|aaj|samay|waqt|tarikh)\b/i.test(cmd)||/(समय|तारीख|दिन|आज)/.test(cmd)){
-        const n=new Date(),d=n.toLocaleDateString(lang==='hi'?'hi-IN':'en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),t=n.toLocaleTimeString(lang==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'});
+        const n=new Date(),
+              d=n.toLocaleDateString(lang==='hi'?'hi-IN':'en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),
+              t=n.toLocaleTimeString(lang==='hi'?'hi-IN':'en-IN',{hour:'2-digit',minute:'2-digit'});
         const r=lang==='hi'?'आज '+d+' है और अभी समय '+t+' हुआ है।':'Today is '+d+' and the time right now is '+t+'.';
         addLog('CLOCK / DATE',r);speak(r,lang);return true;
       }
       return false;
     }
+
     function tryOpenApp(cmd,lang){
       const apps=[
         {keys:['wa business','whatsapp business','व्हाट्सएप बिजनेस'],name:'WA Business',pkg:'com.whatsapp.w4b',url:'https://wa.me/'},
@@ -519,34 +771,89 @@
         if(a.keys.some(function(k){return cmd.toLowerCase().includes(k);})&&(openIntent||cmd.trim().split(' ').length<=3)){
           addLog('APP LAUNCHER','Opening '+a.name+' (App if installed, else Browser)',a.url||null);
           speak(lang==='hi'?'ज़रूर! '+a.name+' खोल रहा हूँ।':'Sure! Opening '+a.name+' for you.',lang);
-          setTimeout(function(){openAppSmart(a);},250);return true;
+          setTimeout(function(){openAppSmart(a);},250);
+          return true;
         }
       }
       return false;
-                                                               }
-        function tryAdvMath(cmd){
+    }
+
+    function tryAdvMath(cmd){
       let s=cmd.toLowerCase();
       const pct=s.match(/(\d+(?:\.\d+)?)\s*(?:%|percent)\s*of\s*(\d+(?:\.\d+)?)/i);
       if(pct){const v=(parseFloat(pct[1])/100)*parseFloat(pct[2]);return Number.isInteger(v)?v:parseFloat(v.toFixed(4));}
-      s=s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi,function(_,fn,deg){const rad=(parseFloat(deg)*Math.PI)/180;let r=fn.toLowerCase()==='sin'?Math.sin(rad):fn.toLowerCase()==='cos'?Math.cos(rad):Math.tan(rad);return '('+Number(r.toFixed(6))+')';});
+      s=s.replace(/\b(sin|cos|tan)\s*\(?\s*(-?\d+(?:\.\d+)?)\s*\)?/gi,function(_,fn,deg){
+        const rad=(parseFloat(deg)*Math.PI)/180;
+        let r=fn.toLowerCase()==='sin'?Math.sin(rad):fn.toLowerCase()==='cos'?Math.cos(rad):Math.tan(rad);
+        return '('+Number(r.toFixed(6))+')';
+      });
       s=s.replace(/(?:square root of|sqrt|वर्गमूल)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.sqrt('+parseFloat(n)+')';});
       s=s.replace(/(?:cube root of|cbrt|घनमूल)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.cbrt('+parseFloat(n)+')';});
       s=s.replace(/\blog10\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,n){return 'Math.log10('+parseFloat(n)+')';});
       s=s.replace(/\b(log|ln)\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi,function(_,__,n){return 'Math.log('+parseFloat(n)+')';});
       s=s.replace(/\b(pi|पाई)\b/gi,'('+Math.PI+')');
       s=s.replace(/(\d+(?:\.\d+)?)\s*(?:to the power(?: of)?|power|\^|की घात)\s*(\d+(?:\.\d+)?)/gi,function(_,b,e){return 'Math.pow('+parseFloat(b)+','+parseFloat(e)+')';});
-      s=s.replace(/into|multiplied by|multiply|x|×|गुणा/gi,'*').replace(/plus|add|added to|जोड़/gi,'+').replace(/minus|subtract|घटा/gi,'-').replace(/divided by|divide by|भाग/gi,'/').replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g,' ').replace(/\s+/g,' ').trim();
+      s=s.replace(/into|multiplied by|multiply|x|×|गुणा/gi,'*')
+         .replace(/plus|add|added to|जोड़/gi,'+')
+         .replace(/minus|subtract|घटा/gi,'-')
+         .replace(/divided by|divide by|भाग/gi,'/')
+         .replace(/[^0-9+\-*/().Mathpowsqrtcbrtlog10a-zA-Z]/g,' ')
+         .replace(/\s+/g,' ').trim();
       if(/[0-9]/.test(s)&&/(\+|-|\*|\/|Math\.)/.test(s)){
-        try{const ans=Function('"use strict";return ('+s+')')();if(typeof ans==='number'&&!isNaN(ans)&&isFinite(ans))return Number.isInteger(ans)?ans:parseFloat(ans.toFixed(4));}catch(e){}
+        try{
+          const ans=Function('"use strict";return ('+s+')')();
+          if(typeof ans==='number'&&!isNaN(ans)&&isFinite(ans))return Number.isInteger(ans)?ans:parseFloat(ans.toFixed(4));
+        }catch(e){}
       }
       return null;
+        }
+        async function askGroqAI(promptText,lang){
+      const apiKey=getGroqKey();
+      if(!apiKey)return false;
+      setVis('thinking');
+      statusEl.innerText=lang==='hi'?'Groq AI सोच रहा है...':'Groq AI is thinking...';
+      groqMessages.push({role:'user',content:promptText});
+      const payloadMessages=[groqMessages[0],...groqMessages.slice(-10)];
+      try{
+        const resp=await fetch(GROQ_ENDPOINT,{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization':'Bearer '+apiKey
+          },
+          body:JSON.stringify({
+            model:GROQ_MODEL,
+            messages:payloadMessages,
+            temperature:0.7,
+            max_tokens:450
+          })
+        });
+        if(!resp.ok)throw new Error('HTTP '+resp.status);
+        const data=await resp.json();
+        const reply=(data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)
+          ?data.choices[0].message.content.trim()
+          :'';
+        if(!reply){
+          groqMessages.pop();
+          return false;
+        }
+        groqMessages.push({role:'assistant',content:reply});
+        addLog('GROQ AI',reply);
+        speak(reply,lang);
+        return true;
+      }catch(err){
+        groqMessages.pop();
+        setVis('idle');
+        addLog('GROQ FALLBACK','Groq error ('+err.message+'), switching to Wiki/Google.');
+        return false;
+      }
     }
 
     async function searchWiki(q,lang){
       setVis('thinking');
-      const m=tryAdvMath(q);
-      if(m!==null){addLog('ADVANCED MATH','Result = '+m);speak(lang==='hi'?'इसका सही उत्तर '+m+' है।':'The answer is '+m+'!',lang);return;}
-      const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain|kya hai|kaun hai|ke bare mein batao|batao)\b/gi,'').replace(/(क्या है|कौन है|के बारे में बताओ|बताओ)/g,'').replace(/[?!।.]/g,'').trim();
+      const topic=q.replace(/\b(who is|who was|what is|tell me about|when was|where is|explain|kya hai|kaun hai|ke bare mein batao|batao)\b/gi,'')
+                   .replace(/(क्या है|कौन है|के बारे में बताओ|बताओ)/g,'')
+                   .replace(/[?!।.]/g,'').trim();
       if(topic.length>=2){
         const sub=lang==='hi'?'hi':'en';
         addLog('WIKIPEDIA ('+sub.toUpperCase()+')','Searching: "'+topic+'"...');
@@ -559,7 +866,8 @@
               const sp=lang==='hi'?'। ':'. ';
               const shortAns=su.extract.split(sp).slice(0,2).join(sp)+(lang==='hi'?'।':'.');
               addLog('WIKIPEDIA ANSWER',shortAns,su.content_urls&&su.content_urls.desktop?su.content_urls.desktop.page:null);
-              speak(shortAns,lang);return;
+              speak(shortAns,lang);
+              return;
             }
           }
         }catch(e){}
@@ -576,57 +884,125 @@
       const lang=detectLang(cleanCmd);
       if(lang==='hi')setPreferredLang('hi');
       addLog('USER ('+lang.toUpperCase()+')','"'+cleanCmd+'"');
+
       if(/\b(stop|sleep|mute mic|go to sleep|band ho ja|so jao)\b/i.test(cleanCmd)||/(बंद हो जा|सो जा)/.test(cleanCmd)){
-        isListening=false;toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');
-        speak(lang==='hi'?'ठीक है, मैं अभी स्टैंडबाय मोड में जा रहा हूँ। ज़रूरत पड़े तो एक्टिवेट कर लेना!':'Okay, entering standby mode! Tap activate whenever you need me.',lang);return;
+        isListening=false;
+        toggleBtn.innerText='ACTIVATE';
+        toggleBtn.classList.remove('active-stop');
+        speak(lang==='hi'?'ठीक है, मैं अभी स्टैंडबाय मोड में जा रहा हूँ। ज़रूरत पड़े तो एक्टिवेट कर लेना!':'Okay, entering standby mode! Tap activate whenever you need me.',lang);
+        return;
       }
+
       if(tryLangSwitch(cleanCmd))return;
       if(tryCustomQA(cleanCmd,lang))return;
+      if(tryTasks(cleanCmd,lang))return;
+      if(trySmartTools(cleanCmd,lang))return;
       if(tryTimerAndConvert(cleanCmd,lang))return;
       if(tryMemoryAndNotes(cleanCmd,lang))return;
       if(tryFriendlyChat(cleanCmd,lang))return;
       if(tryDateTime(cleanCmd,lang))return;
+
       if(/\b(play|song|music|chalao|gaana|bajao)\b/i.test(cleanCmd)||/(गाना|चलाओ|बजाओ)/.test(cleanCmd)){
         const q=cleanCmd.replace(/play|on youtube|song|music|chalao|gaana|bajao|गाना|चलाओ|बजाओ/gi,'').trim();
         const webYt='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
         addLog('YOUTUBE','Playing: "'+q+'"',webYt);
         speak(lang==='hi'?'यूट्यूब पर '+q+' चला रहा हूँ!':'Playing '+q+' on YouTube!',lang);
-        setTimeout(function(){openAppSmart({name:'YouTube',pkg:'com.google.android.youtube',url:webYt});},250);return;
+        setTimeout(function(){openAppSmart({name:'YouTube',pkg:'com.google.android.youtube',url:webYt});},250);
+        return;
       }
+
       if(/\b(call|dial|phone lagao)\b/i.test(cleanCmd)||/कॉल/.test(cleanCmd)){
         addLog('DIALER','Opening Phone Dialer','tel:');
         speak(lang==='hi'?'कॉल डायलर खोल रहा हूँ।':'Opening the dialer for you.',lang);
-        setTimeout(function(){window.location.href='tel:';},250);return;
+        setTimeout(function(){window.location.href='tel:';},250);
+        return;
       }
+
       if(tryOpenApp(cleanCmd,lang))return;
+
+      const mathAns=tryAdvMath(cleanCmd);
+      if(mathAns!==null){
+        addLog('ADVANCED MATH','Result = '+mathAns);
+        speak(lang==='hi'?'इसका सही उत्तर '+mathAns+' है।':'The answer is '+mathAns+'!',lang);
+        return;
+      }
+
+      const groqOk=await askGroqAI(cleanCmd,lang);
+      if(groqOk)return;
+
       await searchWiki(cleanCmd,lang);
     }
 
-    document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){const c=b.getAttribute('data-cmd');statusEl.innerText='You: '+c;processCmd(c);});});
-    chatForm.addEventListener('submit',function(e){e.preventDefault();const val=chatInput.value.trim();if(!val)return;chatInput.value='';statusEl.innerText='You: '+val;processCmd(val);});
+    document.querySelectorAll('.chip').forEach(function(b){
+      b.addEventListener('click',function(){
+        const c=b.getAttribute('data-cmd');
+        statusEl.innerText='You: '+c;
+        processCmd(c);
+      });
+    });
+
+    chatForm.addEventListener('submit',function(e){
+      e.preventDefault();
+      const val=chatInput.value.trim();
+      if(!val)return;
+      chatInput.value='';
+      statusEl.innerText='You: '+val;
+      processCmd(val);
+    });
 
     if(SR){
-      rec=new SR();rec.lang=preferredLang==='hi'?'hi-IN':'en-IN';rec.continuous=false;rec.interimResults=false;
-      rec.onstart=function(){if(isSpeaking){try{rec.abort();}catch(e){}return;}setVis('listening');statusEl.innerText=preferredLang==='hi'?'सुन रहा हूँ...':'Listening...';};
-      rec.onresult=function(e){if(isSpeaking)return;const c=e.results[0][0].transcript;statusEl.innerText='You: '+c;processCmd(c);};
-      rec.onend=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},350);};
-      rec.onerror=function(){if(!isSpeaking)setVis('idle');if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},600);};
+      rec=new SR();
+      rec.lang=preferredLang==='hi'?'hi-IN':'en-IN';
+      rec.continuous=false;
+      rec.interimResults=false;
+      rec.onstart=function(){
+        if(isSpeaking){try{rec.abort();}catch(e){}return;}
+        setVis('listening');
+        statusEl.innerText=preferredLang==='hi'?'सुन रहा हूँ...':'Listening...';
+      };
+      rec.onresult=function(e){
+        if(isSpeaking)return;
+        const c=e.results[0][0].transcript;
+        statusEl.innerText='You: '+c;
+        processCmd(c);
+      };
+      rec.onend=function(){
+        if(!isSpeaking)setVis('idle');
+        if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},350);
+      };
+      rec.onerror=function(){
+        if(!isSpeaking)setVis('idle');
+        if(isListening&&!isSpeaking)setTimeout(function(){if(isListening&&!isSpeaking)try{rec.start();}catch(e){}},600);
+      };
     }
 
     function toggleSurya(){
       if(!SR){statusEl.innerText='Please use Chrome browser.';return;}
       if(!isListening){
-        isListening=true;toggleBtn.innerText='STOP';toggleBtn.classList.add('active-stop');addLog('SYSTEM','Surya Neural Core Active.');
+        isListening=true;
+        toggleBtn.innerText='STOP';
+        toggleBtn.classList.add('active-stop');
+        addLog('SYSTEM','Surya Neural Core Active.');
         try{rec.start();}catch(e){statusEl.innerText='Please allow microphone permission.';}
       }else{
-        isListening=false;isSpeaking=false;window.speechSynthesis.cancel();toggleBtn.innerText='ACTIVATE';toggleBtn.classList.remove('active-stop');setVis('idle');
-        try{rec.abort();}catch(e){}addLog('SYSTEM','Standby.');statusEl.innerText='Surya on standby. Tap ACTIVATE to resume.';
+        isListening=false;isSpeaking=false;
+        window.speechSynthesis.cancel();
+        toggleBtn.innerText='ACTIVATE';
+        toggleBtn.classList.remove('active-stop');
+        setVis('idle');
+        try{rec.abort();}catch(e){}
+        addLog('SYSTEM','Standby.');
+        statusEl.innerText='Surya on standby. Tap ACTIVATE to resume.';
       }
     }
 
     toggleBtn.addEventListener('click',toggleSurya);
     orbLogo.addEventListener('click',toggleSurya);
-    miniMicBtn.addEventListener('click',function(){if(!SR){statusEl.innerText='Please use Chrome browser.';return;}if(!isListening)toggleSurya();else try{rec.start();}catch(e){}});
+    miniMicBtn.addEventListener('click',function(){
+      if(!SR){statusEl.innerText='Please use Chrome browser.';return;}
+      if(!isListening)toggleSurya();
+      else try{rec.start();}catch(e){}
+    });
   </script>
 </body>
 </html>
